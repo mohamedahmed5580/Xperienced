@@ -759,7 +759,7 @@ p {
   .header  .btnbox{
     display: flex;
     justify-content: space-between;
-    margin-right: 25px;
+    margin-right:   px;
   }
   .header .fixed-bottom-nav{
     position: fixed;
