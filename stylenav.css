@@ -809,10 +809,12 @@ p {
 .profile-head .nav-tabs .nav-link{
   font-weight:600;
   border: none;
+  color: var(--secondary2-color);
 }
 .profile-head .nav-tabs .nav-link.active{
   border: none;
-  border-bottom:2px solid #0062cc;
+  border-bottom:2px solid var(--main3-color);
+  color: var(--main3-color);
 }
 .profile-work{
   padding: 14%;
@@ -1044,21 +1046,31 @@ p {
     margin-top: 100px;
   }
   .signin .form .inp{
-    width: 150%;
+    width: 100%;
+  }
+
+
+  .profile-work{
+   margin-top: 0px;
   }
   .emp-profile{
     width: 95%;
-
+    height: 850px;
   }
+  .profile-img img {
+    width: 70%;
+    height: 100%;
+    padding-top: 10px;
+}
   .profile-head{
     text-align: center;
     align-items: center;
   }
   .profile-head h5{
-    width: 400px;
+    width: 300px;
   }
   .profile-head h6{
-    width: 400px;
+    width: 300px;
   }
 
   .profile-work .row {
@@ -1073,14 +1085,26 @@ p {
     font-size: 18px;
     color: #818182;
     font-weight: 600;
-    margin-top: 10%;
+    margin-top: 8%;
   }
   .profile-head .nav-tabs {
     position: absolute;
-    margin-top: 200px;
+    margin-top: 250px;
   }
   .profile-tab p{
-    width: 240px;
+    width: 200px;
+    margin-left: 10px;
   }
+  .col-md-2{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  .profile-tab{
+    margin-top: 30px;
+  }
+
 }
+
 
