@@ -1091,11 +1091,15 @@ p {
   }
   .profile-head .nav-tabs {
     position: absolute;
-    margin-top: 150px;
+    margin-top: 250px;
   }
   .profile-tab p{
-    width: 200px;
-    margin-left: 100px;
+    width: 180px;
+    margin-left: 10px;
+  }
+  .profile-tab .sk{
+    width: 180px;
+    margin-left: 60px;
   }
   .col-md-2{
     display: flex;
