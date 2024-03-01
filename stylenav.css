@@ -897,9 +897,7 @@ p {
   cursor: pointer;
   border: solid 1px #BA68C8
 }
-input.ff  {
-width: 150px;
-}
+
 @media (max-width:725px) {
   .head{
     background-color: var(--main2-background);
