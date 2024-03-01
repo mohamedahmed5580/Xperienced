@@ -759,7 +759,7 @@ p {
   .header  .btnbox{
     display: flex;
     justify-content: space-between;
-    margin-right: 50px;
+    margin-right: 25px;
   }
   .header .fixed-bottom-nav{
     position: fixed;
@@ -777,14 +777,14 @@ p {
     color: var(--secondary3-color);
     margin-left: auto;
     margin-right: auto;
-
+text-align: center;
   }
 
   .mobile-text{
     display: block;
     color: var(--secondary3-color);
     margin-left: -30px;
-    margin-right: 50px;
+    margin-right: 30px;
     font-size: 20px;
 }
 
