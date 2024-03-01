@@ -782,7 +782,6 @@ p {
     width: 150%;
   }
 }
-
 .menu{
   overflow-x:hidden;
   position:relative;
@@ -855,3 +854,4 @@ section {
 }
 p.coder a {font:11px georgia;color:#ddd;}
 p.coder a:hover {color:#bbb;}
+
