@@ -897,7 +897,6 @@ p {
   cursor: pointer;
   border: solid 1px #BA68C8
 }
-
 @media (max-width:725px) {
   .head{
     background-color: var(--main2-background);
@@ -1037,7 +1036,6 @@ p {
   }
   .about .about-content .image::after{
     width: 120px;
-
     border-left: 80px solid var(--secondary2-color);
     border-bottom: 80px solid var(--secondary2-color);
     right: -55px;
@@ -1142,7 +1140,7 @@ p {
   }
   .profile-head .nav-tabs {
     position: absolute;
-    margin-top: 250px;
+    margin-top: 300px;
   }
   .profile-tab p{
     width: 180px;
