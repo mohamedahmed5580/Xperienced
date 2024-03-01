@@ -1159,7 +1159,14 @@ p {
   .profile-tab{
     margin-top: 30px;
   }
-
+  .editbtn{
+    width: 400px;
+    display: block;
+    margin-left: 100px;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 
