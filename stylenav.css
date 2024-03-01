@@ -777,14 +777,13 @@ p {
     left: 0;
   }
   .landing .text .content h2{
-    font-size: xx-large;
-    font-weight:700;
+    font-weight:700;  
   }
   .navbar-Name {
     color: var(--secondary3-color);
     margin-left: auto;
     margin-right: auto;
-text-align: center;
+    text-align: center;
   }
 
   .mobile-text{
