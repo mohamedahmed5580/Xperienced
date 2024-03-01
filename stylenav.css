@@ -895,7 +895,7 @@ text-align: center;
     display: grid;
     grid-template-columns: repeat(2, minmax(200px, 1fr));
     grid-column-gap: 0px;
-    grid-row-gap: 60px;
+    grid-row-gap: 10px;
     position: relative;
   
   }
