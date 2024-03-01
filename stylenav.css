@@ -837,6 +837,8 @@ p {
 }
 .profile-tab label{
   font-weight: 600;
+  width: 150px;
+ 
 }
 .profile-tab p{
   font-weight: 600;
@@ -1093,7 +1095,7 @@ p {
   }
   .profile-tab p{
     width: 200px;
-    margin-left: 10px;
+    margin-left: 50px;
   }
   .col-md-2{
     display: flex;
