@@ -92,6 +92,9 @@ p {
     background-color: var(--secondary-color);
     color: var(--secondary2-color);
 }
+.right{
+  margin-right: 10px;
+}
 .toggle {
   background:transparent;
   color: var(--secondary3-color);
@@ -787,7 +790,12 @@ text-align: center;
     /* margin-right: 15px; */
     font-size: 20px;
 }
-
+.service .boxs .box .text
+  .service .boxs .box .text p{
+    line-height: 2;
+    color: var(--main2-background);
+    font-size: medium;
+  }
   .images .up {
     width: 350px;
   }
