@@ -265,7 +265,7 @@ p {
 
 .landing .text {
   position: absolute;
-  top:60%;
+  top:50%;
   left: 300px;
   transform: translateY(-50%);
   width: 50%;
@@ -777,8 +777,8 @@ p {
     left: 0;
   }
   .landing .text .content h2{
-    font-size: x-large;
-    font-weight:500;
+    font-size: xx-large;
+    font-weight:700;
   }
   .navbar-Name {
     color: var(--secondary3-color);
