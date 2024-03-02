@@ -2280,10 +2280,10 @@ p {
       margin-left: auto;
     }
     .profile-head h5{
-      width: 400px;
+      width: 380px;
     }
     .profile-head h6{
-      width: 400px;
+      width: 380px;
     }
   
     .profile-work .row {
@@ -2332,7 +2332,7 @@ p {
     .col-md-6{
       width: 375px;
       align-items: center;
-      text-align: ;
+      text-align: center;
     }
   }
   
