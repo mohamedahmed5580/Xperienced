@@ -14,7 +14,7 @@
   --section-background: #c9ebde;
   --main2-background: #ffffff;
   --transparent-color:rgba(15, 115, 143, 0.5);
-  --section-padding: 60px;
+  --section-padding: 80px;
   --main-duration: 0.5s;
   --main-size:20px;
 }
@@ -994,6 +994,7 @@ span.text-black{
   }
   .hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper h2{
     font-size: 45px;
+    margin-top: 15px;
   }
   .img-bg{  
     margin-top: -200px;
