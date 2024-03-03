@@ -156,6 +156,7 @@ p {
   margin-left: auto;
   margin-right: 100px;
   margin-top: -300px;
+  
 }
 
 .header .right{
@@ -164,7 +165,7 @@ p {
   top: 0;
   width: 93px;
   height: 467px;
-  z-index: -1;
+  /* z-index: -1; */
 }
 .header .left{
   position: absolute;
@@ -172,7 +173,7 @@ p {
   top: 0;
   width: 193px;
   height: 467px;
-  z-index: -1;
+  /* z-index: -1; */
 }
 /* uultimate guide */
 

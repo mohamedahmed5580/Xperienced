@@ -278,7 +278,7 @@ background: url(image/hero-bg.svg);
 background-size: cover;
 background-repeat: no-repeat;
 height: 800px;
-margin-top: -140px;
+margin-top: 50px;
 }
 
 .hero-section-wrapper-5 .header {
@@ -324,6 +324,9 @@ margin-top: -140px;
   z-index: 1;
   padding: 0 25px;
   overflow: hidden;
+}
+.hero-content-wrapper .Get_start .fa-chevron-right{
+  padding-left: 15px;
 }
 .container.land {
 }
@@ -381,6 +384,9 @@ margin-top: -140px;
   display: flex;
   font-size: 30px;
   text-transform: uppercase;
+}
+.service {
+  padding-top: var(--section-padding);
 }
 .service .boxs {
   display: grid;
@@ -887,9 +893,7 @@ margin-top: -140px;
   width: 45%;
 }
 /* .profile2 page */
-.container{
-  margin-top: 200px;
-}
+
 .form-control:focus {
   box-shadow: none;
   border-color: #BA68C8
@@ -1208,9 +1212,12 @@ span.text-black{
   }
   .profile-tab p{
     width: 200px;
-    margin-left: 95px;
+    margin-left: 80px;
   }
-
+  .profile-tab .right-row p{
+    width: 200px;
+    margin-left: 100px;
+  }
   
   /* profile page */
   .emp-profile{
@@ -1301,11 +1308,12 @@ span.text-black{
 
   }
 
-  .col-md-6{
-    width: 1%;
+  .col-md-8 .col-md-6{
+    width: 5%;
+
   }
   /* .profile2 page */
-  .container{
+  .land{
     margin-top: 200px;
   }
   .form-control:focus {
@@ -1369,7 +1377,7 @@ span.text-black{
      margin-left: auto;
    }
    .profile-head h5{
-     width: 380px;
+     width: 350px;
    }
    .profile-head h6{
      width: 350px;
