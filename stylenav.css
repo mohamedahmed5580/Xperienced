@@ -967,7 +967,6 @@ span.text-black{
   .head .container .collapse .items .nav-link{
     color: var(--secondary2-color);
   }
-}
 
   .header  .btnbox{
     display: flex;
@@ -989,11 +988,8 @@ span.text-black{
   .landing .text .content h2{
     font-weight:700;  
   }
-
-
   .hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper h2{
     font-size: 45px;
-
   }
   .img-bg{  
     margin-top: -200px;
