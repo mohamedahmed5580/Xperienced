@@ -12,7 +12,7 @@
   --main3-color: #60b3f8;
   --secondary-color: #afc7d6;
   --section-background: #c9ebde;
-  --main2-background: #eeeeeeee;
+  --main2-background: #ffffff;
   --transparent-color:rgba(15, 115, 143, 0.5);
   --section-padding: 60px;
   --main-duration: 0.5s;
@@ -248,15 +248,15 @@ p {
   background-color: rgb(0 0 0 / 60%);
 }
 .landing .text {
+  display: flex;
   position: absolute;
   top:50%;
-  left: 300px;
+  left: 0;
   transform: translateY(-50%);
   width: 50%;
   padding: 50px;
   background-color: var(--transparent-color);
   color: white;
-
 }
 .landing .text .content {
   max-width: 500px;
@@ -272,12 +272,66 @@ p {
   color: white;
   line-height: 2;
 }
+.img-bg{  
+background-color: var(--main2-background);
+background: url(image/hero-bg.svg);
+background-size: cover;
+background-repeat: no-repeat;
+height: 800px;
+margin-top: -140px;
+}
+
+.hero-section-wrapper-5 .header {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: 0 0;
+}
+.hero-section-wrapper-5 .hero-style-5 .hero-image img {
+  width: 100%;
+  margin-top: 25px;
+}
+.hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper {
+  padding: 100px 0;
+
+}
+.hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper h2 {
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 65px;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper p {
+  padding: 15px;
+  font-size:  x-large;
+}
+.hero-content-wrapper .Get_start {
+  height: 44px;
+  font-size: 18px;
+  font-weight: 500;
+  box-sizing: border-box;
+  line-height: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--main-color);
+  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 50px ;
+  position: relative;
+  z-index: 1;
+  padding: 0 25px;
+  overflow: hidden;
+}
+.container.land {
+}
+
 /* uultimate guide */
 .side-content{
   justify-content: center;
   text-align: center;
-
-  padding-top: var(--section-padding);
   padding-bottom: var(--section-padding);
 }
 .side-content .main-heading h2 {
@@ -934,6 +988,15 @@ span.text-black{
   .landing .text .content h2{
     font-weight:700;  
   }
+
+
+  .hero-section-wrapper-5 .hero-style-5 .hero-content-wrapper h2{
+    font-size: 45px;
+  }
+  .img-bg{  
+    margin-top: -200px;
+  }
+
   .navbar-Name {
     color: var(--secondary3-color);
     margin-left: auto;
@@ -1241,7 +1304,7 @@ span.text-black{
   }
 
   .col-md-6{
-    width: 8%;
+    width: 1%;
   }
   /* .profile2 page */
   .container{
