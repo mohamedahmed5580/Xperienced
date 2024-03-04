@@ -36,7 +36,7 @@ body::beforse{
   bottom: 0;
   width: 100%;
   background: linear-gradient(65deg,#8a56fe,#50e1e9,#8a56fe);
-  z-index: -1
+  z-index: -176;
 }
 body::after{
   content: "";
@@ -45,7 +45,7 @@ body::after{
   bottom: 0;
   width: 100%;
   background: linear-gradient(65deg,#8a56fe,#50e1e9,#8a56fe);
-  z-index: -1
+  z-index: -1555;
 }
 .background{
   display: flex;
@@ -119,16 +119,17 @@ p {
 }
 /* login page */
 .header h1{
-  display: block;
-  font-size:60px;
+  display: flex;
+  font-size:50px;
   font-weight: bold;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color:black;
-  margin-top: 150px;
+
+  margin-top: 50px;
   margin-left: 50px;
 }
 .header h5{
-  display: block;
+  display: flex;
   font-size:30px;
   font-weight: bold;
   color:black;
@@ -150,22 +151,44 @@ p {
   color:var(--secondary2-color);
   background-color: var(--secondary-color);
 }
+
 .img-fluid{
   display: block;
   width: 500px;
   margin-left: auto;
-  margin-right: 100px;
-  margin-top: -300px;
   
 }
+.container{
+  display: block;
+  position: absolute;
+  width: 100%;
+  margin-top: 25px;
+  margin-left: 50px;
+  z-index: 5;
 
+}
+.login{
+  display: block;
+  width: 100%;
+  margin-left: 25px ;
+}
+.login h1{
+  font-weight: bold;
+  width: 100px;
+  text-align: start;
+
+
+}
+.login .form .inp{
+
+}
 .header .right{
   position: absolute;
   right: 0;
   top: 0;
   width: 93px;
   height: 467px;
-  /* z-index: -1; */
+  z-index: -5;
 }
 .header .left{
   position: absolute;
@@ -173,13 +196,12 @@ p {
   top: 0;
   width: 193px;
   height: 467px;
-  /* z-index: -1; */
+  z-index: -5; ;
 }
 /* uultimate guide */
 
 .images .up{
   display: block;
-  margin-top: 150px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -190,43 +212,13 @@ p {
 
 }
 
-.images .image_group .box .dawn {
-  display: flex;
-  position: relative;
-  width: 400px;
-  border-radius: 15px;
-  padding: 5px;
-  transition: 0.3s;
-  overflow: hidden;  
-}
-.images .image_group .box h3{
-  display: flex;
-  color: var(--main2-background);
-  text-transform: uppercase;
-  margin-top: 50px;
-  align-items: center;
-  justify-content: center;
-  font-size: xx-large;
-}
 
-.login{
-  display: block;
-  width: 50%;
-  margin-left: auto ;
-  margin-top: -150px;
-}
-.login h1{
-  font-weight: bold;
-}
-.login .form .inp{
-  width: 500px;
-}
+
 /* signin page */
 .signin{
   display: block;
   width: 50%;
   margin-left: auto ;
-  margin-top: -150px;
 }
 .signin h1{
   font-weight: bold;
@@ -256,12 +248,12 @@ p {
   }
 
   .login{
-    margin-left: 50px;
+    /* margin-left: 50px; */
     margin-top: 100px;
     margin-bottom: 50px;
   }
   .login .form .inp{
-    width: 150%;
+    width: 80%;
   }
   .signin{
     margin-left: 50px;
