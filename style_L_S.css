@@ -35,7 +35,7 @@ body::beforse{
   top: 0;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(65deg,#8a56fe,#50e1e9,#8a56fe);
+  background: linear-gradient(65deg,#8a56fe,#ba55f0,#8a56fe);
   z-index: -176;
 }
 body::after{
