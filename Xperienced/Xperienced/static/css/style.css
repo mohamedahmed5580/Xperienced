@@ -1020,8 +1020,8 @@ p.text-34 {
 
 
 .profile-tab{
-  width: 55%;
-  
+  width: 50%;
+  margin-left: 50px;
 }
 
 .profile-tab label{
@@ -1048,18 +1048,22 @@ a#home-tab .text-secondary ,a#profile-tab .text-secondary ,.skils .text-secondar
   display: flex !important;
   margin-bottom: 10px;
 }
- .r-box{
+.r-box{
   display: flex;
   width: 100%;
 
 }
-.row .column {
-  width: 40%;
+.roww ,.rr{
+  display: flex;
+}
+.roww .column {
+  width: 35%;
+  margin-left: 10px;
 }
 .lr-box{
   display: flex;
   top: auto;
-  width: 40%;
+  width: auto;
   
   /* margin-top: 290px; */
 
@@ -1103,6 +1107,7 @@ a#home-tab .text-secondary ,a#profile-tab .text-secondary ,.skils .text-secondar
 h5.wizardy__label {
   font-size: 16px;
   line-height:  1.8;
+  right: 10px;
 }
 img.img-thumbnail.media-object.uavatar.uavatar--medium.img-circle{
   border-radius: 50%;
@@ -1227,6 +1232,7 @@ tr td span {
   padding: 15px;
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 /* Start find-assistant page */
 
