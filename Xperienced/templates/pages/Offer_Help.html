@@ -1,133 +1,98 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Xperienced</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css.map' %} ">
-    <link rel="stylesheet" href="{% static 'css/all.css' %} ">
-    <link rel="stylesheet" href="{% static 'css/all.min.css' %} ">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %} ">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap" rel="stylesheet">
-  </head>
-  <body>
 
-    <div class="container Offer_Help  " id="offer-list">
-      <div class="Required">
-        <div class="Requir">
-            <span >
-              Required aid
-            </span>
+<div class="container Offer_Help  " id="offer-list">
+  <div class="Required">
+    <div class="Requir">
+        <span >
+          Required aid
+        </span>
+    </div>
+    <div class="search">
+      <h5>Search</h5>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <div class="category">
+      <h5>Category</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Mathematics
+          </label>
         </div>
-        <div class="search">
-          <h5>Search</h5>
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Computer Science
+          </label>
         </div>
-        <div class="category">
-          <h5>Category</h5>
-          <div class="Check_boxs">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Mathematics
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Computer Science
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Engineering, architecture
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Business sciences
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                E-marketing and sales
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Others
-              </label>
-            </div>
-          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Engineering, architecture
+          </label>
         </div>
-        <div class="category">
-          <h5>Type</h5>
-          <div class="Check_boxs">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Career Guidance
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Academic Support
-              </label>
-            </div>
-    
-          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Business sciences
+          </label>
         </div>
-      </div>
-      <div class="Categorys " id="offer-list-items">
-        <div class="box">
-          <p>
-            OOP
-          </p>
-          <div class="text">
-            محتاج حد يشرحلي  يعني ايه  copy constructor<br />
-            و ايه الفرق بينه و بين الـ deep copy and shallow copy
-          </div>
-          <div class="Add">
-            <div class="price">
-              25-50 EGP
-            </div>
-            <a href="" class="btn_add">  Add an offer</a>
-    
-          </div>
- 
-       
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            E-marketing and sales
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Others
+          </label>
+        </div>
       </div>
     </div>
-     
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/nav.js' %} "></script>
-  <script src="{% static 'js/all.min.js' %} "></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="{% static 'js/aos.js' %} "></script>
-  <script src="{% static 'js/main.js' %} "></script>
-  <script src="{% static 'js/jquery.min.js' %} "></script>
-  <script src="{% static 'js/popper.js' %} "></script>
-  <script src="{% static 'js/bootstrap.min.js' %} "></script>
-  <script src="{% static 'js/Addoffer.js' %} "></script>
-  <script src="{% static 'js/show_offer.js' %} "></script>
-  </body>
-</html>   
+    <div class="category">
+      <h5>Type</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Career Guidance
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Academic Support
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="Categorys " id="offer-list-items">
+    <div class="box">
+      <p>
+        OOP
+      </p>
+      <div class="text">
+        محتاج حد يشرحلي  يعني ايه  copy constructor<br />
+        و ايه الفرق بينه و بين الـ deep copy and shallow copy
+      </div>
+      <div class="Add">
+        <div class="price">
+          25-50 EGP
+        </div>
+        <a href="" class="btn_add">  Add an offer</a>
+
+      </div>
+
+    
+  </div>
+</div>
 {% endblock content %}
 
 
