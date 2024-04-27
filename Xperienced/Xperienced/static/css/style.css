@@ -1636,7 +1636,7 @@ span.action-text {
   font-size: 14px;
   text-align: left;
 }
-.show:after {
+.navbar-collapse .show:after {
   content: ' ';
   display: block;
   position: absolute;
@@ -1717,7 +1717,20 @@ span.action-text {
     border-bottom: 1px solid var(--secondary-color);
 
   }
-
+  .roww, .rr {
+    display: block;
+    width: 95%;
+    margin-left: 0px;
+  }
+  .profile-tab{
+    margin-left: 10px;
+  }
+  .roww .column {
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  
   .header .navbar .collapse .navbar-nav .nav-l:hover{
     background-color: var(--section-background);
     color: var(--secondary2-color);
