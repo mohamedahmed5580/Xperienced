@@ -1599,7 +1599,20 @@ span.action-text {
   transition: background-color .2s;
   height: 100%;
 }
-.accunt-content .dropdown-toggle .imag-navb{
+.accunt-content .bg-img{
+  background-color: var(--main-color);
+  border-color: var(--secondary-color);
+}
+.btn-check:checked + .btn-secondary, .btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle{
+  background-color: var(--main-color);
+  border-color: var(--secondary-color);
+  box-shadow: var(--main-color);
+}
+.accunt-content .bg-img::after {
+  display: none;
+
+}
+.accunt-content .img-navb{
   display: inline-block;
   height: 36px;
   width: 36px;
@@ -1608,6 +1621,96 @@ span.action-text {
   border: 0;
   border-radius: 100px;
 }
+
+.accunt-content .dropdown-menu{
+  list-style: none;
+  margin: 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  position: absolute;
+  min-width: 160px;
+  background-color: #fff;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  border-top: 0;
+  font-family: "Noto Kufi Arabic", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+.navbar-collapse .show:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border: solid 5px transparent;
+  border-bottom-color: #fff;
+}
+.accunt-content .dropdown-menu .dropdown-item{
+  position: relative;
+  display: block;
+  padding: 7px 14px;
+  transition-duration: .1s;
+  clear: both;
+  color: #484848;
+  font-weight: 400;
+  line-height: 1.4285714;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+
+/* Account Balance */
+
+.transactions {
+  margin-top: 40px;
+  border-top: 2px solid #ccc;
+  padding-top: 20px;
+}
+
+.transaction {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc; /* إضافة حدود بين المعاملات */
+  padding-bottom: 10px; /* زيادة التباعد بين المعاملات */
+}
+
+.transaction-date {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.transaction-amount {
+  font-weight: bold;
+  font-size: 18px; /* زيادة حجم الخط */
+  color: #333; /* تغيير لون النص */
+}
+
+/* تحسينات لحقول الفلتر */
+.filter-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-form select,
+.filter-form input[type="date"] {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-form label {
+  margin-right: 10px;
+
+}
+/* end Account Balance */
+
 @media (max-width:825px) {
   .header .nav {
     padding: 0px;
@@ -1664,7 +1767,20 @@ span.action-text {
     border-bottom: 1px solid var(--secondary-color);
 
   }
-
+  .roww, .rr {
+    display: block;
+    width: 95%;
+    margin-left: 0px;
+  }
+  .profile-tab{
+    margin-left: 10px;
+  }
+  .roww .column {
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  
   .header .navbar .collapse .navbar-nav .nav-l:hover{
     background-color: var(--section-background);
     color: var(--secondary2-color);

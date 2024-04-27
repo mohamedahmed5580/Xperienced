@@ -1,196 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>account balance</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-        }
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
 
-        h1 {
-            color: #333;
-            text-align: center;
-        }
 
-        h2 {
-            color: #666;
-        }
+    
+<div class="Signin Balance ">
+    <div class="TextContainer">
+      <div class="Heading">Account Balance</div>
 
-        .balance-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+      <div class="balance-info">
+        <h2>Total Balance: 1000 EGP</h2>
+        <h2>On Hold Balance: 200 EGP</h2>
+        <h2>Available Balance: 800 EGP</h2>
+      </div>
+    </div>
 
-        div {
-            margin-bottom: 20px;
-        }
+    <form class="row g-3">
+      <div class="col-md-15 ">
+        <label for="inputName" class="form-label Withdraw">Withdraw Balance </label>
+       
+        <label for="inputEmail4" class="form-label">Amount to withdraw (Minimum 200 EGP):</label>
+        <input type="email" class="form-control" id="inputEmail4" placeholder="" required>
+        <label for="inputEmail4" class="form-label">Number to transfer funds to:</label>
+        <input type="text" class="form-control" id="inputEmail4" placeholder="" required>
 
-        form {
-            margin-top: 10px;
-        }
+      </div>
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
+      <div class="col-12">
+        <a  class="btn btn-primary sub_balance" id="btn-primary"   type="submit">Withdraw</a>
+      </div>
+    </form>
+    
+    <div class="Recharge">
+        <h2>Recharge Balance</h2>
+        <button class="recharge" type="submit">Recharge Balance </button>
+    </div>
+    <div class="filter-form">
+        <label for="transaction-type">Filter by Transaction Type:</label>
+        <select id="transaction-type">
+            <option value="all">All</option>
+            <option value="withdraw">Withdraw</option>
+            <option value="recharge">Recharge</option>
+        </select>
+        <label for="start-date">From:</label>
+        <input type="date" id="start-date">
+        <label for="end-date">To:</label>
+        <input type="date" id="end-date">
+        <button id="filter-btn">Filter</button>
+    </div>
 
-        input[type="number"],
-        input[type="text"] {
-            width: 30%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            width: 30%;
-            padding: 8px 15px; /* تقليل حجم الأزرار */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button.withdraw {
-            background-color: #28a745; 
-            color: #fff;
-        }
-
-        button.recharge {
-            background-color: #007bff; 
-            color: #fff;
-        }
-
-        button:hover {
-            opacity: 0.8; /* تقليل الشفافية عند التحويم */
-        }
-
-        .transactions {
-            margin-top: 40px;
-            border-top: 2px solid #ccc;
-            padding-top: 20px;
-        }
-
-        .transaction {
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ccc; /* إضافة حدود بين المعاملات */
-            padding-bottom: 10px; /* زيادة التباعد بين المعاملات */
-        }
-
-        .transaction-date {
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .transaction-amount {
-            font-weight: bold;
-            font-size: 18px; /* زيادة حجم الخط */
-            color: #333; /* تغيير لون النص */
-        }
-
-        /* تحسينات لحقول الفلتر */
-        .filter-form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .filter-form select,
-        .filter-form input[type="date"] {
-            flex: 1;
-            margin-right: 10px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .filter-form label {
-            margin-right: 10px;
-
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Account Balance</h1>
-        <div class="balance-info">
-            <h2>Total Balance: 1000 EGP</h2>
-            <h2>On Hold Balance: 200 EGP</h2>
-            <h2>Available Balance: 800 EGP</h2>
+    <div class="transactions">
+        <h2>Financial Transactions</h2>
+        <div class="transaction">
+            <p class="transaction-date">2024-04-25 10:00 AM</p>
+            <p class="transaction-amount">+500 EGP</p>
         </div>
-        <div>
-            <h2>Withdraw Balance</h2>
-            <form action="/withdraw" method="post">
-                <label for="amount">Amount to withdraw (Minimum 200 EGP):</label>
-                <input type="number" id="amount" name="amount" min="200" required>
-                <br><br>
-                <label for="account">Number to transfer funds to:</label>
-                <input type="text" id="account" name="account" required>
-                <br><br>
-                <button class="withdraw" type="submit">Withdraw</button>
-            </form>
+        <div class="transaction">
+            <p class="transaction-date">2024-04-24 03:30 PM</p>
+            <p class="transaction-amount">-300 EGP</p>
         </div>
-        <div>
-            <h2>Recharge Balance</h2>
-            <form action="/recharge" method="post">
-                <button class="recharge" type="submit">Recharge Balance </button>
-            </form>
-        </div>
-        <div class="filter-form">
-            <label for="transaction-type">Filter by Transaction Type:</label>
-            <select id="transaction-type">
-                <option value="all">All</option>
-                <option value="withdraw">Withdraw</option>
-                <option value="recharge">Recharge</option>
-            </select>
-            <label for="start-date">From:</label>
-            <input type="date" id="start-date">
-            <label for="end-date">To:</label>
-            <input type="date" id="end-date">
-            <button id="filter-btn">Filter</button>
-        </div>
-        <div class="transactions">
-            <h2>Financial Transactions</h2>
-            <div class="transaction">
-                <p class="transaction-date">2024-04-25 10:00 AM</p>
-                <p class="transaction-amount">+500 EGP</p>
-            </div>
-            <div class="transaction">
-                <p class="transaction-date">2024-04-24 03:30 PM</p>
-                <p class="transaction-amount">-300 EGP</p>
-            </div>
-            <div class="transaction">
-                <p class="transaction-date">2024-04-23 11:45 AM</p>
-                <p class="transaction-amount">+200 EGP</p>
-            </div>
+        <div class="transaction">
+            <p class="transaction-date">2024-04-23 11:45 AM</p>
+            <p class="transaction-amount">+200 EGP</p>
         </div>
     </div>
 
-    <script>
-        document.getElementById('filter-btn').addEventListener('click', function() {
-            var transactionType = document.getElementById('transaction-type').value;
-            var startDate = document.getElementById('start-date').value;
-            var endDate = document.getElementById('end-date').value;
-            
-            // تنفيذ الفلتر هنا
-        });
-    </script>
-</body>
-</html>
+</div>
+  
+
+{% endblock content %}
+
