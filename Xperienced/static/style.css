@@ -63,7 +63,7 @@ span{
 .sidepar {
   display: flex;
   flex-direction: row;
-  width: 139.1px;
+  width: 90px;
   height: fit-content;
   box-sizing: border-box;
 }
@@ -752,7 +752,8 @@ span{
   word-wrap: break-word;
 }
 .Login,
-.Signin {
+.Signin 
+{
   width: 48%;
   height: 1000px;
   padding: 40px;
@@ -989,7 +990,7 @@ p.text-34 {
 .profile-work ul{
   list-style: none;
 }
-.profile{
+.profile,.Balance{
   display: block;
   margin-top: 6%;
   margin-bottom: 20%;
@@ -1661,43 +1662,80 @@ span.action-text {
   white-space: nowrap;
   text-decoration: none;
 }
+/* start Account Balance */
+.Balance{
+  display: block;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 85%;
+  height: 100%;
+}
+.Balance .balance-info{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+}
+.Balance .balance-info h2{
+  font-size: 26px;
+  padding: 5px;
+}
+.Balance .col-12 .sub_balance{
+  width: 30% !important;
+  padding: 8px 15px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  background-color: #28a745 !important;
+  color: #fff !important;
+  margin-left: 0px !important;
+}
+.Balance .Withdraw,.Balance .Recharge h2{
+  display: block;
+  font-size: x-large;
+  padding: 10px;
+}
+.Balance input{
+  width: 30% !important;
+  margin-bottom: 10px;
+}
 
-
-/* Account Balance */
-
-.transactions {
+.Balance .transactions {
   margin-top: 40px;
   border-top: 2px solid #ccc;
   padding-top: 20px;
 }
 
-.transaction {
+.Balance .transaction {
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc; /* إضافة حدود بين المعاملات */
   padding-bottom: 10px; /* زيادة التباعد بين المعاملات */
 }
 
-.transaction-date {
+.Balance .transaction-date {
   color: #666;
   margin-bottom: 5px;
 }
 
-.transaction-amount {
+.Balance .transaction-amount {
   font-weight: bold;
   font-size: 18px; /* زيادة حجم الخط */
   color: #333; /* تغيير لون النص */
 }
 
-/* تحسينات لحقول الفلتر */
-.filter-form {
+.Balance .filter-form {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.filter-form select,
-.filter-form input[type="date"] {
+.Balance .filter-form select,
+.Balance .filter-form input[type="date"] {
   flex: 1;
   margin-right: 10px;
   padding: 8px;
@@ -1705,9 +1743,26 @@ span.action-text {
   border-radius: 5px;
 }
 
-.filter-form label {
+.Balance .filter-form label {
   margin-right: 10px;
 
+}
+.Balance .Recharge .recharge{
+  background-color: var(--main-color);
+  color: var(--secondary-color);
+  width: 30%;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.Balance .filter-form #filter-btn{
+  width: 30%;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
 }
 /* end Account Balance */
 
@@ -1855,6 +1910,7 @@ span.action-text {
   justify-content: center;
   align-items: center;
   position: relative; 
+  bottom: 0;
   gap: 0px;
 }
 .Logo{
@@ -2158,5 +2214,27 @@ span.action-text {
     height: 800px;
     
   }
+  /* end Offer_Help page */
 
+  .Balance{
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .Balance .balance-info {
+    display: block;
+  }
+  .Balance .Recharge .recharge{
+    width: 100%;
+  }
+  .Balance .filter-form {
+    display: block;
+  }
+  .Balance .filter-form label{
+    display: block;
+  }
+  .Balance .filter-form input{
+    width: 50%;
+  }
 }
