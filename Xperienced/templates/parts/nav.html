@@ -47,13 +47,39 @@
                 Offer Help </a>
             </li>
           </ul>
-          <div class="sidepar d-flex">
-            <div class="chat">
-              <a class="vector" href="#" ><i class="fa-solid fa-bell" ></i> </a>
+          <div class="sidepar  d-flex">
+
             </div>
             <div class="chat">
-              <a class="vector" href="#"  ><i class="fa-solid fa-envelope"></i></i></a>
+              <a class="vector" href="#"  >
+                <i class="fa-solid fa-envelope"></i>
+              </a>
             </div>
+            <div class="chat dropdown ">
+              <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid fa-bell" ></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'profile'%}">
+                  <i class="fa fa-fw fa-user"></i>
+                  Mohamed Ahmed
+                </a>
+                <a class="dropdown-item" href="{% url 'balance'%}">
+                  <i class="fa fa-fw fa-usd"></i>
+                  Balance
+                </a>
+                <hr>
+                <a class="dropdown-item" href="#">
+                  <i class="fa fa-fw fa-edit"></i>
+                  Edit Profile 
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fa fa-fw fa-sign-out"></i>
+                  Logout
+                </a>
+  
+  
+              </div>
 
           </div>
           <div class="accunt-content dropdown">
