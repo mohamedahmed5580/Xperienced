@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile',views.profile,name="profile"),
     path('addoffer',views.addOffer,name="addoffer"),
     path('balance',views.Account_Balance,name="balance"),
+    path('notification',views.Notification,name="notification"),
     
 ]

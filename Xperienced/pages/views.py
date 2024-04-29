@@ -23,3 +23,6 @@ def addOffer(requst):
     return render(requst,'pages/Add_Offer.html')
 def Account_Balance(requst):
     return render(requst,'pages/Account_Balance.html')
+
+def Notification(requst):
+    return render(requst,'pages/Notifications.html')

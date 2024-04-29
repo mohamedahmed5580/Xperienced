@@ -1830,9 +1830,79 @@ span.action-text {
 /* end massage page */
 /* start notification page */
 
+.notification{
+  list-style: none;
+  margin: 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  position: absolute;
+  width: 480px;
+  background-color: #fff;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  border-top: 0;
+  font-family: "Noto Kufi Arabic", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+.notification .notification-list{
+  position: relative;
+  list-style: none;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}   
+.notification .notification-list .notification-list-item {
+  display: flex;
+  position: relative;
+  padding: 10px 10px 10px 5px;
+  font-size: 14px;
+  line-height: 1.4285714;
+  white-space: normal;
+  word-break: break-word;
+}
+.notification .notification-list .notification-list-item:hover{
+  background-color: var(--secondary-color);
+}
+.notification-list-item .notification-item-img{
+  width: 35px;
+  height: 35px;
+  background-color: #fff;
+  vertical-align: text-top;
+  float: left;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.05);
+}
+.notification-list-item  .notification-item-content{
+  overflow: hidden;
+  padding-right: 8px;
+  text-align: left;
+  float: left;
+}
+.notification-item-date {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.6666667;
+}
+.notification-link {
+  color: var(--secondary2-color) !important;
+  text-decoration: none;
+  padding: 10px;
+  
+}
+.notification-link a{
+  color: var(--secondary2-color);
+}
 
 
-.notification {
+.container .notifications-title{
+
+  text-align: center;
+
+}
+
+.notification-content {
   margin-bottom: 20px;
   padding: 20px;
   background-color: #f5f5f5;
@@ -1840,29 +1910,30 @@ span.action-text {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.notification-title {
+.notification-content  .notification-title {
   font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
-.notification-shap{
-    top: 97% !important;
-    
-}
-.notification-content {
+
+.notification-content  .notification-content {
   color: #666;
   margin-bottom: 10px;
 }
 
-.notification-date {
+.notification-content  .notification-date {
   color: #999;
   font-size: 12px;
 }
 
 .pagination {
+  display: block;
   text-align: center;
   margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
 }
 
 .pagination button {

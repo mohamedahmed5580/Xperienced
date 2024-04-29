@@ -48,8 +48,6 @@
             </li>
           </ul>
           <div class="sidepar  d-flex">
-
-            </div>
             <div class="chat">
               <a class="vector" href="#"  >
                 <i class="fa-solid fa-envelope"></i>
@@ -59,28 +57,41 @@
               <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa-solid fa-bell" ></i>
               </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="{% url 'profile'%}">
-                  <i class="fa fa-fw fa-user"></i>
-                  Mohamed Ahmed
-                </a>
-                <a class="dropdown-item" href="{% url 'balance'%}">
-                  <i class="fa fa-fw fa-usd"></i>
-                  Balance
-                </a>
+              <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
+                <ul class="notification-list" data-empty="لا جديد حتى اللحظة!">
+                  <li class="notification-list-item ">
+                    <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                    <div class="notification-item-content">
+                      Message:
+                      <a class="notification-link" href="#" >
+                        A guide for entrepreneurs to get started with the Independent platform
+                      </a>
+                      <div class="notification-item-date">
+                        <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="notification-list-item ">
+                    <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                    <div class="notification-item-content">
+                      Message:
+                      <a class="notification-link" href="#" >
+                        A guide for entrepreneurs to get started with the Independent platform
+                      </a>
+                      <div class="notification-item-date">
+                        <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                      </div>
+                    </div>
+                  </li>
+
+                </ul>
                 <hr>
-                <a class="dropdown-item" href="#">
-                  <i class="fa fa-fw fa-edit"></i>
-                  Edit Profile 
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fa fa-fw fa-sign-out"></i>
-                  Logout
-                </a>
-  
-  
+                <div class="notification-link">
+                  <a href="{% url 'notification' %}"><i class="fa-regular fa-bell"></i> All Notifications </a>
+                </div>
               </div>
 
+          </div>
           </div>
           <div class="accunt-content dropdown">
             <a class="btn btn-secondary dropdown-toggle bg-img" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

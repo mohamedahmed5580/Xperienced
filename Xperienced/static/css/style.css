@@ -63,7 +63,7 @@ span{
 .sidepar {
   display: flex;
   flex-direction: row;
-  width: 90px;
+  width: fit-content;
   height: fit-content;
   box-sizing: border-box;
 }
@@ -754,7 +754,7 @@ span{
 .Signin 
 {
   width: 48%;
-  height: 1000px;
+  height: 100%;
   padding: 40px;
   background: white;
   border-radius: 10px;
@@ -895,7 +895,7 @@ p.text-34 {
 /* Additional CSS would follow for .Form, .Container, .SubContainer, .InputField, .Icon, .TextButton, .CheckBoxContainer, .CheckBox, .Button, .Line, and so on, directly translating the inline styles into CSS rules. For brevity, I've not repeated all individual rules, but they would be formatted similarly to the examples above. */
 /* profile page */
 .mt{
-  margin-top: 150px;
+  margin-top: 100px !important;
 }
 .emp-profile{
   padding: 3%;
@@ -1325,9 +1325,6 @@ tr td span {
 /* Start Offer_Help page */
 .Offer_Help {
   display: flex;
-  margin-top: 10%;
-  margin-bottom: 3%;
-  
 }
 .Offer_Help .Required{
   display: block;
@@ -1557,6 +1554,9 @@ tr td span {
   color: var(--secondary-color);
   border-color: #1c6ca1;
 }
+.sidebar .show:after{
+  top: 50px;
+}
 .dropdown-menu-left {
   right: auto;
   left: 0;
@@ -1579,6 +1579,8 @@ tr td span {
   border-radius: 0;
   background-clip: padding-box;
 }
+
+
 span.action-text {
   color: var(--secondary-color);
 }
@@ -1638,6 +1640,7 @@ span.action-text {
   font-size: 14px;
   text-align: left;
 }
+
 .navbar-collapse .show:after {
   content: ' ';
   display: block;
@@ -1767,15 +1770,6 @@ span.action-text {
 }
 /* end Account Balance */
 /* start massedge page  */
-.container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 
 .message {
   display: flex;
@@ -1836,62 +1830,76 @@ span.action-text {
 /* end massage page */
 /* start notification page */
 
-.container {
-  max-width: 1400px;
-  margin: 20px auto;
-  padding: 20px;
+.notification{
+  list-style: none;
+  margin: 0;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  position: absolute;
+  width: 480px;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  color: #333;
-  text-align: center;
-}
-
-.notification {
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.notification-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.notification-content {
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.notification-date {
-  color: #999;
-  font-size: 12px;
-}
-
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.pagination button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  border: 1px solid #e8eaed;
   border-radius: 5px;
-  padding: 8px 15px;
-  margin: 0 5px;
-  cursor: pointer;
+  border-top: 0;
+  font-family: "Noto Kufi Arabic", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
 }
-
-.pagination button:hover {
-  background-color: #0056b3;
+.notification .notification-list{
+  position: relative;
+  list-style: none;
+  height: 248px;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}   
+.notification .notification-list .notification-list-item {
+  display: flex;
+  position: relative;
+  padding: 10px 10px 10px 5px;
+  font-size: 14px;
+  line-height: 1.4285714;
+  white-space: normal;
+  word-break: break-word;
+}
+.notification .notification-list .notification-list-item:hover{
+  background-color: var(--secondary-color);
+}
+.notification-list-item .notification-item-img{
+  width: 35px;
+  height: 35px;
+  background-color: #fff;
+  vertical-align: text-top;
+  float: left;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.05);
+}
+.notification-list-item  .notification-item-content{
+  overflow: hidden;
+  padding-right: 8px;
+  text-align: left;
+  float: left;
+}
+.notification-item-date {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.6666667;
+}
+.notification-link {
+  color: var(--secondary2-color) !important;
+  text-decoration: none;
+  padding: 10px;
+  
+}
+.notification-link a{
+  color: var(--secondary2-color);
+}
+.notification-link:hover{
+  color: var(--main-color);
+  background-color: var(--secondary-color);
+}
+.notification-link:hover a{
+  color: var(--main-color);
 }
 /* end notification page */
 
