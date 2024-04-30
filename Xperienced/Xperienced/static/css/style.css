@@ -1937,7 +1937,7 @@ span.action-text {
 }
 
 .pagination button {
-  background-color: #007bff;
+  background-color: var(--main-color);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -1945,9 +1945,19 @@ span.action-text {
   margin: 0 5px;
   cursor: pointer;
 }
+.pagination .active {
+  background-color: var(--main-color);
+  color: white;
+}
 
+.pagination .inactive {
+  background-color: white;
+  color: black;
+  /* Add any other styles as needed */
+}
 .pagination button:hover {
-  background-color: #0056b3;
+  background-color: var(--main-color);
+  color: var(--secondary-color);
 }
 /* end notification page */
 

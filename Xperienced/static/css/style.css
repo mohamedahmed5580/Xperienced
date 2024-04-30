@@ -1847,7 +1847,7 @@ span.action-text {
 .notification .notification-list{
   position: relative;
   list-style: none;
-  height: 248px;
+  height: fit-content;
   padding: 0;
   margin: 0;
   overflow: auto;
@@ -1894,12 +1894,69 @@ span.action-text {
 .notification-link a{
   color: var(--secondary2-color);
 }
-.notification-link:hover{
-  color: var(--main-color);
-  background-color: var(--secondary-color);
+
+
+.container .notifications-title{
+
+  text-align: center;
+
 }
-.notification-link:hover a{
-  color: var(--main-color);
+
+.notification-content {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.notification-content  .notification-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.notification-content  .notification-content {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.notification-content  .notification-date {
+  color: #999;
+  font-size: 12px;
+}
+
+.pagination {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.inactive {
+  background-color: white;
+  color: black;
+  /* Add any other styles as needed */
+}
+.pagination button:hover {
+  background-color: #0056b3;
 }
 /* end notification page */
 

@@ -40,7 +40,7 @@ function displayNotifications(page) {
 
     notificationsToShow.forEach(function(notification) {
         var notificationElement = document.createElement('div');
-        notificationElement.classList.add('notification');
+        notificationElement.classList.add('notification-content');
         notificationElement.innerHTML = `
             <p class="notification-title">${notification.title}</p>
             <p class="notification-content">${notification.content}</p>
@@ -63,6 +63,12 @@ function displayPagination() {
             currentPage = parseInt(this.textContent);
             displayNotifications(currentPage);
         });
+        if (i === currentPage) {
+            button.classList.add('active');
+        }else{
+            button.classList.add('inactive');
+            
+        }
         paginationContainer.appendChild(button);
     }
 }

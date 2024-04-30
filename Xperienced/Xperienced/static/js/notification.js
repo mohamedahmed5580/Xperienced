@@ -61,8 +61,18 @@ function displayPagination() {
         button.textContent = i;
         button.addEventListener('click', function() {
             currentPage = parseInt(this.textContent);
+
             displayNotifications(currentPage);
+            currentPage++;
         });
+
+
+        if (i === currentPage) {
+            button.classList.add('active');
+        }else{
+            button.classList.add('inactive');
+        }
+        
         paginationContainer.appendChild(button);
     }
 }
