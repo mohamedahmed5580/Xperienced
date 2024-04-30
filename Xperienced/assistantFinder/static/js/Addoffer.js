@@ -1,7 +1,7 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     let requestForm = document.getElementById("new-request-form");
     requestForm.onsubmit = addRequest;
-
 })
   
 function updateJSONFile() {

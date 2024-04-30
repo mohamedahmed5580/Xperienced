@@ -16,10 +16,18 @@ urlpatterns = [
     path('find/submit', views.find_assistant),
 
     path('offer', views.requests_view, name="requests"),
+
     path('request/<int:id>', views.request_view, name="request"),
+
+    path('request', views.request_view, name="request"),
+    path('massage',views.massages,name="massage"),
+    path('find', views.find_assistant, name="find_assistant"),
+    path('offer', views.offer_help, name="offer_help"),
+    
     path('profile', views.profile, name="profile"),
     path('notification',views.notification,name="notification"),
     path('massage',views.massages,name="massage"),
 
     path('balance', views.account_balance, name="balance"),
+    path('notification',views.notification,name="notification"),
 ]
