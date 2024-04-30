@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "assistantFinder/base.html" %}
 {% load static %}
 {% block content %}
 <div class="container mt">
     <h1 class="notifications-title">Notifications</h1>
     <div id="notifications-container"></div>
 
-    <div class="pagination" id="pagination"></div>
+    <div class="btn-group" id="btn-group"></div>
 </div>
 <script src="{% static 'js/notification.js' %}"></script>
 

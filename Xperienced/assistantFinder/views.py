@@ -188,3 +188,9 @@ def profile(request):
 
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')
+
+def notification(requst):
+    return render(requst,'assistantFinder/Notifications.html')
+
+def massages(requst):
+    return render(requst,'assistantFinder/Messages.html')

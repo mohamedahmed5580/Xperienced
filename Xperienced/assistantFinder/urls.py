@@ -16,6 +16,8 @@ urlpatterns = [
     path('offer', views.requests_view, name="requests"),
     path('request', views.request_view, name="request"),
     path('profile', views.profile, name="profile"),
-    
+    path('notification',views.notification,name="notification"),
+    path('massage',views.massages,name="massage"),
+
     path('balance', views.account_balance, name="balance"),
 ]
