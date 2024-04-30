@@ -5,7 +5,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django import forms
-from .models import User
+from .models import User, Token
+from .emails import EmailSender
+from random import randint
+
+emailSender = EmailSender(
+    "myspaceduckbot@gmail.com",
+    "nrsw vzer tbkl jzuw",
+)
 
 # Create your views here.
 
@@ -74,6 +81,35 @@ def signup(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+@login_required(login_url='login')
+def send_email_token(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    try:
+        key = request.user.createToken()
+        emailSender.sendPlain(request.user.email, f"Your email verification token: {key}")
+    except Exception:
+        return JsonResponse({"error": "Something went wrong"}, status=500)
+    return JsonResponse({"success": "Token sent successfully"}, status=200) 
+
+@login_required(login_url='login')
+def verify_email(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+
+    data = json.loads(request.body)
+    if not data.get("token"):
+        return JsonResponse({"error": "Missing verification token."}, status=400) 
+    token = request.user.getToken()
+    if token is None:
+        return JsonResponse({"error": "You have to request a new token first."}, status=400) 
+    if token.key != data["token"]:
+        return JsonResponse({"error": "Invalid token."}, status=400) 
+    if token.isExpired():
+        return JsonResponse({"error": "Token is expired."}, status=400) 
+    request.user.verifyEmail()
+    return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
 @login_required(login_url='login')
 def find_assistant(request):

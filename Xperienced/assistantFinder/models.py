@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from phonenumber_field.modelfields import PhoneNumberField
+from random import randint
+from datetime import datetime
 
 OPEN = "Open"
 PENDING = "Pending"
@@ -11,6 +13,22 @@ CANCELLED = "Cancelled"
 
 class User(AbstractUser):
     phone = PhoneNumberField()
+    verifiedEmail = models.BooleanField(default=False)
+
+    def createToken(self):
+        if Token.objects.filter(user=self).exists():
+            Token.objects.get(user=self).delete()
+        token = Token(self)
+        token.generateTokenKey()
+        token.save()
+        return token.key
+    
+    def getToken(self):
+        return Token.objects.filter(user=self)
+
+    def verifyEmail(self):
+        Token.objects.get(user=self).delete()
+        verifiedEmail = True
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -92,3 +110,17 @@ class Message(models.Model):
 
     def sender(self):
         return self.connection.instructor() if self.byInstructor else self.connection.student()
+
+class Token(models.Model):
+    TOKEN_VALIDITY_LIMIT = 5
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tokens")
+    key = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def generateTokenKey(self):
+        self.token = 0
+        for i in range(6):
+            self.token += 10**i * randint(0, 9)
+    def isExpired(self):
+        minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
+        return minutesDiff > TOKEN_VALIDITY_LIMIT
