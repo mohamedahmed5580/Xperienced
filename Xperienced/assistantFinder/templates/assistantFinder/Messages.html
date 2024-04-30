@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .message-details {
+            flex: 1;
+        }
+        .message-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .message-sender {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .message-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Messages</h1>
+        <div id="messages-container"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+        var messages = [
+            { title: "New Message Received", content: "You have received a new message from a client regarding your project.", date: "April 25, 2024", sender: "client", image: "client.jpg" },
+            // أضف المزيد من الرسائل هنا
+        ];
+
+        var messagesPerPage = 20;
+        var currentPage = 1;
+
+        function displayMessages(page) {
+            var startIndex = (page - 1) * messagesPerPage;
+            var endIndex = startIndex + messagesPerPage;
+            var messagesToShow = messages.slice(startIndex, endIndex);
+
+            var messagesContainer = document.getElementById('messages-container');
+            messagesContainer.innerHTML = '';
+
+            messagesToShow.forEach(function(message) {
+                var messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.innerHTML = `
+                    <img class="message-image" src="${message.image}" alt="Sender Image">
+                    <div class="message-details">
+                        <p class="message-title">${message.title}</p>
+                        <p class="message-sender">${message.sender}</p>
+                        <p class="message-date">${message.date}</p>
+                    </div>
+                `;
+                messagesContainer.appendChild(messageElement);
+            });
+        }
+
+        function displayPagination() {
+            var totalPages = Math.ceil(messages.length / messagesPerPage);
+            var paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+
+            for (var i = 1; i <= totalPages; i++) {
+                var button = document.createElement('button');
+                button.textContent = i;
+                button.addEventListener('click', function() {
+                    currentPage = parseInt(this.textContent);
+                    displayMessages(currentPage);
+                });
+                paginationContainer.appendChild(button);
+            }
+        }
+
+        // Display all messages initially
+        displayMessages(currentPage);
+        displayPagination();
+    </script>
+</body>
+</html>
