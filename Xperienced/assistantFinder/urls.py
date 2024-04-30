@@ -13,8 +13,10 @@ urlpatterns = [
     path('verify_email/verfiy', views.verify_email),
 
     path('find', views.find_assistant_view, name="find_assistant"),
+    path('find/submit', views.find_assistant),
+
     path('offer', views.requests_view, name="requests"),
-    path('request', views.request_view, name="request"),
+    path('request/<int:id>', views.request_view, name="request"),
     path('profile', views.profile, name="profile"),
     path('notification',views.notification,name="notification"),
     path('massage',views.massages,name="massage"),
