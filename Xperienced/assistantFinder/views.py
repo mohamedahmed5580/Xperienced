@@ -184,7 +184,7 @@ def add_offer(request, id):
     for key in ["bid", "notes"]:
         if not data["offer"].get(key):
             return JsonResponse({"error": f"Missing {key}."}, status=400)
-    if requestInstance.
+
     offerForm = NewOfferForm(data["offer"])
     offer = offerForm.save(commit=False)
     offer.bidder = request.user

@@ -24,7 +24,7 @@ btn.onclick = function() {
     
 }
 
-<<<<<<< Updated upstream
+
 
 var offerDataArray = JSON.parse(localStorage.getItem('offerDataArray')) || [];
 var btn=document.getElementById("btnAdd");
@@ -62,8 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let requestForm = document.getElementById("new-request-form");
     requestForm.onsubmit = addRequest;
 })
-=======
->>>>>>> Stashed changes
+
   
 function updateJSONFile() {
     var jsonData = JSON.stringify(offerDataArray);
@@ -78,7 +77,6 @@ function updateJSONFile() {
     document.body.removeChild(a);
 }
 
-<<<<<<< Updated upstream
 console.log(offerDataArray);
 
 function HelpRequest(title, description, skills, category, budget) {
@@ -112,6 +110,4 @@ function addRequest() {
     window.localStorage.setItem('offerDataArray', JSON.stringify(requests));
     return false;
 }
-=======
 console.log(offerDataArray);
->>>>>>> Stashed changes
