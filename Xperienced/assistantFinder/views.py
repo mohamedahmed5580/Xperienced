@@ -174,9 +174,22 @@ class NewOfferForm(forms.ModelForm):
         )
 
 def add_offer(request, id):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    response = checkRequest(request)
+    if response is not None:
+        return response
     data = json.loads(request.body)
+    if not data.get("offer"):
+        return JsonResponse({"error": "Missing request."}, status=400)
+    for key in ["bid", "notes"]:
+        if not data["offer"].get(key):
+            return JsonResponse({"error": f"Missing {key}."}, status=400)
+    offerForm = NewOfferForm(data["offer"])
+    offer = offerForm.save(commit=False)
+    offer.bidder = request.user
+    offer.save()
+    return JsonResponse({"success": request.id}, status=200) 
+
+    
 def profile(request):
     return render(request, 'assistantFinder/profile.html')
 
