@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from phonenumber_field import PhoneNumberField
+from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
-    phoneNumber = PhoneNumberField()
+    phone = PhoneNumberField()
 
 class RequestType(models.Model):
     name = models.CharField(max_length=100)
@@ -37,6 +37,6 @@ class Connection(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 class Message(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="messages")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages")
     connection = models.ForeignKey(Connection, on_delete=models.CASCADE, related_name="messages")
     
