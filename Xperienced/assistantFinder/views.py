@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django import forms
-from .models import User, Token
+from .models import User, Token, Request, Offer
 from .emails import EmailSender
 from random import randint
 
@@ -16,6 +16,19 @@ emailSender = EmailSender(
 
 # Create your views here.
 
+def checkRequest(request, auth=True):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    if not request.user.is_authenticated():
+        return JsonResponse({"error": "Authentication error."}, status=401)
+    return None
+
+def checkFormErrors(form):
+    errors = []
+    for field in form:
+        errors += field.errors()
+    return errros
+
 def index(request):
     return render(request, 'assistantFinder/index.html')
 
@@ -23,8 +36,9 @@ def login_view(request):
     return render(request, 'assistantFinder/login.html')
 
 def login(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    response = checkRequest(request, False)
+    if response is not None:
+        return response
     data = json.loads(request.body)
     if not data.get("username"):
         return JsonResponse({"error": "Missing username."}, status=400)
@@ -54,8 +68,9 @@ class NewUserForm(forms.ModelForm):
         )
 
 def signup(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    response = checkRequest(request, False)
+    if response is not None:
+        return response
     data = json.loads(request.body)
     for key in ["first_name", "last_name", "username", "email", "phone", "password", "confirmation"]:
         if not data.get(key):
@@ -66,9 +81,7 @@ def signup(request):
 
     userForm = NewUserForm(data)
     if not userForm.is_valid():
-        errors = []
-        for field in recipeForm:
-            errors += field.errors()
+        errors = checkFormErrors(userForm)
         return JsonResponse({"error": errors[0]}, status=400)
 
     if User.objects.exists(username=data["username"]):
@@ -84,8 +97,9 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def send_email_token(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    response = checkRequest(request)
+    if response is not None:
+        return response
     try:
         key = request.user.createToken()
         emailSender.sendPlain(request.user.email, f"Your email verification token: {key}")
@@ -95,8 +109,9 @@ def send_email_token(request):
 
 @login_required(login_url='login')
 def verify_email(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    response = checkRequest(request)
+    if response is not None:
+        return response
 
     data = json.loads(request.body)
     if not data.get("token"):
@@ -112,18 +127,64 @@ def verify_email(request):
     return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
 @login_required(login_url='login')
-def find_assistant(request):
+def find_assistant_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
 
+class NewRequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = (
+            "title",
+            "description",
+            "category",
+            "budget",
+        )
+
 @login_required(login_url='login')
-def offer_help(request):
+def find_assistant(request):
+    response = checkRequest(request)
+    if response is not None:
+        return response
+    data = json.loads(request.body)
+    if not data.get("request"):
+        return JsonResponse({"error": "Missing request."}, status=400)
+    for key in ["title", "description", "category", "budegt"]:
+        if not data["request"].get(key):
+            return JsonResponse({"error": f"Missing {key}."}, status=400)
+    requestForm = NewRequestForm(data)
+    if not requestForm.is_valid():
+        errors = checkFormErrors(requestForm)
+        return JsonResponse({"error": errors[0]}, status=400)
+    request = requestForm.save(commit=False)
+    request.owner = request.user
+    request.save()
+    return JsonResponse({"success": request.id}, status=200)
+    
+
+@login_required(login_url='login')
+def requests_view(request):
     return render(request, 'assistantFinder/offer_help.html')
+
+def request_view(request):
+    return render(request, 'assistantFinder/add_offer.html')
+
+
+class NewOfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = (
+            "bid",
+            "notes"
+        )
+
+def add_offer(request, id):
+    if request.method != "POST":
+        return JsonResponse({"error": "Only post method is allowed."}, status=400)
+    data = json.loads(request.body)
+
 
 def profile(request):
     return render(request, 'assistantFinder/profile.html')
-
-def add_offer(request):
-    return render(request, 'assistantFinder/add_offer.html')
 
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')

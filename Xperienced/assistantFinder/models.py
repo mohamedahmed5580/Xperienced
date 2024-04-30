@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from phonenumber_field.modelfields import PhoneNumberField
 from random import randint
 from datetime import datetime
+from django.urls import reverse
 
 OPEN = "Open"
 PENDING = "Pending"
@@ -121,6 +122,18 @@ class Token(models.Model):
         self.token = 0
         for i in range(6):
             self.token += 10**i * randint(0, 9)
+
     def isExpired(self):
         minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
         return minutesDiff > TOKEN_VALIDITY_LIMIT
+
+def URLValidator(url):
+    try:
+        reverse(url)
+    except Exception:
+        raise ValidationError
+        
+class Notification(model.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    content = models.TextField(max_length=250)
+    url = models.CharField(max_length=50, validators=[URLValidator])
