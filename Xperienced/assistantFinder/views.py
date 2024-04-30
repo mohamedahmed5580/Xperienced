@@ -174,6 +174,7 @@ class NewOfferForm(forms.ModelForm):
         )
 
 def add_offer(request, id):
+    requestInstance = Request.objects.filter(id=id)
     response = checkRequest(request)
     if response is not None:
         return response
@@ -183,13 +184,14 @@ def add_offer(request, id):
     for key in ["bid", "notes"]:
         if not data["offer"].get(key):
             return JsonResponse({"error": f"Missing {key}."}, status=400)
+    if requestInstance.
     offerForm = NewOfferForm(data["offer"])
     offer = offerForm.save(commit=False)
     offer.bidder = request.user
     offer.save()
     return JsonResponse({"success": request.id}, status=200) 
 
-    
+
 def profile(request):
     return render(request, 'assistantFinder/profile.html')
 
