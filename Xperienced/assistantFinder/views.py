@@ -177,14 +177,11 @@ def add_offer(request, id):
     if request.method != "POST":
         return JsonResponse({"error": "Only post method is allowed."}, status=400)
     data = json.loads(request.body)
-
-
 def profile(request):
     return render(request, 'assistantFinder/profile.html')
 
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')
-
 
 def notification(requst):
     return render(requst,'assistantFinder/Notifications.html')
@@ -192,10 +189,5 @@ def notification(requst):
 def massages(requst):
     return render(requst,'assistantFinder/Messages.html')
 def offer_help(requst):
-    return render(requst,'pages/Offer_Help.html')
+    return render(requst,'assistantFinder/Offer_Help.html')
 
-def massages(requst):
-    return render(requst,'pages/Messages.html')
-
-def notification(requst):
-    return render(requst,'pages/Notifications.html')
