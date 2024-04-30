@@ -46,7 +46,7 @@ function addRequest() {
         }),
     }).then(response => response.json()).then(console.log(response));
     let requests = JSON.parse(localStorage.getItem('offerDataArray')) || [];
-    window.localStorage.setItem('offerDataArray', JSON.stringify(offerDataArray));
     requests.push(request);
+    window.localStorage.setItem('offerDataArray', JSON.stringify(requests));
     return false;
 }
