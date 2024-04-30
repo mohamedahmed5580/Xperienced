@@ -90,12 +90,10 @@ def signup(request):
     login(request, user)
     return JsonResponse({"success": "User authenticated successfully"}, status=200)
 
-@login_required(login_url='login')
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-@login_required(login_url='login')
 def send_email_token(request):
     response = checkRequest(request)
     if response is not None:
@@ -107,7 +105,6 @@ def send_email_token(request):
         return JsonResponse({"error": "Something went wrong"}, status=500)
     return JsonResponse({"success": "Token sent successfully"}, status=200) 
 
-@login_required(login_url='login')
 def verify_email(request):
     response = checkRequest(request)
     if response is not None:
@@ -126,7 +123,7 @@ def verify_email(request):
     request.user.verifyEmail()
     return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
-@login_required(login_url='login')
+
 def find_assistant_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
 
@@ -140,7 +137,6 @@ class NewRequestForm(forms.ModelForm):
             "budget",
         )
 
-@login_required(login_url='login')
 def find_assistant(request):
     response = checkRequest(request)
     if response is not None:
@@ -161,7 +157,7 @@ def find_assistant(request):
     return JsonResponse({"success": request.id}, status=200)
     
 
-@login_required(login_url='login')
+
 def requests_view(request):
     return render(request, 'assistantFinder/offer_help.html')
 

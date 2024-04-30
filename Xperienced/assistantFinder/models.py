@@ -15,7 +15,8 @@ CANCELLED = "Cancelled"
 class User(AbstractUser):
     phone = PhoneNumberField()
     verifiedEmail = models.BooleanField(default=False)
-
+    picture = models.ImageField(null=True, upload_to="images/")
+    
     def createToken(self):
         if Token.objects.filter(user=self).exists():
             Token.objects.get(user=self).delete()
