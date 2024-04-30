@@ -133,7 +133,7 @@ def URLValidator(url):
     except Exception:
         raise ValidationError
         
-class Notification(model.Model):
+class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     content = models.TextField(max_length=250)
     url = models.CharField(max_length=50, validators=[URLValidator])
