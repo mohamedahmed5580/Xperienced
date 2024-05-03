@@ -40,10 +40,10 @@ function displayNotifications(page) {
 
     notificationsToShow.forEach(function(notification) {
         var notificationElement = document.createElement('div');
-        notificationElement.classList.add('notification-content');
+        notificationElement.classList.add('notification-contents');
         notificationElement.innerHTML = `
             <p class="notification-title">${notification.title}</p>
-            <p class="notification-content">${notification.content}</p>
+            <p class="notification-contents">${notification.content}</p>
             <p class="notification-date">${notification.date}</p>
         `;
         notificationsContainer.appendChild(notificationElement);

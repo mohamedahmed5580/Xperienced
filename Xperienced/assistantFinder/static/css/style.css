@@ -1593,7 +1593,6 @@ span.action-text {
   position: relative;
   display: block;
   max-width: 55vw;
-  padding: 5px 18px;
   font-size: 14px;
   line-height: 1.4285714;
   color: #efefef;
@@ -1601,11 +1600,10 @@ span.action-text {
   text-overflow: ellipsis;
   cursor: pointer;
   transition: background-color .2s;
-  height: 100%;
 }
 .accunt-content .bg-img{
   background-color: var(--main-color);
-  border-color: var(--secondary-color);
+
 }
 .btn-check:checked + .btn-secondary, .btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--main-color);
@@ -1618,12 +1616,11 @@ span.action-text {
 }
 .accunt-content .img-navb{
   display: inline-block;
-  height: 36px;
-  width: 36px;
+  height: 30px;
+  width: 30px;
   margin: -1px 0 1px;
   vertical-align: middle;
-  border: 0;
-  border-radius: 100px;
+
 }
 
 .accunt-content .dropdown-menu{
@@ -1910,19 +1907,19 @@ span.action-text {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.notification-content  .notification-title {
+.notification-contents  .notification-title {
   font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
 
-.notification-content  .notification-content {
+.notification-contents  .notification-content {
   color: #666;
   margin-bottom: 10px;
 }
 
-.notification-content  .notification-date {
+.notification-contents  .notification-date {
   color: #999;
   font-size: 12px;
 }
@@ -2031,6 +2028,9 @@ span.action-text {
   .container-fluid {
     padding: 0px; 
 }
+    .Hero_Section .overlay .hero_bg{
+        height: 80%;
+    }
   .header .navbar .navbar-brand .logo {
     margin-left: 25px ;
   }
@@ -2047,6 +2047,7 @@ span.action-text {
   }
   .Benefits{
     height: 70pc;
+    margin-top: 10%;
   }
   .Benefits .header-about{
     padding-bottom: 50px;

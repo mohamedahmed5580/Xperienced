@@ -61,11 +61,11 @@ span{
 
 }
 .sidepar {
-  display: flex;
   flex-direction: row;
   width: fit-content;
   height: fit-content;
   box-sizing: border-box;
+  margin-right: 10px;
 }
 .chat {
   border-radius: 4px;
@@ -1593,19 +1593,18 @@ span.action-text {
   position: relative;
   display: block;
   max-width: 55vw;
-  padding: 5px 18px;
   font-size: 14px;
   line-height: 1.4285714;
   color: #efefef;
   text-decoration: none;
   text-overflow: ellipsis;
   cursor: pointer;
+  padding:7px;
   transition: background-color .2s;
-  height: 100%;
 }
 .accunt-content .bg-img{
   background-color: var(--main-color);
-  border-color: var(--secondary-color);
+
 }
 .btn-check:checked + .btn-secondary, .btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle{
   background-color: var(--main-color);
@@ -1618,12 +1617,11 @@ span.action-text {
 }
 .accunt-content .img-navb{
   display: inline-block;
-  height: 36px;
-  width: 36px;
+  height: 30px;
+  width: 30px;
   margin: -1px 0 1px;
   vertical-align: middle;
-  border: 0;
-  border-radius: 100px;
+
 }
 
 .accunt-content .dropdown-menu{
