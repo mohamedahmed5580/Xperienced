@@ -53,7 +53,7 @@ function displayNotifications(page) {
 function displayPagination() {
     var totalNotifications = notifications.length;
     var totalPages = Math.ceil(totalNotifications / notificationsPerPage);
-    var paginationContainer = document.getElementById('pagination');
+    var paginationContainer = document.getElementById('btn-group');
     paginationContainer.innerHTML = '';
 
     for (var i = 1; i <= totalPages; i++) {

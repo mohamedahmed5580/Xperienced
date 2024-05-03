@@ -1910,19 +1910,19 @@ span.action-text {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.notification-content  .notification-title {
+.notification-contents  .notification-title {
   font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
 
-.notification-content  .notification-content {
+.notification-contents  .notification-content {
   color: #666;
   margin-bottom: 10px;
 }
 
-.notification-content  .notification-date {
+.notification-contents  .notification-date {
   color: #999;
   font-size: 12px;
 }
@@ -2031,6 +2031,9 @@ span.action-text {
   .container-fluid {
     padding: 0px; 
 }
+    .Hero_Section .overlay .hero_bg{
+        height: 80%;
+    }
   .header .navbar .navbar-brand .logo {
     margin-left: 25px ;
   }
@@ -2047,6 +2050,7 @@ span.action-text {
   }
   .Benefits{
     height: 70pc;
+    margin-top: 10%;
   }
   .Benefits .header-about{
     padding-bottom: 50px;
