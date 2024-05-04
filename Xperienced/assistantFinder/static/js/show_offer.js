@@ -1,5 +1,7 @@
+var offerDataArray = JSON.parse(localStorage.getItem('offerDataArray')) || [];
 
 function dspliayoffers() {
+
   var offerListItems = document.getElementById("offer-list-items");
   offerDataArray.forEach(function(offerData, index) {
       var listItem = document.createElement("div");
@@ -38,5 +40,6 @@ function removeoffer(index) {
 
 dspliayoffers();  
 
+console.log(offerDataArray);
 
 

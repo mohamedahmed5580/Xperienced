@@ -24,8 +24,7 @@ var notifications = [
     { title: "Bid Accepted", content: "Congratulations! Your bid on a project has been accepted by the client.", date: "April 3, 2024" },
     { title: "New Task Created", content: "A new task has been created for your project. Please review and take necessary action.", date: "April 2, 2024" },
     { title: "Task Updated", content: "One of the tasks in your project has been updated. Please review the changes.", date: "April 1, 2024" },
-    { title: "New Message Received", content: "You have received a new message from a client regarding your project.", date: "April 25, 2024" },
- // أضف المزيد من الإشعارات هنا
+    // أضف المزيد من الإشعارات هنا
 ];
 
 var currentPage = 1;
@@ -37,14 +36,14 @@ function displayNotifications(page) {
     var notificationsToShow = notifications.slice(startIndex, endIndex);
 
     var notificationsContainer = document.getElementById('notifications-container');
-    notificationsContainer.innerHTML = ''; // Clear previous notifications
+    notificationsContainer.innerHTML = '';
 
     notificationsToShow.forEach(function(notification) {
         var notificationElement = document.createElement('div');
-        notificationElement.classList.add('notification-content');
+        notificationElement.classList.add('notification-contents');
         notificationElement.innerHTML = `
             <p class="notification-title">${notification.title}</p>
-            <p class="notification-content">${notification.content}</p>
+            <p class="notification-contents">${notification.content}</p>
             <p class="notification-date">${notification.date}</p>
         `;
         notificationsContainer.appendChild(notificationElement);
@@ -55,27 +54,22 @@ function displayPagination() {
     var totalNotifications = notifications.length;
     var totalPages = Math.ceil(totalNotifications / notificationsPerPage);
     var paginationContainer = document.getElementById('btn-group');
-    paginationContainer.classList.add('center');
+    paginationContainer.innerHTML = '';
 
     for (var i = 1; i <= totalPages; i++) {
-        var button = document.createElement('input');
-        button.classList.add('btn-check');
-        button.classList.add('btn-check');
-        button.type = 'radio';
-        button.id = 'btnradio' + i;
-        button.name = 'btnradio';
-        button.value = i; // Set the value of the button to the page number
+        var button = document.createElement('button');
+        button.textContent = i;
         button.addEventListener('click', function() {
-            currentPage = parseInt(this.value);
+            currentPage = parseInt(this.textContent);
             displayNotifications(currentPage);
         });
-
-        var label = document.createElement('label');
-        label.setAttribute('for', 'btnradio' + i);
-        label.textContent = i;
-        label.classList.add('btn', 'btn-outline-primary');
+        if (i === currentPage) {
+            button.classList.add('active');
+        }else{
+            button.classList.add('inactive');
+            
+        }
         paginationContainer.appendChild(button);
-        paginationContainer.appendChild(label);
     }
 }
 

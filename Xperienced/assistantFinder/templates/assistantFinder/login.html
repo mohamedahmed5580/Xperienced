@@ -15,12 +15,12 @@
     <div class="Heading">Login</div>
     <div class="Paragraph">Welcome back! Please log in to access your account.</div>
   </div>
-  <form class="row g-3">
+  <form class="row g-3" method="get">
     <div class="col-md-15">
       <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
       <label for="inputPassword4" class="form-label">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
       <label class="form-check-label ">
         Forgot Password?
       </label>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="col-12">
-      <a href="{% url 'index' %}" class="btn btn-primary">Log in</a>
+      <button class="btn btn-primary" id="btn-primary" type="submit">Log in</button>
     </div>
     <div class="container-24">
       <div class="line">
@@ -55,10 +55,8 @@
       </svg>
       Login with Google
     </a> 
-
-      
     <p class="button-34">
-      Don’t have an account? <a href="{% url "signup" %}">Sign Up</a>
+      Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a>
     </p>
   </form>
 </div>
