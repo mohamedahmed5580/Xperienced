@@ -100,7 +100,7 @@ def send_email_token(request):
         return response
     try:
         key = request.user.createToken()
-        emailSender.sendPlain(request.user.email, f"Your email verification token: {key}")
+        emailSender.sendPlain(request.user.email, "Xperienced: Email Verification", f"Your email verification token: {key}")
     except Exception:
         return JsonResponse({"error": "Something went wrong"}, status=500)
     return JsonResponse({"success": "Token sent successfully"}, status=200) 
@@ -155,11 +155,10 @@ def find_assistant(request):
     request.owner = request.user
     request.save()
     return JsonResponse({"success": request.id}, status=200)
-    
-
 
 def requests_view(request):
     return render(request, 'assistantFinder/offer_help.html')
+
 
 def request_view(request):
     return render(request, 'assistantFinder/add_offer.html')
@@ -192,7 +191,7 @@ def add_offer(request, id):
     offer = offerForm.save(commit=False)
     offer.bidder = request.user
     offer.save()
-    return JsonResponse({"success": request.id}, status=200) 
+    return JsonResponse({"success": request.id}, status=200)
 
 
 def profile(request):
