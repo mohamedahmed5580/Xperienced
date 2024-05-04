@@ -183,10 +183,6 @@ def add_offer(request, id):
     for key in ["bid", "notes"]:
         if not data["offer"].get(key):
             return JsonResponse({"error": f"Missing {key}."}, status=400)
-    if requestInstance.owner == request.user:
-        return JsonResponse({"error": "You can't make an offer to a request that you made."}, status=400)
-    if requestInstance.offer.filter(bidder=request.user).exists():
-        return JsonResponse({"error": "You already made an offer to this request"}, status=400)
     offerForm = NewOfferForm(data["offer"])
     offer = offerForm.save(commit=False)
     offer.bidder = request.user

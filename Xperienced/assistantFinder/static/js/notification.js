@@ -40,10 +40,10 @@ function displayNotifications(page) {
 
     notificationsToShow.forEach(function(notification) {
         var notificationElement = document.createElement('div');
-        notificationElement.classList.add('notification-content');
+        notificationElement.classList.add('notification-contents');
         notificationElement.innerHTML = `
             <p class="notification-title">${notification.title}</p>
-            <p class="notification-content">${notification.content}</p>
+            <p class="notification-contents">${notification.content}</p>
             <p class="notification-date">${notification.date}</p>
         `;
         notificationsContainer.appendChild(notificationElement);
@@ -53,7 +53,7 @@ function displayNotifications(page) {
 function displayPagination() {
     var totalNotifications = notifications.length;
     var totalPages = Math.ceil(totalNotifications / notificationsPerPage);
-    var paginationContainer = document.getElementById('pagination');
+    var paginationContainer = document.getElementById('btn-group');
     paginationContainer.innerHTML = '';
 
     for (var i = 1; i <= totalPages; i++) {
