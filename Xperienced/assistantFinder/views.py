@@ -5,9 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django import forms
-from .models import User, Token, Request, Offer
+from .models import User, Token, Request, Offer, Notification, Category, OPEN, PENDING, PROGRESS, COMPLETED, CANCELLED
 from .emails import EmailSender
-from random import randint
 
 emailSender = EmailSender(
     "myspaceduckbot@gmail.com",
@@ -16,10 +15,10 @@ emailSender = EmailSender(
 
 # Create your views here.
 
-def checkRequest(request, auth=True):
-    if request.method != "POST":
+def checkRequest(request, auth=True, post=True):
+    if post and request.method != "POST":
         return JsonResponse({"error": "Only post method is allowed."}, status=400)
-    if not request.user.is_authenticated():
+    if auth and not request.user.is_authenticated():
         return JsonResponse({"error": "Authentication error."}, status=401)
     return None
 
@@ -27,7 +26,12 @@ def checkFormErrors(form):
     errors = []
     for field in form:
         errors += field.errors()
-    return errros
+    return errors
+
+def checkKeys(dic, keys):
+    for key in keys:
+        if dic.get(key) is None:
+            return key
 
 def index(request):
     return render(request, 'assistantFinder/index.html')
@@ -35,25 +39,12 @@ def index(request):
 def login_view(request):
     return render(request, 'assistantFinder/login.html')
 
-def login(request):
-    response = checkRequest(request, False)
-    if response is not None:
-        return response
-    data = json.loads(request.body)
-    if not data.get("username"):
-        return JsonResponse({"error": "Missing username."}, status=400)
-    if not data.get("password"):
-        return JsonResponse({"error": "Missing password."}, status=400)
-    username = data["username"]
-    password = data["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is None:
-        return JsonResponse({"error": "Invalid username and/or password."}, status=401)
-    login(request, user)
-    return JsonResponse({"success": "User authenticated successfully"}, status=200)
-
 def signup_view(request):
     return render(request, 'assistantFinder/signup.html')
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
 
 class NewUserForm(forms.ModelForm):
     class Meta:
@@ -67,14 +58,30 @@ class NewUserForm(forms.ModelForm):
             "password"
         )
 
+def login(request):
+    response = checkRequest(request, False)
+    if response is not None:
+        return response
+    data = json.loads(request.body)
+    missingKey = checkKeys(data, ["username", "password"])
+    if missingKey is not None:
+        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
+    username = data["username"]
+    password = data["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is None:
+        return JsonResponse({"error": "Invalid username and/or password."}, status=401)
+    login(request, user)
+    return JsonResponse({"success": "User authenticated successfully"}, status=200)
+
 def signup(request):
     response = checkRequest(request, False)
     if response is not None:
         return response
     data = json.loads(request.body)
-    for key in ["first_name", "last_name", "username", "email", "phone", "password", "confirmation"]:
-        if not data.get(key):
-            return JsonResponse({"error": f"Missing {key}."}, status=400)
+    missingKey = checkKeys(data, NewUserForm.Meta.fields)
+    if missingKey is not None:
+        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
 
     if data["password"] != data["confirmation"]:
         return JsonResponse({"error": "Passwords don't match."}, status=400)
@@ -84,15 +91,11 @@ def signup(request):
         errors = checkFormErrors(userForm)
         return JsonResponse({"error": errors[0]}, status=400)
 
-    if User.objects.exists(username=data["username"]):
+    if User.objects.filter(username=data["username"]).exists():
         return JsonResponse({"error": "Username already taken."}, status=400)
     user = userForm.save()
     login(request, user)
     return JsonResponse({"success": "User authenticated successfully"}, status=200)
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("index"))
 
 def send_email_token(request):
     response = checkRequest(request)
@@ -115,7 +118,7 @@ def verify_email(request):
         return JsonResponse({"error": "Missing verification token."}, status=400) 
     token = request.user.getToken()
     if token is None:
-        return JsonResponse({"error": "You have to request a new token first."}, status=400) 
+        return JsonResponse({"error": "You have to request a token first."}, status=400) 
     if token.key != data["token"]:
         return JsonResponse({"error": "Invalid token."}, status=400) 
     if token.isExpired():
@@ -124,7 +127,7 @@ def verify_email(request):
     return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
 
-def find_assistant_view(request):
+def new_request_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
 
 class NewRequestForm(forms.ModelForm):
@@ -137,16 +140,16 @@ class NewRequestForm(forms.ModelForm):
             "budget",
         )
 
-def find_assistant(request):
+def new_request(request):
     response = checkRequest(request)
     if response is not None:
         return response
     data = json.loads(request.body)
     if not data.get("request"):
         return JsonResponse({"error": "Missing request."}, status=400)
-    for key in ["title", "description", "category", "budegt"]:
-        if not data["request"].get(key):
-            return JsonResponse({"error": f"Missing {key}."}, status=400)
+    missingKey = checkKeys(data["request"], NewRequestForm.Meta.fields)
+    if missingKey is not None:
+        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
     requestForm = NewRequestForm(data)
     if not requestForm.is_valid():
         errors = checkFormErrors(requestForm)
@@ -157,11 +160,27 @@ def find_assistant(request):
     return JsonResponse({"success": request.id}, status=200)
 
 def requests_view(request):
-    return render(request, 'assistantFinder/offer_help.html')
+    return render(request, 'assistantFinder/offer_help.html', {
+        "categories": Category.objects.all()
+    })
+
+def requests(request):
+    data = json.loads(request.body)
+    requests = []
+    for req in Request.objects.all():
+        if req.state() == OPEN:
+            requests.append(req)
+    if data.get("category"):
+        if Category.objects.filter(name=data["category"]) is None:
+            return JsonResponse({"error": "Specified category doesn't exist"}, status=400)
+        requests.filter(category=data["category"])
+    return JsonResponse({"requests": requests}, status=200)
 
 
-def request_view(request):
-    return render(request, 'assistantFinder/add_offer.html')
+def request_view(request, id):
+    return render(request, 'assistantFinder/add_offer.html', {
+        "request": Request.objects.get(id=id)
+    })
 
 
 class NewOfferForm(forms.ModelForm):
@@ -173,34 +192,49 @@ class NewOfferForm(forms.ModelForm):
         )
 
 def add_offer(request, id):
-    requestInstance = Request.objects.filter(id=id)
     response = checkRequest(request)
     if response is not None:
         return response
+    if Request.objects.filter(id=id) is None:
+        return JsonResponse({"error": "Request doesn't exist"}, status=400) 
+    requestInstance = Request.objects.get(id=id)
     data = json.loads(request.body)
+    if requestInstance.owner == request.user:
+        return JsonResponse({"error": "You can't add an offer to a request that you made."}, status=400)
+    if requestInstance.offers.filter(bidder=request.user):
+        return JsonResponse({"error": "You already made an offer to that request"}, status=400)
     if not data.get("offer"):
-        return JsonResponse({"error": "Missing request."}, status=400)
-    for key in ["bid", "notes"]:
-        if not data["offer"].get(key):
-            return JsonResponse({"error": f"Missing {key}."}, status=400)
+        return JsonResponse({"error": "Missing offer."}, status=400)
+    missingKey = checkKeys(data["offer"], NewOfferForm.Meta.fields)
+    if missingKey is not None:
+        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
+    
     offerForm = NewOfferForm(data["offer"])
     offer = offerForm.save(commit=False)
     offer.bidder = request.user
+    offer.request = requestInstance
     offer.save()
-    return JsonResponse({"success": request.id}, status=200)
+    return JsonResponse({"success": "Offer added successfully."}, status=200)
 
 
-def profile(request):
-    return render(request, 'assistantFinder/profile.html')
+def profile(request, username):
+    return render(request, 'assistantFinder/profile.html', {
+        "profile": User.objects.get(username=username)
+    })
 
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')
 
-def notification(requst):
-    return render(requst,'assistantFinder/Notifications.html')
+def notifications(request):
+    response = checkRequest(request, post=False)
+    if response is not None:
+        return response
+    return JsonResponse({"notifications": Notification.objects.all()}, status=200)
+    
+def notifications_view(request):
+    return render(request, "Notifications.html", {
+        "notifications": Notification.objects.all(),
+    })
 
 def massages(requst):
     return render(requst,'assistantFinder/Messages.html')
-def offer_help(requst):
-    return render(requst,'assistantFinder/Offer_Help.html')
-

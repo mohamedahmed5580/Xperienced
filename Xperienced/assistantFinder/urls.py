@@ -4,30 +4,23 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('login', views.login_view, name="login"),
-    path('login/submit', views.login),
     path('signup', views.signup_view, name="signup"),
-    path('signup/submit', views.signup),
     path('logout', views.logout_view, name="logout"),
 
-    path('verify_email/send', views.send_email_token),
-    path('verify_email/verfiy', views.verify_email),
-
-    path('find', views.find_assistant_view, name="find_assistant"),
-    path('find/submit', views.find_assistant),
-
-    path('offer', views.requests_view, name="requests"),
-
+    path('new_request', views.new_request_view, name="new_request"),
     path('request/<int:id>', views.request_view, name="request"),
+    path('requests', views.requests_view, name="requests"),
 
-    path('request', views.request_view, name="request"),
+    # under development
     path('massage',views.massages,name="massage"),
-    path('find', views.find_assistant, name="find_assistant"),
-    path('offer', views.offer_help, name="offer_help"),
-    
-    path('profile', views.profile, name="profile"),
-    path('notification',views.notification,name="notification"),
-    path('massage',views.massages,name="massage"),
-
     path('balance', views.account_balance, name="balance"),
-    path('notification',views.notification,name="notification"),
+
+    #API
+    path('api/login', views.login),
+    path('api/signup', views.signup),
+    path('api/verify_email/send', views.send_email_token),
+    path('api/verify_email/verfiy', views.verify_email),
+    path('api/notifications',views.notifications),
+    path('api/new_request', views.find_assistant),
+    path('api/requests', views.requests),
 ]
