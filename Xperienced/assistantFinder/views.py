@@ -222,6 +222,9 @@ def profile(request, username):
         "profile": User.objects.get(username=username)
     })
 
+def temp_profile(request):
+    return render(request, 'assistantFinder/profile.html') 
+
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')
 

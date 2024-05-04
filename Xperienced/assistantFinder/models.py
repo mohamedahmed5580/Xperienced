@@ -100,9 +100,18 @@ class Offer(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 class ChatRoom(models.Model):
-    firstUser = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="chatrooms")
-    secondUser = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="chatrooms")
+    student = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="student_chatrooms")
+    mentor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="mentor_chatrooms")
     datetime = models.DateTimeField(auto_now_add=True)
+
+    def clean(self, *args, **kwargs):
+        if self.student == self.mentor:
+            raise ValidationError
+        super().clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     def sendMessage(self, sender, content):
         if sender not in [self.firstUser, self.secondUser]:
