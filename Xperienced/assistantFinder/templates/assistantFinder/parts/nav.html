@@ -22,14 +22,18 @@
   </head>
   <body>
   <header class="header">
-    <nav class="navbar navbar-expand-lg navbar-light nav fixed-top  ">
+    <nav class="navbar navbar-expand-lg navbar-light nav fixed-top fixed-bottom-nav">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'index' %}">
-          <img class="logo" src="{% static 'image/image.png' %} " alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="btnbox">
+          <button type="button" class="toggle" id="toggle">
+            <span></span>
+          </button>
+        </div>
+        <div class="box-nav">
+          <a class="nav-link mobile-text" href="{% url 'notification' %}"><i class="fa-solid fa-bell " ></i> </a>
+          <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'image/image.png' %} " alt=""></a>
+          <a class="nav-link mobile-text" href="{% url 'massage' %}"><i class="fa-solid fa-envelope "></i> </a>
+        </div>
         <div class="collapse navbar-collapse" id="navbarScroll">
           <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item">
@@ -50,11 +54,11 @@
           <div class="sidepar  d-flex">
             <div class="chat dropdown">
               <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                <i class="fa-solid fa-envelope"></i>
+                <i class="fa-solid fa-envelope fa-xl"></i>
               </a>
               <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
 
-                <ul class="notification-list" data-empty="لا جديد حتى اللحظة!">
+                <ul class="notification-list" >
                   <li class="notification-list-item ">
                     <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
                     <div class="notification-item-content">
@@ -90,7 +94,7 @@
             </div>
             <div class="chat dropdown ">
               <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa-solid fa-bell" ></i>
+                <i class="fa-solid fa-bell fa-xl" ></i>
               </a>
               <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
                 <ul class="notification-list" data-empty="لا جديد حتى اللحظة!">
@@ -128,11 +132,9 @@
 
           </div>
           <div class="chat dropdown accunt-content">
-
             <a class=" dropdown-toggle bg-img" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128">
             </a>
-
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{% url 'profile'%}">
                 <i class="fa fa-fw fa-user"></i>
@@ -156,25 +158,50 @@
           </div>
           </div>
           </div>
-         
-        <form class="d-flex">
-            <a href="{% url 'signup' %}" type="button" class="btn btn-outline-light left">
-              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.25 7.25C13.25 8.24456 12.8549 9.19839 12.1517 9.90165C11.4484 10.6049 10.4946 11 9.5 11C8.50544 11 7.55162 10.6049 6.84835 9.90165C6.14509 9.19839 5.75 8.24456 5.75 7.25C5.75 6.25544 6.14509 5.30161 6.84835 4.59835C7.55162 3.89509 8.50544 3.5 9.5 3.5C10.4946 3.5 11.4484 3.89509 12.1517 4.59835C12.8549 5.30161 13.25 6.25544 13.25 7.25ZM15.5 20C16.328 20 17.015 19.322 16.85 18.509C16.5042 16.8144 15.5836 15.2914 14.244 14.1975C12.9044 13.1036 11.228 12.5062 9.49851 12.5062C7.76902 12.5062 6.09264 13.1036 4.75301 14.1975C3.41339 15.2914 2.4928 16.8144 2.14701 18.509C1.98351 19.322 2.67201 20 3.50001 20H15.5ZM19.25 5.75C19.5484 5.75 19.8345 5.86853 20.0455 6.0795C20.2565 6.29048 20.375 6.57663 20.375 6.875V8.375H21.875C22.1734 8.375 22.4595 8.49353 22.6705 8.7045C22.8815 8.91548 23 9.20163 23 9.5C23 9.79837 22.8815 10.0845 22.6705 10.2955C22.4595 10.5065 22.1734 10.625 21.875 10.625H20.375V12.125C20.375 12.4234 20.2565 12.7095 20.0455 12.9205C19.8345 13.1315 19.5484 13.25 19.25 13.25C18.9516 13.25 18.6655 13.1315 18.4545 12.9205C18.2435 12.7095 18.125 12.4234 18.125 12.125V10.625H16.625C16.3266 10.625 16.0405 10.5065 15.8295 10.2955C15.6185 10.0845 15.5 9.79837 15.5 9.5C15.5 9.20163 15.6185 8.91548 15.8295 8.7045C16.0405 8.49353 16.3266 8.375 16.625 8.375H18.125V6.875C18.125 6.57663 18.2435 6.29048 18.4545 6.0795C18.6655 5.86853 18.9516 5.75 19.25 5.75Z" fill="white"/>
-              </svg>
-              Sign Up
-            </a>
-            <a href="{% url "login" %}" type="button" class="btn btn-outline-light right">
-              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16.25 9.5V5.75C16.25 5.15326 16.0129 4.58097 15.591 4.15901C15.169 3.73705 14.5967 3.5 14 3.5H8C7.40326 3.5 6.83097 3.73705 6.40901 4.15901C5.98705 4.58097 5.75 5.15326 5.75 5.75V19.25C5.75 19.8467 5.98705 20.419 6.40901 20.841C6.83097 21.2629 7.40326 21.5 8 21.5H14C14.5967 21.5 15.169 21.2629 15.591 20.841C16.0129 20.419 16.25 19.8467 16.25 19.25V15.5M12.5 9.5L9.5 12.5M9.5 12.5L12.5 15.5M9.5 12.5H22.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>                
-              Login
-            </a>
+          
+          <form class="d-flex">
+              <a href="{% url 'signup' %}" type="button" class="btn btn-outline-light left">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.25 7.25C13.25 8.24456 12.8549 9.19839 12.1517 9.90165C11.4484 10.6049 10.4946 11 9.5 11C8.50544 11 7.55162 10.6049 6.84835 9.90165C6.14509 9.19839 5.75 8.24456 5.75 7.25C5.75 6.25544 6.14509 5.30161 6.84835 4.59835C7.55162 3.89509 8.50544 3.5 9.5 3.5C10.4946 3.5 11.4484 3.89509 12.1517 4.59835C12.8549 5.30161 13.25 6.25544 13.25 7.25ZM15.5 20C16.328 20 17.015 19.322 16.85 18.509C16.5042 16.8144 15.5836 15.2914 14.244 14.1975C12.9044 13.1036 11.228 12.5062 9.49851 12.5062C7.76902 12.5062 6.09264 13.1036 4.75301 14.1975C3.41339 15.2914 2.4928 16.8144 2.14701 18.509C1.98351 19.322 2.67201 20 3.50001 20H15.5ZM19.25 5.75C19.5484 5.75 19.8345 5.86853 20.0455 6.0795C20.2565 6.29048 20.375 6.57663 20.375 6.875V8.375H21.875C22.1734 8.375 22.4595 8.49353 22.6705 8.7045C22.8815 8.91548 23 9.20163 23 9.5C23 9.79837 22.8815 10.0845 22.6705 10.2955C22.4595 10.5065 22.1734 10.625 21.875 10.625H20.375V12.125C20.375 12.4234 20.2565 12.7095 20.0455 12.9205C19.8345 13.1315 19.5484 13.25 19.25 13.25C18.9516 13.25 18.6655 13.1315 18.4545 12.9205C18.2435 12.7095 18.125 12.4234 18.125 12.125V10.625H16.625C16.3266 10.625 16.0405 10.5065 15.8295 10.2955C15.6185 10.0845 15.5 9.79837 15.5 9.5C15.5 9.20163 15.6185 8.91548 15.8295 8.7045C16.0405 8.49353 16.3266 8.375 16.625 8.375H18.125V6.875C18.125 6.57663 18.2435 6.29048 18.4545 6.0795C18.6655 5.86853 18.9516 5.75 19.25 5.75Z" fill="white"/>
+                </svg>
+                Sign Up
+              </a>
+              <a href="{% url "login" %}" type="button" class="btn btn-outline-light right">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.25 9.5V5.75C16.25 5.15326 16.0129 4.58097 15.591 4.15901C15.169 3.73705 14.5967 3.5 14 3.5H8C7.40326 3.5 6.83097 3.73705 6.40901 4.15901C5.98705 4.58097 5.75 5.15326 5.75 5.75V19.25C5.75 19.8467 5.98705 20.419 6.40901 20.841C6.83097 21.2629 7.40326 21.5 8 21.5H14C14.5967 21.5 15.169 21.2629 15.591 20.841C16.0129 20.419 16.25 19.8467 16.25 19.25V15.5M12.5 9.5L9.5 12.5M9.5 12.5L12.5 15.5M9.5 12.5H22.25" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                
+                Login
+              </a>
           </form>
         </div>
       </div>
     </nav>
     {% csrf_token %}
   </header>
+  <div class="sidebar" id='sidebar'>
+    <ul class="navbar-nav ms-auto nav-section items">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'find_assistant' %}">Find Assistant</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'requests' %}">Offer Help</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'requests' %}">SERVICES</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'requests' %}">Contact us</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link img-link" href="{% url 'profile' %}"> 
+            <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128">
+            User
+          </a>
+      </li>
+    </ul>
+    </div>
 <!-- start landing -->
 

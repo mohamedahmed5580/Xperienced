@@ -61,15 +61,14 @@ span{
 
 }
 .sidepar {
-  display: flex;
   flex-direction: row;
   width: fit-content;
   height: fit-content;
   box-sizing: border-box;
+  margin-right: 10px;
 }
 .chat {
   border-radius: 4px;
-  border: 1px solid #FFFFFF;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -172,7 +171,7 @@ span{
 }
 .sidebar ul li a:hover {
   color:var(--main3-color);
-  background-color: var(--main2-background);
+  background-color: var(--secondary-color);
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -181,6 +180,170 @@ span{
 }
 
 
+
+.btnbox {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+  display: none;
+}
+.toggle {
+background:transparent;
+color: var(--secondary-color);
+border:none;
+width:30px;
+height:30px;
+text-align: center;
+cursor:pointer; 
+margin-top: 10px;
+
+}
+.toggle span {
+width:100%;
+height:3px;
+background:var(--secondary-color);
+display:block;
+position:relative;
+}
+.toggle span:before,
+.toggle span:after {
+content:'';
+position:absolute;
+left:0;
+width:100%;
+height:100%;
+background:var(--secondary-color);
+transition: all 0.3s ease-out;
+}
+.toggle span:before {
+top:-8px;
+}
+.toggle span:after {
+top:8px;
+}
+.toggle span.toggle {
+background:transparent;
+}
+.toggle span.toggle:before {
+top:0;
+transform:rotate(-45deg);
+background:var(--secondary-color);
+
+}
+.toggle span.toggle:after {
+top:0;
+transform:rotate(45deg);
+background:var(--secondary-color);
+
+}
+.dropdown-menu-left {
+  right: auto;
+  left: 0;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  display: none;
+  float: right;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: right;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-clip: padding-box;
+}
+
+
+span.action-text {
+  color: var(--secondary-color);
+}
+.btn_s{
+  display: flex;
+  justify-content: flex-end;
+
+}
+.accunt-content{
+  position: relative;
+  display: block;
+  max-width: 55vw;
+  font-size: 14px;
+  line-height: 1.4285714;
+  color: #efefef;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  padding:7px;
+  transition: background-color .2s;
+}
+.accunt-content .bg-img{
+  background-color: var(--main-color);
+
+}
+.btn-check:checked + .btn-secondary, .btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle{
+  background-color: var(--main-color);
+  border-color: var(--secondary-color);
+  box-shadow: var(--main-color);
+}
+.accunt-content .bg-img::after {
+  display: none;
+
+}
+.accunt-content .img-navb{
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  
+}
+
+.accunt-content .dropdown-menu{
+  list-style: none;
+  margin-right: -5px;
+  margin-top: 0px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  position: absolute;
+  min-width: 160px;
+  background-color: #fff;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  border-top: 0;
+  font-family: "Noto Kufi Arabic", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+
+.navbar-collapse .show:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border: solid 5px transparent;
+  border-bottom-color: #fff;
+}
+.accunt-content .dropdown-menu .dropdown-item{
+  position: relative;
+  display: block;
+  padding: 7px 14px;
+  transition-duration: .1s;
+  clear: both;
+  color: #484848;
+  font-weight: 400;
+  line-height: 1.4285714;
+  white-space: nowrap;
+  text-decoration: none;
+}
 /* start landing */
 
 .Hero_Section{
@@ -262,7 +425,7 @@ span{
   margin-top: 25px;
 } 
 .img-bg{  
-  background-color: var(--main2-background);
+  background-color: var(--secondary-color);
   background: url(image/hero-bg.svg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -871,7 +1034,7 @@ span{
   height: 1px;
 }
 
-.col-12 a.btn.btn-primary {
+#btn-primary {
   margin-left: auto;
   margin-right: auto;
   border-radius: 8px;
@@ -1320,6 +1483,17 @@ tr td span {
   line-height: 1.5;
   color: #656567;
 }
+/* div#alart {
+  display: block;
+} */
+
+.d-n{
+  display: none;
+}
+.d-b{
+  display: block;
+}
+
 /* end find-assistant page */
 
 /* Start Offer_Help page */
@@ -1557,112 +1731,7 @@ tr td span {
 .sidebar .show:after{
   top: 50px;
 }
-.dropdown-menu-left {
-  right: auto;
-  left: 0;
-}
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 1000;
-  display: none;
-  float: right;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  font-size: 14px;
-  text-align: right;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 0;
-  background-clip: padding-box;
-}
 
-
-span.action-text {
-  color: var(--secondary-color);
-}
-.btn_s{
-  display: flex;
-  justify-content: flex-end;
-
-}
-.accunt-content{
-  position: relative;
-  display: block;
-  max-width: 55vw;
-  font-size: 14px;
-  line-height: 1.4285714;
-  color: #efefef;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  transition: background-color .2s;
-}
-.accunt-content .bg-img{
-  background-color: var(--main-color);
-
-}
-.btn-check:checked + .btn-secondary, .btn-check:active + .btn-secondary, .btn-secondary:active, .btn-secondary.active, .show > .btn-secondary.dropdown-toggle{
-  background-color: var(--main-color);
-  border-color: var(--secondary-color);
-  box-shadow: var(--main-color);
-}
-.accunt-content .bg-img::after {
-  display: none;
-
-}
-.accunt-content .img-navb{
-  display: inline-block;
-  height: 30px;
-  width: 30px;
-  margin: -1px 0 1px;
-  vertical-align: middle;
-
-}
-
-.accunt-content .dropdown-menu{
-  list-style: none;
-  margin: 0;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  position: absolute;
-  min-width: 160px;
-  background-color: #fff;
-  border: 1px solid #e8eaed;
-  border-radius: 5px;
-  border-top: 0;
-  font-family: "Noto Kufi Arabic", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  text-align: left;
-}
-
-.navbar-collapse .show:after {
-  content: ' ';
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  margin: 0 auto;
-  border: solid 5px transparent;
-  border-bottom-color: #fff;
-}
-.accunt-content .dropdown-menu .dropdown-item{
-  position: relative;
-  display: block;
-  padding: 7px 14px;
-  transition-duration: .1s;
-  clear: both;
-  color: #484848;
-  font-weight: 400;
-  line-height: 1.4285714;
-  white-space: nowrap;
-  text-decoration: none;
-}
 /* start Account Balance */
 .Balance{
   display: block;
@@ -1946,6 +2015,13 @@ span.action-text {
   .header .nav {
     padding: 0px;
   }
+  .header .fixed-bottom-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+}
   .Hero_Section .text-center{
     width: 320px;
     height: 70px;
@@ -2027,10 +2103,15 @@ span.action-text {
   }
   .container-fluid {
     padding: 0px; 
-}
-    .Hero_Section .overlay .hero_bg{
+  }
+  .Hero_Section .overlay .hero_bg{
         height: 80%;
-    }
+  }
+  
+
+  .btnbox{
+    display: block;
+  }
   .header .navbar .navbar-brand .logo {
     margin-left: 25px ;
   }
@@ -2113,7 +2194,7 @@ span.action-text {
   gap: 5px;
 }
 .Heading{
-  font-size:26px ;
+  font-size:25px ;
   width: 100%;
   line-height: normal;
 }
@@ -2121,7 +2202,13 @@ span.action-text {
   padding-top: 25px;
 }
 .SubContainer {
-  display: block;
+  display: flex;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+.TextContainer {
   width: 100%;
 }
 .Login, .Signin {
@@ -2129,9 +2216,18 @@ span.action-text {
   width: 95%;
   margin-right: auto;
   margin-left: auto;
+  justify-content: center;
+  padding: 20px;
+}
+#btn-primary{
+  width: 95%;
 }
 .Signin .Paragraph ,.Login .Paragraph{
   text-align: center; 
+}
+
+.Signin .row .col-md-15 .Nam .form-control-N {
+  width: 48%;
 }
 .col-12 a.btn.btn-primary {
   width: 95%;
