@@ -25,7 +25,7 @@ urlpatterns = [
     path('offer', views.offer_help, name="offer_help"),
     
     path('profile', views.profile, name="profile"),
-    path('notification',views.notification,name="notification"),
+    # path('notification',views.notification,name="notification"),
     path('massage',views.massages,name="massage"),
 
     path('balance', views.account_balance, name="balance"),

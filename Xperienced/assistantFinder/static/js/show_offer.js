@@ -19,7 +19,7 @@ function dspliayoffers() {
           ${offerData.salary} EGP
           </div>
           <div class="btnAR">
-          <a href="addoffer" class="btn_add">Add an offer</a>
+          <a href="request" class="btn_add">Add an offer</a>
           <a href="#" class="btn_add" onclick="removeoffer(${index})">Remove offer</a>
           </div>
 
