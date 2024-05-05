@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django import forms
-from .models import User, Token, Request, Offer, Notification, Category, OPEN, PENDING, PROGRESS, COMPLETED, CANCELLED
+from . import models
+from .models import User, Token, Request, Offer, Notification, Category, Message
 from .emails import EmailSender
 
 emailSender = EmailSender(
@@ -227,17 +228,25 @@ def temp_profile(request):
 
 def account_balance(request):
     return render(request, 'assistantFinder/account_balance.html')
+    
+def notifications_view(request):
+    return render(request, "assistantFinder/Notifications.html")
+
+def messages_view(request):
+    return render(request, "assistantFinder/Messages.html")
 
 def notifications(request):
     response = checkRequest(request, post=False)
     if response is not None:
         return response
-    return JsonResponse({"notifications": Notification.objects.all()}, status=200)
-    
-def notifications_view(request):
-    return render(request, "Notifications.html", {
-        "notifications": Notification.objects.all(),
-    })
+    return JsonResponse({"notifications": Notification.objects.filter(user=request.user)}, status=200)
 
-def massages(requst):
-    return render(requst,'assistantFinder/Messages.html')
+def messages(request):
+    response = checkRequest(request, post=False)
+    if response is not None:
+        return response
+    messages = []
+    for room in request.user.student_chatrooms + request.user.mentor_chatrooms:
+        messages += room.messages.exclude(sender=request.user)
+    messages = messages.order_by("-timestamp")
+    return JsonResponse({"messages": messages}, status=200)

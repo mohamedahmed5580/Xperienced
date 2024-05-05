@@ -11,11 +11,11 @@ urlpatterns = [
     path('request/<int:id>', views.request_view, name="request"),
     path('requests', views.requests_view, name="requests"),
     path('notifications',views.notifications_view, name="notifications"),
+    path('messages',views.messages_view, name="messages"),
     # path('profile/<str:username>',views.profile, name="profile"),
 
     # under development
     path('profile',views.temp_profile, name="profile"),
-    path('massage',views.massages,name="massage"),
     path('balance', views.account_balance, name="balance"),
 
     #API
@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/verify_email/send', views.send_email_token),
     path('api/verify_email/verfiy', views.verify_email),
     path('api/notifications',views.notifications),
+    path('api/messages',views.messages),
     path('api/new_request', views.new_request),
     path('api/requests', views.requests),
 ]
