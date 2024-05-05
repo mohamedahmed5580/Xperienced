@@ -28,7 +28,7 @@ urlpatterns = [
     # path('notification',views.notification,name="notification"),
     # path('massage',views.massages,name="massage"),
 
-    path('balance', views.account_balance, name="balance"),
+    path('balance', views.balance_view, name="balance"),
     #API
     path('api/login', views.login),
     path('api/signup', views.signup),
