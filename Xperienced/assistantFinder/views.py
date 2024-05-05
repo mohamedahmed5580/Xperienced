@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django import forms
 from . import models
-from .models import User, Token, Request, Offer, Notification, Category, Message
+from django.core.paginator import Paginator
+from .models import User, Token, Request, Offer, Notification, Category, Message, Connection
 from .emails import EmailSender
 
 emailSender = EmailSender(
@@ -33,6 +34,18 @@ def checkKeys(dic, keys):
     for key in keys:
         if dic.get(key) is None:
             return key
+
+def getPage(request, items, limit=20):
+    if not len(items):
+        return None
+    items = items.order_by("-timestamp")
+    pag = Paginator(items, limit)
+    try:
+        pageNum = int(request.GET["page"])
+        assert pageNum <= pag.num_pages
+    except Exception:
+        pageNum = 1
+    return pag.page(pageNum).object_list
 
 def index(request):
     return render(request, 'assistantFinder/index.html')
@@ -230,23 +243,34 @@ def balance_view(request):
     return render(request, 'assistantFinder/account_balance.html')
     
 def notifications_view(request):
-    return render(request, "assistantFinder/Notifications.html")
+    return render(request, "assistantFinder/Notifications.html", {
+        "notifications": getPage(request.user.notifications)
+    })
 
 def messages_view(request):
-    return render(request, "assistantFinder/Messages.html")
-
-def notifications(request):
-    response = checkRequest(request, post=False)
-    if response is not None:
-        return response
-    return JsonResponse({"notifications": Notification.objects.filter(user=request.user)}, status=200)
-
-def messages(request):
-    response = checkRequest(request, post=False)
-    if response is not None:
-        return response
     messages = []
     for room in request.user.student_chatrooms + request.user.mentor_chatrooms:
-        messages += room.messages.exclude(sender=request.user)
-    messages = messages.order_by("-timestamp")
-    return JsonResponse({"messages": messages}, status=200)
+        if room.messages.exclude(sender=request.user).exists():
+            message = room.messages.exclude(sender=request.user).order_by("-timestamp")[0]
+            messages.append(message)
+    return render(request, "assistantFinder/Messages.html", {
+        "messages": messages,
+    })
+
+def send_message(request, id):
+    response = checkRequest(request)
+    if response is not None:
+        return response
+    if Request.objects.filter(id=id) is None:
+        return JsonResponse({"error": "Request doesn't exist"}, status=400) 
+    requestInstance = Request.objects.get(id=id)
+    if Connection.objects.filter(request=requestInstance) is None:
+        return JsonResponse({"error": "Authorization error"}, status=403) 
+    chatRoom = Connection.objects.get(request=requestInstance).chatRoom
+    if request.user not in [chatRoom.mentor, chatRoom.student]:
+        return JsonResponse({"error": "Authorization error"}, status=403)
+    data = json.loads(request.body)
+    if not data.get("content"):
+        return JsonResponse({"error": "Message can't be empty."})
+    Message.objects.create(chatRoom, request.user, data["content"])
+    return JsonResponse({"success": "Message sent successfully."})

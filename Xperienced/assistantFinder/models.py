@@ -14,6 +14,7 @@ CANCELLED = "Cancelled"
 
 class User(AbstractUser):
     phone = PhoneNumberField()
+    about = models.TextField(max_length=5000)
     picture = models.ImageField(null=True, upload_to="images/")
     verifiedEmail = models.BooleanField(default=False)
     balance = models.IntegerField(default=0)
@@ -53,6 +54,9 @@ class User(AbstractUser):
         self.balance -= transation.amount
         self.save()
 
+class Skill(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="skills")
+    skill = models.CharField(max_length=50)
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -85,7 +89,7 @@ class Request(models.Model):
         offer.save()
         chatRoom = ChatRoom(self.owner, offer.bidder)
         chatRoom.save()
-        connection = Connection(offer, chatRoom)
+        connection = Connection(self, offer, chatRoom)
         connection.save();
         return True
 
@@ -150,9 +154,11 @@ class Message(models.Model):
     chatroom = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name="messages")
     sender = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="sent_messages")
     content = models.TextField(max_length=1000)
+    read = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 class Connection(models.Model):
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name="connections")
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name="connections")
     chatRoom = models.ForeignKey(ChatRoom, on_delete=models.RESTRICT)
     datetime = models.DateTimeField(auto_now_add=True)
