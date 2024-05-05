@@ -12,6 +12,11 @@ urlpatterns = [
     path('requests', views.requests_view, name="requests"),
     path('notifications',views.notifications_view, name="notifications"),
     path('messages',views.messages_view, name="messages"),
+    path('balance', views.balance_view, name="balance"),
+    # path('profile/<str:username>',views.profile, name="profile"),
+
+    # under development
+    path('profile',views.temp_profile, name="profile"),
     path('profile/<str:username>',views.profile, name="profile"),
 
     path('request', views.request_view, name="request"),
@@ -24,7 +29,6 @@ urlpatterns = [
     # path('massage',views.massages,name="massage"),
 
     path('balance', views.account_balance, name="balance"),
-
     #API
     path('api/login', views.login),
     path('api/signup', views.signup),
