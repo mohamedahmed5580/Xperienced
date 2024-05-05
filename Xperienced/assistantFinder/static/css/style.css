@@ -237,6 +237,9 @@ transform:rotate(45deg);
 background:var(--secondary-color);
 
 }
+.mobile-text{
+  display: none;
+}
 .dropdown-menu-left {
   right: auto;
   left: 0;
@@ -347,10 +350,11 @@ span.action-text {
 /* start landing */
 
 .Hero_Section{
-  width: 100%;
-  height:100% ;
-  background-color: var(--secondary2-color);
+  background-color: var(--secondary-color);
+  background: url(../image/Hero_Section.png);
   background-size: cover;
+  background-repeat: no-repeat;
+  height: 800px;
 }
 .Hero_Section .overlay{
   display: flex;
@@ -359,8 +363,6 @@ span.action-text {
 .Hero_Section .overlay .hero_bg{
   width: 100%;
   height: 100%;
-  position: absolute;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(desk-593327_1920.jpg);
 }
 .Hero_Section .text-center {
   display: flex;
@@ -371,14 +373,22 @@ span.action-text {
   height: 100px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 300px;
   background: #FFFFFF;
   border-radius: 10px;
   justify-content: center;
   align-items: center;
-  
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  transform: translateY(-50%);
 }
-
+.text-content {
+  position: absolute;
+  top: 60%;
+  right: 0;
+  left: 0;
+}
 .Hero_Section .text-center h2{
   font-family: 'Poppins';
   font-style: normal;
@@ -488,7 +498,6 @@ span.action-text {
   text-align: center;
   background-size: cover;
   background: var(--section-background);
-  margin-top: 50px;
 }
 .Benefits .header-about{
   padding-bottom: 50px;
@@ -1431,9 +1440,12 @@ tr td span {
 }
 .Type_Category{
   display: flex;
+  justify-content: space-between;
+
 }
+
 .Type_Category .col-md-3{
-  padding-left: 25px;
+  padding-left: 0px;
 }
 .frame-10 {
   border-radius: 8px;
@@ -1445,6 +1457,7 @@ tr td span {
   width: 98%;
   box-sizing: border-box;
 }
+
 .frame-12 {
   border-radius: 8px;
   background: #F1F1F3;
@@ -1503,12 +1516,13 @@ tr td span {
 .Offer_Help .Required{
   display: block;
   width: 250px;
-  height: 900px;
+  height:80%;
   background-color: var(--section-background);
   padding: 40px 15px;
   gap: 40px;
   background: #FFFFFF;
   border-radius: 10px;
+  margin-bottom: 50px;
 }
 
 .Offer_Help .Required .Requir{
@@ -1558,6 +1572,7 @@ tr td span {
 
 .Offer_Help .category{
   margin-bottom: 25px;
+  
 }
 .Offer_Help .category h5{
   margin-bottom: 10px;
@@ -1608,7 +1623,8 @@ tr td span {
   width: 813px;
   box-sizing: border-box;
   margin-left: 30px;
-  
+  margin-bottom: 50px;
+
 }
 .Offer_Help .Categorys .box{
   border-radius: 8px;
@@ -2014,6 +2030,7 @@ tr td span {
 @media (max-width:685px) {
   .header .nav {
     padding: 0px;
+    top: auto;
   }
   .header .fixed-bottom-nav {
     position: fixed;
@@ -2021,7 +2038,19 @@ tr td span {
     bottom: 0;
     left: 0;
     z-index: 1030;
-}
+  }
+  .text-content{
+    top: 25%;
+  }
+  .box-nav .mobile-text{
+    display: block;
+    color: var(--secondary-color);
+    margin-left: -20px;
+    font-size: 30px;
+  }
+  .Hero_Section{
+    height: 600px;
+  }
   .Hero_Section .text-center{
     width: 320px;
     height: 70px;
@@ -2030,6 +2059,7 @@ tr td span {
     justify-content: center;
     text-align: center;
     align-items: center;
+    top: 20%;
   }
   .Hero_Section .hero-text {
     display: block;
@@ -2096,7 +2126,14 @@ tr td span {
     background-color: var(--section-background);
     color: var(--secondary2-color);
   }
-
+  img.img-navb{
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
   div#navbarScroll {
     background-color: var(--main-color);
     height: 800px;
@@ -2105,14 +2142,21 @@ tr td span {
     padding: 0px; 
   }
   .Hero_Section .overlay .hero_bg{
-        height: 80%;
+    height: 80%;
   }
-  
+  .box-nav{
+    display: flex;
+    width: 85%;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15px;
+
+  }
 
   .btnbox{
     display: block;
   }
-  .header .navbar .navbar-brand .logo {
+  .header .navbar .box .logo {
     margin-left: 25px ;
   }
   .Hero_Section .text-center h2 {
@@ -2126,9 +2170,9 @@ tr td span {
     height: 46px;
     font-size: large;
   }
+
   .Benefits{
     height: 70pc;
-    margin-top: 10%;
   }
   .Benefits .header-about{
     padding-bottom: 50px;
@@ -2139,7 +2183,7 @@ tr td span {
     justify-content: center;
     align-items: center;
     padding: 0px;
-    width: 350px;
+    width: 90%;
     height: 773px;
     box-shadow: 30px 30px 30px 30px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
@@ -2154,10 +2198,9 @@ tr td span {
   }
   .Section-3 .row .coloumn .serv .text {
     padding: 0px;
+    width: 95%;
 }
-.Section-3 .row .coloumn .serv{
-  width: 300px;
-}
+
 .Footer {
   display: flex;
   width: 100%;
@@ -2240,7 +2283,7 @@ tr td span {
   margin-top: 0px;
  }
  .profile{
-  margin-top: 100px;
+  margin-top: 0px;
  }
  .emp-profile{
    width: 95%;
@@ -2477,7 +2520,7 @@ tr td span {
     width: 100%;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     height: 700px;
   }
   .Offer_Help .Categorys{

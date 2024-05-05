@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<div class="Signin">
+<div class="Signin" id="myForm">
   <div class="TextContainer">
     <div class="Heading">Sign Up</div>
     <div class="Paragraph">Welcome Please Sign in to access your account.</div>
@@ -18,18 +18,18 @@
     <div class="col-md-15">
       <label for="inputName" class="form-label">Name : </label>
       <div class="Nam">
-        <input type="text" class="form-control-N " id="inputEmail4" placeholder="First Name" required>
-        <input type="text" class="form-control-N" id="inputEmail4" placeholder="Last Name" required>
+        <input type="text" class="form-control-N " id="name" placeholder="First Name" required>
+        <input type="text" class="form-control-N" id="name" placeholder="Last Name" required>
       </div>
       <br>
       <label for="inputEmail4" class="form-label">User Name :</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="USer Name" required>
+      <input type="text" class="form-control" id="name" placeholder="USer Name" required>
       <br>
       <label for="inputEmail4" class="form-label">Email :</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+      <input type="email" class="form-control" id="email" placeholder="Email" required>
       <br>
       <label for="inputEmail4" class="form-label">Phone :</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="Phone Number" required>
+      <input type="text" class="form-control" id="phone" placeholder="Phone Number" required>
       <br>
       <label for="inputPassword4" class="form-label">Password</label>
       <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
@@ -69,8 +69,7 @@
       </svg>
         Login with Google
       </a> 
-
-        
+      
     <p class="button-34">
       You Have an Account ? <a href="{% url "login" %}">Login</a>
     </p>

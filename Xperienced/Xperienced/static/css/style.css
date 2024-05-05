@@ -1440,9 +1440,12 @@ tr td span {
 }
 .Type_Category{
   display: flex;
+  justify-content: space-between;
+
 }
+
 .Type_Category .col-md-3{
-  padding-left: 25px;
+  padding-left: 0px;
 }
 .frame-10 {
   border-radius: 8px;
@@ -1454,6 +1457,7 @@ tr td span {
   width: 98%;
   box-sizing: border-box;
 }
+
 .frame-12 {
   border-radius: 8px;
   background: #F1F1F3;
@@ -2516,7 +2520,7 @@ tr td span {
     width: 100%;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 100px;
+    margin-top: 50px;
     height: 700px;
   }
   .Offer_Help .Categorys{

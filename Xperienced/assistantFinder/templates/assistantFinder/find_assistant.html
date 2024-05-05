@@ -13,30 +13,30 @@
   <form id="new-request-form">
       <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Title<span class="heading-17-sub-0">*</span></label>
-          <input type="text" class="form-control" id="title" placeholder="Write Titlem" required>
+          <input type="text" class="form-control" id="title" placeholder="Write Titlem"  >
       </div>
       <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Description<span class="heading-17-sub-0">*</span></label>
-          <textarea class="form-control" id="description" placeholder="Enter a detailed description of your project and attach examples of what you want if possible." rows="3" required></textarea>
+          <textarea class="form-control" id="description" placeholder="Enter a detailed description of your project and attach examples of what you want if possible." rows="3" ></textarea>
       </div>
       <!-- <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Required Skills<span class="heading-17-sub-0">*</span></label>
-          <input type="text" class="form-control" id="skills" placeholder="Identify the most important skills required" required>
+          <label for="exampleFormControlInput1" class="form-label"> Skills<span class="heading-17-sub-0">*</span></label>
+          <input type="text" class="form-control" id="skills" placeholder="Identify the most important skills " >
       </div> -->
 
       <div class="mb-3 Type_Category">
           <div class="col-md-3">
               <label for="validationCustom04" class="form-label">Type</label>
-              <input type="text" class="form-control" id="type" required>
+              <input type="text" class="form-control" id="type" >
 
           </div>
           <div class="col-md-3">
               <label for="validationCustom05" class="form-label">Category</label>
-              <input type="text" class="form-control" id="category" required>
+              <input type="text" class="form-control" id="category" >
           </div>
           <div class="col-md-3">
               <label for="validationCustom05" class="form-label">Expected budget</label>
-              <input type="text" class="form-control" id="salary" placeholder="25$" required>
+              <input type="text" class="form-control" id="salary" placeholder="25$" >
           </div>
       </div>
 
@@ -64,11 +64,11 @@
       <div class="alert alert-danger d-n" role="alert" id="alart">
 
       </div>
-      <button class="btn btn-primary" id="btnAdd">Submit</button>
-  </form>
+      <button  class="btn btn-primary" id="btnAdd" onclick="addoffer()" >Submit</button>
+
 </div>
+
 <script src="{% static 'js/Addoffer.js' %} "></script>
+{% comment %} <script src="{% static 'js/show_offer.js' %} "></script> {% endcomment %}
+
 {% endblock content %}
-
-
-
