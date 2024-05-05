@@ -33,6 +33,6 @@ urlpatterns = [
     path('api/new_request', views.new_request),
     path('api/requests', views.requests),
     path('api/request/<int:id>/offer', views.add_offer),
-    path('api/request/<int:id>/accept_offer', views.accept),
+    # path('api/request/<int:id>/accept_offer', views.accept),
     path('api/request/<int:id>/chat/send', views.send_message),
 ]
