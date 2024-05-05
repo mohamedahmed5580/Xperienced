@@ -26,7 +26,7 @@ def checkRequest(request, auth=True, post=True):
 def checkFormErrors(form):
     errors = []
     for field in form:
-        errors += field.errors()
+        errors += list(field.errors)
     return errors
 
 def checkKeys(dic, keys):
