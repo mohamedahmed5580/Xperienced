@@ -169,7 +169,7 @@ def requests(request):
     data = json.loads(request.body)
     requests = []
     for req in Request.objects.all():
-        if req.state() == OPEN:
+        if req.state() == models.OPEN:
             requests.append(req)
     if data.get("category"):
         if Category.objects.filter(name=data["category"]) is None:

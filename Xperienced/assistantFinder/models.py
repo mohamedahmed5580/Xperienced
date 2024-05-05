@@ -23,7 +23,6 @@ class User(AbstractUser):
             Token.objects.get(user=self).delete()
         token = Token(self)
         token.generateTokenKey()
-        token.save()
         return token.key
     
     def getToken(self):
@@ -34,6 +33,7 @@ class User(AbstractUser):
     def verifyEmail(self):
         Token.objects.get(user=self).delete()
         self.verifiedEmail = True
+        self.save()
 
     def availableBalance(self):
         return self.balance
@@ -51,6 +51,7 @@ class User(AbstractUser):
         transation = Transaction(self, offer.bidder, offer.bid)
         transation.save()
         self.balance -= transation.amount
+        self.save()
 
 
 class Category(models.Model):
@@ -81,6 +82,7 @@ class Request(models.Model):
         if offer.request != self or self.state() != OPEN:
             return False
         offer.state = PROGRESS
+        offer.save()
         chatRoom = ChatRoom(self.owner, offer.bidder)
         chatRoom.save()
         connection = Connection(offer, chatRoom)
@@ -91,6 +93,7 @@ class Request(models.Model):
         if offer.request != self or offer.state != PENDING:
             return False
         offer.state = CANCELLED
+        offer.save()
         return True
 
     def completeRequest(self):
@@ -98,11 +101,15 @@ class Request(models.Model):
             return False
         offer = self.offers.get(state=PENDING)
         offer.state = COMPLETED
+        offer.save()
+        return True
     
     def cancelRequest(self):
         if self.state() != OPEN:
             return False
         self.cancelled = True
+        self.save()
+        return True
         
 
 class Offer(models.Model):
@@ -116,7 +123,7 @@ class Offer(models.Model):
         (CANCELLED, CANCELLED), 
         (COMPLETED, COMPLETED)
         ])
-    date = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField(auto_now_add=True)
 
 class ChatRoom(models.Model):
     student = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="student_chatrooms")
@@ -150,10 +157,10 @@ class Connection(models.Model):
     chatRoom = models.ForeignKey(ChatRoom, on_delete=models.RESTRICT)
     datetime = models.DateTimeField(auto_now_add=True)
 
-    def instructor(self):
-        return self.offer.request.owner
-    def student(self):
+    def mentor(self):
         return self.offer.bidder
+    def student(self):
+        return self.offer.request.owner
     def isActive(self):
         return self.offer.state == PROGRESS
 
@@ -164,9 +171,10 @@ class Token(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def generateTokenKey(self):
-        self.token = 0
+        self.key = 0
         for i in range(6):
-            self.token += 10**i * randint(0, 9)
+            self.key += 10**i * randint(0, 9)
+        self.save()
 
     def isExpired(self):
         minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
@@ -197,3 +205,4 @@ class Transaction(models.Model):
             return False
         self.to_user.balance += self.amount
         self.onHold = False
+        self.save()
