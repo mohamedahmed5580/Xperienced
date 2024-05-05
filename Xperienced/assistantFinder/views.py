@@ -129,7 +129,6 @@ def verify_email(request):
     request.user.verifyEmail()
     return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
-
 def new_request_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
 

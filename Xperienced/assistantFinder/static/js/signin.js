@@ -1,60 +1,27 @@
-$(document).ready(function() {
-    $("#btn-primary").click(function(event) {
-      event.preventDefault();
-  
-      var isValid = true;
-  
-      // Validate first name
-      if ($("#first-name").val() == "") {
-        $("#first-name").addClass("error");
-        isValid = false;
-      } else {
-        $("#first-name").removeClass("error");
-      }
-  
-      // Validate last name
-      if ($("#last-name").val() == "") {
-        $("#last-name").addClass("error");
-        isValid = false;
-      } else {
-        $("#last-name").removeClass("error");
-      }
-  
-      // Validate email
-      if ($("#email").val() == "") {
-        $("#email").addClass("error");
-        isValid = false;
-      } else {
-        $("#email").removeClass("error");
-      }
-  
-      // Validate phone number
-      if ($("#phone").val() == "") {
-        $("#phone").addClass("error");
-        isValid = false;
-      } else {
-        $("#phone").removeClass("error");
-      }
-  
-      // Validate password
-      if ($("#password").val() == "") {
-        $("#password").addClass("error");
-        isValid = false;
-      } else {
-        $("#password").removeClass("error");
-      }
-  
-      // Validate confirm password
-      if ($("#confirm-password").val() == "") {
-        $("#confirm-password").addClass("error");
-        isValid = false;
-      } else {
-        $("#confirm-password").removeClass("error");
-      }
-  
-      // If all fields are valid, submit the form
-      if (isValid) {
-        $("#signup-form").submit();
-      }
-    });
-  });
+const form = document.getElementById('form');
+
+document.getElementById('form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  fetch('/api/login/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          firstname: document.getElementById('firstname').value,
+          lastname: document.getElementById('lastname').value,
+          username: document.getElementById('username').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          password: document.getElementById('Password').value,
+          confirm_password: document.getElementById('ConfirmPassword').value
+      }),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data); 
+      
+  })
+
+});
