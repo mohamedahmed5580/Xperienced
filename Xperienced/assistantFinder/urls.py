@@ -12,16 +12,16 @@ urlpatterns = [
     path('requests', views.requests_view, name="requests"),
     path('notifications',views.notifications_view, name="notifications"),
     path('messages',views.messages_view, name="messages"),
-    # path('profile/<str:username>',views.profile, name="profile"),
+    path('profile/<str:username>',views.profile, name="profile"),
 
     path('request', views.request_view, name="request"),
-    path('massage',views.massages,name="massage"),
-    path('find', views.find_assistant, name="find_assistant"),
-    path('offer', views.offer_help, name="offer_help"),
+    # path('massage',views.massages,name="massage"),
+    # path('find', views.find_assistant, name="find_assistant"),
+    # path('offer', views.offer_help, name="offer_help"),
     
     path('profile', views.profile, name="profile"),
     # path('notification',views.notification,name="notification"),
-    path('massage',views.massages,name="massage"),
+    # path('massage',views.massages,name="massage"),
 
     path('balance', views.account_balance, name="balance"),
 

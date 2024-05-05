@@ -2,14 +2,14 @@
 var offerDataArray = JSON.parse(localStorage.getItem('offerDataArray')) || [];
 var btn=document.getElementById("btnAdd");
 var alart_error= document.getElementById('alart');
-btn.onclick = function() {
+function addoffer() {
     var title = document.getElementById("title").value;
     var salary = document.getElementById("salary").value;
-    var skills = document.getElementById("skills").value;
+    // var skills = document.getElementById("skills").value;
     var type = document.getElementById("type").value;
     var description = document.getElementById("description").value;
     var category = document.getElementById("category").value;
-    if (title == '' || salary ==''  || skills ==''  || description ==''  || type ==''  || category=='') {
+    if (title == '' || salary =='' || description ==''  || type ==''  || category=='') {
         alart_error.classList.remove('d-n');
         alart_error.classList.add('d-b');
         alart_error.textContent="you have empty field";
@@ -17,7 +17,7 @@ btn.onclick = function() {
       }else{
           var offerData = {
               title: title,
-              salary: salary,
+            //   salary: salary,
               skills: skills,
               type: type,
               description: description,

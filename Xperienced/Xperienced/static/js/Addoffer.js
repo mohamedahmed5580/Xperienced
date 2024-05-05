@@ -2,7 +2,8 @@
 var offerDataArray = JSON.parse(localStorage.getItem('offerDataArray')) || [];
 var btn=document.getElementById("btnAdd");
 var alart_error= document.getElementById('alart');
-btn.onclick = function() {
+
+function addoffer() {
     var title = document.getElementById("title").value;
     var salary = document.getElementById("salary").value;
     // var skills = document.getElementById("skills").value;

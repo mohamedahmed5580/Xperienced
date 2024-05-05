@@ -183,7 +183,6 @@ def request_view(request, id):
         "request": Request.objects.get(id=id)
     })
 
-
 class NewOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
