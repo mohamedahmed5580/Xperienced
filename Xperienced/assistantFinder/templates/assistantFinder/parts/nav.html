@@ -30,14 +30,14 @@
           </button>
         </div>
         <div class="box-nav">
-          <a class="nav-link mobile-text" href="{% url 'notification' %}"><i class="fa-solid fa-bell " ></i> </a>
+          <a class="nav-link mobile-text" href="{% url 'notifications' %}"><i class="fa-solid fa-bell " ></i> </a>
           <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'image/image.png' %} " alt=""></a>
-          <a class="nav-link mobile-text" href="{% url 'massage' %}"><i class="fa-solid fa-envelope "></i> </a>
+          <a class="nav-link mobile-text" href="{% url 'messages' %}"><i class="fa-solid fa-envelope "></i> </a>
         </div>
         <div class="collapse navbar-collapse" id="navbarScroll">
           <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
             <li class="nav-item">
-              <a class="nav-link nav-l active " aria-current="page" href="{% url 'find_assistant' %}">
+              <a class="nav-link nav-l active " aria-current="page" href="{% url 'new_request' %}">
                 <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 8.75H17M8 11.75H12.5M2.75 13.26C2.75 14.86 3.873 16.254 5.457 16.487C6.586 16.653 7.727 16.78 8.88 16.866C9.23 16.892 9.55 17.076 9.745 17.367L12.5 21.5L15.255 17.367C15.3516 17.2233 15.4798 17.1034 15.6297 17.0166C15.7795 16.9298 15.9472 16.8783 16.12 16.866C17.2652 16.7805 18.4069 16.6541 19.543 16.487C21.127 16.254 22.25 14.861 22.25 13.259V7.241C22.25 5.639 21.127 4.246 19.543 4.013C17.211 3.67072 14.857 3.49926 12.5 3.5C10.108 3.5 7.756 3.675 5.457 4.013C3.873 4.246 2.75 5.64 2.75 7.241V13.259V13.26Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -87,7 +87,7 @@
                 </ul>
                 <hr>
                 <div class="notification-link">
-                  <a href="{% url 'massage' %}"><i class="fa-regular fa-bell"></i> All Massages </a>
+                  <a href="{% url 'messages' %}"><i class="fa-regular fa-bell"></i> All Massages </a>
                 </div>
               </div>
 
@@ -126,7 +126,7 @@
                 </ul>
                 <hr>
                 <div class="notification-link">
-                  <a href="{% url 'notification' %}"><i class="fa-regular fa-bell"></i> All Notifications </a>
+                  <a href="{% url 'notifications' %}"><i class="fa-regular fa-bell"></i> All Notifications </a>
                 </div>
               </div>
 
@@ -184,7 +184,7 @@
         <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'find_assistant' %}">Find Assistant</a>
+        <a class="nav-link " href="{% url 'new_request' %}">Find Assistant</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'requests' %}">Offer Help</a>

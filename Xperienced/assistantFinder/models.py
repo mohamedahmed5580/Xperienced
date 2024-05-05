@@ -14,23 +14,45 @@ CANCELLED = "Cancelled"
 
 class User(AbstractUser):
     phone = PhoneNumberField()
-    verifiedEmail = models.BooleanField(default=False)
     picture = models.ImageField(null=True, upload_to="images/")
+    verifiedEmail = models.BooleanField(default=False)
+    balance = models.IntegerField(default=0)
     
     def createToken(self):
         if Token.objects.filter(user=self).exists():
             Token.objects.get(user=self).delete()
         token = Token(self)
         token.generateTokenKey()
-        token.save()
         return token.key
     
     def getToken(self):
-        return Token.objects.filter(user=self)
+        if Token.objects.filter(user=self) is not None:
+            return None
+        return Token.objects.get(user=self)
 
     def verifyEmail(self):
         Token.objects.get(user=self).delete()
-        verifiedEmail = True
+        self.verifiedEmail = True
+        self.save()
+
+    def availableBalance(self):
+        return self.balance
+    
+    def onHoldBalance(self):
+        total = 0
+        for tran in self.to_transations:
+            total += tran.amount
+        return total
+    
+    def totalBalance(self):
+        return self.availableBalance() + self.onHoldBalance()
+    
+    def makeTransation(self, offer):
+        transation = Transaction(self, offer.bidder, offer.bid)
+        transation.save()
+        self.balance -= transation.amount
+        self.save()
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -46,7 +68,7 @@ class Request(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="requests")
     budget = models.IntegerField()
     cancelled = models.BooleanField(default=False)
-    date = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField(auto_now_add=True)
 
     def state(self):
         if self.cancelled:
@@ -60,12 +82,18 @@ class Request(models.Model):
         if offer.request != self or self.state() != OPEN:
             return False
         offer.state = PROGRESS
+        offer.save()
+        chatRoom = ChatRoom(self.owner, offer.bidder)
+        chatRoom.save()
+        connection = Connection(offer, chatRoom)
+        connection.save();
         return True
 
     def cancelOffer(self, offer):
         if offer.request != self or offer.state != PENDING:
             return False
         offer.state = CANCELLED
+        offer.save()
         return True
 
     def completeRequest(self):
@@ -73,11 +101,15 @@ class Request(models.Model):
             return False
         offer = self.offers.get(state=PENDING)
         offer.state = COMPLETED
+        offer.save()
+        return True
     
     def cancelRequest(self):
         if self.state() != OPEN:
-            return FALSE
+            return False
         self.cancelled = True
+        self.save()
+        return True
         
 
 class Offer(models.Model):
@@ -91,27 +123,46 @@ class Offer(models.Model):
         (CANCELLED, CANCELLED), 
         (COMPLETED, COMPLETED)
         ])
-    date = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+class ChatRoom(models.Model):
+    student = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="student_chatrooms")
+    mentor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="mentor_chatrooms")
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def clean(self, *args, **kwargs):
+        if self.student == self.mentor:
+            raise ValidationError
+        super().clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def sendMessage(self, sender, content):
+        if sender not in [self.firstUser, self.secondUser]:
+            return False
+        message = Message(self, sender, content)
+        message.save()
+        return True
+
+class Message(models.Model):
+    chatroom = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name="messages")
+    sender = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="sent_messages")
+    content = models.TextField(max_length=1000)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 class Connection(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name="connections")
-    date = models.DateTimeField(auto_now_add=True)
+    chatRoom = models.ForeignKey(ChatRoom, on_delete=models.RESTRICT)
+    datetime = models.DateTimeField(auto_now_add=True)
 
-    def instructor(self):
-        return self.offer.request.owner
-    def student(self):
+    def mentor(self):
         return self.offer.bidder
+    def student(self):
+        return self.offer.request.owner
     def isActive(self):
         return self.offer.state == PROGRESS
-
-class Message(models.Model):
-    connection = models.ForeignKey(Connection, on_delete=models.CASCADE, related_name="messages")
-    content = models.TextField(max_length=1000)
-    byInstructor = models.BooleanField(default=False)
-    date = models.DateTimeField(auto_now_add=True)
-
-    def sender(self):
-        return self.connection.instructor() if self.byInstructor else self.connection.student()
 
 class Token(models.Model):
     TOKEN_VALIDITY_LIMIT = 5
@@ -120,13 +171,14 @@ class Token(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def generateTokenKey(self):
-        self.token = 0
+        self.key = 0
         for i in range(6):
-            self.token += 10**i * randint(0, 9)
+            self.key += 10**i * randint(0, 9)
+        self.save()
 
     def isExpired(self):
         minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
-        return minutesDiff > TOKEN_VALIDITY_LIMIT
+        return minitesDiff > self.TOKEN_VALIDITY_LIMIT
 
 def URLValidator(url):
     try:
@@ -138,3 +190,19 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     content = models.TextField(max_length=250)
     url = models.CharField(max_length=50, validators=[URLValidator])
+    read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class Transaction(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="from_transations")
+    to_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="to_transations")
+    amount = models.IntegerField()
+    onHold = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def finalizeTransaction(self):
+        if not self.onHold:
+            return False
+        self.to_user.balance += self.amount
+        self.onHold = False
+        self.save()
