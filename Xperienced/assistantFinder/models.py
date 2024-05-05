@@ -16,6 +16,7 @@ class User(AbstractUser):
     phone = PhoneNumberField()
     picture = models.ImageField(null=True, upload_to="images/")
     verifiedEmail = models.BooleanField(default=False)
+    balance = models.IntegerField(default=0)
     
     def createToken(self):
         if Token.objects.filter(user=self).exists():
@@ -33,6 +34,24 @@ class User(AbstractUser):
     def verifyEmail(self):
         Token.objects.get(user=self).delete()
         self.verifiedEmail = True
+
+    def availableBalance(self):
+        return self.balance
+    
+    def onHoldBalance(self):
+        total = 0
+        for tran in self.to_transations:
+            total += tran.amount
+        return total
+    
+    def totalBalance(self):
+        return self.availableBalance() + self.onHoldBalance()
+    
+    def makeTransation(self, offer):
+        transation = Transaction(self, offer.bidder, offer.bid)
+        transation.save()
+        self.balance -= transation.amount
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -164,3 +183,17 @@ class Notification(models.Model):
     content = models.TextField(max_length=250)
     url = models.CharField(max_length=50, validators=[URLValidator])
     read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class Transaction(models.Model):
+    from_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="from_transations")
+    to_user = models.ForeignKey(User, on_delete=models.RESTRICT, related_name="to_transations")
+    amount = models.IntegerField()
+    onHold = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def finalizeTransaction(self):
+        if not self.onHold:
+            return False
+        self.to_user.balance += self.amount
+        self.onHold = False
