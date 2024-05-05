@@ -1,5 +1,5 @@
 import json
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
@@ -44,7 +44,7 @@ def signup_view(request):
     return render(request, 'assistantFinder/signup.html')
 
 def logout_view(request):
-    logout(request)
+    auth.logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 class NewUserForm(forms.ModelForm):
@@ -59,24 +59,8 @@ class NewUserForm(forms.ModelForm):
             "password"
         )
 
-def login(request):
-    response = checkRequest(request, False)
-    if response is not None:
-        return response
-    data = json.loads(request.body)
-    missingKey = checkKeys(data, ["username", "password"])
-    if missingKey is not None:
-        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
-    username = data["username"]
-    password = data["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is None:
-        return JsonResponse({"error": "Invalid username and/or password."}, status=401)
-    login(request, user)
-    return JsonResponse({"success": "User authenticated successfully"}, status=200)
-
 def signup(request):
-    response = checkRequest(request, False)
+    response = checkRequest(request, auth=False)
     if response is not None:
         return response
     data = json.loads(request.body)
@@ -92,10 +76,28 @@ def signup(request):
         errors = checkFormErrors(userForm)
         return JsonResponse({"error": errors[0]}, status=400)
 
-    if User.objects.filter(username=data["username"]).exists():
+    if models.User.objects.filter(username=data["username"]).exists():
         return JsonResponse({"error": "Username already taken."}, status=400)
-    user = userForm.save()
-    login(request, user)
+    user = userForm.save(commit=False)
+    user.set_password(userForm.cleaned_data["password"])
+    user.save()
+    auth.login(request, user)
+    return JsonResponse({"success": "User authenticated successfully"}, status=200)
+
+def login(request):
+    response = checkRequest(request, auth=False)
+    if response is not None:
+        return response
+    data = json.loads(request.body)
+    missingKey = checkKeys(data, ["username", "password"])
+    if missingKey is not None:
+        return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
+    username = data["username"]
+    password = data["password"]
+    user = auth.authenticate(request, username=username, password=password)
+    if user is None:
+        return JsonResponse({"error": "Invalid username and/or password."}, status=401)
+    auth.login(request, user)
     return JsonResponse({"success": "User authenticated successfully"}, status=200)
 
 def send_email_token(request):
@@ -217,7 +219,6 @@ def add_offer(request, id):
     offer.save()
     return JsonResponse({"success": "Offer added successfully."}, status=200)
 
-
 def profile(request, username):
     return render(request, 'assistantFinder/profile.html', {
         "profile": User.objects.get(username=username)
@@ -226,7 +227,7 @@ def profile(request, username):
 def temp_profile(request):
     return render(request, 'assistantFinder/profile.html') 
 
-def account_balance(request):
+def balance_view(request):
     return render(request, 'assistantFinder/account_balance.html')
     
 def notifications_view(request):
