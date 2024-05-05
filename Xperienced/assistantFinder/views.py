@@ -154,6 +154,7 @@ def new_request(request):
     if missingKey is not None:
         return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
     requestForm = NewRequestForm(data)
+    
     if not requestForm.is_valid():
         errors = checkFormErrors(requestForm)
         return JsonResponse({"error": errors[0]}, status=400)
