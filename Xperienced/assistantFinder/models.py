@@ -19,6 +19,15 @@ class User(AbstractUser):
     verifiedEmail = models.BooleanField(default=False)
     balance = models.IntegerField(default=0)
     
+    def changeEmail(self, email):
+        if email == self.email:
+            return False
+        self.email = email
+        self.verifiedEmail = False
+        if Token.objects.filter(user=self).exists():
+            Token.objects.get(user=self).delete()
+        return True
+
     def createToken(self):
         if Token.objects.filter(user=self).exists():
             Token.objects.get(user=self).delete()

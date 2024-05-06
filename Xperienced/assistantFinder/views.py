@@ -461,6 +461,8 @@ def edit_profile(request):
         data["phone"] = request.user.phone
     if data.get("email") is None:
         data["email"] = request.user.email
+    else
+        request.user.changeEmail(data["email"])
 
     userForm = EditUserForm(data)
     if not userForm.is_valid():
@@ -469,7 +471,6 @@ def edit_profile(request):
     request.user.last_name = data["last_name"]
     request.user.about = data["about"]
     request.user.phone = data["phone"]
-    request.user.email = data["email"]
     request.user.save()
     if data.get("skills"):
         skills = request.user.skills
@@ -487,7 +488,7 @@ def edit_profile(request):
             request.user.save()
         except Exception:
             return JsonResponse({"error": "Picture is invalid"})
-        request.user.save()
+    request.user.save()
     return JsonResponse({"success": "Profile edited successfully"}, status=200)
 
 def notifications(request):
