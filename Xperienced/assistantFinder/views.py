@@ -141,20 +141,21 @@ def signup(request):
     if response is not None:
         return response
     data = json.loads(request.body)
-    missingKey = checkKeys(data, NewUserForm.Meta.fields)
+    missingKey = checkKeys(data, list(NewUserForm.Meta.fields) + ["confirmation"])
     if missingKey is not None:
         return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
 
     if data["password"] != data["confirmation"]:
         return JsonResponse({"error": "Passwords don't match."}, status=400)
 
+    if models.User.objects.filter(username=data["username"]).exists():
+        return JsonResponse({"error": "Username already taken."}, status=400)
+
     userForm = NewUserForm(data)
     if not userForm.is_valid():
         errors = checkFormErrors(userForm)
         return JsonResponse({"error": errors[0]}, status=400)
-
-    if models.User.objects.filter(username=data["username"]).exists():
-        return JsonResponse({"error": "Username already taken."}, status=400)
+    
     user = userForm.save(commit=False)
     user.set_password(userForm.cleaned_data["password"])
     user.save()
