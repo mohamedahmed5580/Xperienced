@@ -8,7 +8,7 @@ from django.urls import reverse
 from django import forms
 from . import models
 from django.core.paginator import Paginator
-from .models import User, Token, Request, Offer, Notification, Category, Message, Connection, Skill
+from .models import User, Token, Request, Offer, Notification, Category, Message, Connection, Skill, Type
 from .emails import EmailSender
 
 emailSender = EmailSender(
@@ -31,7 +31,8 @@ def checkRequest(request, auth=True, post=True):
 def checkFormErrors(form):
     errors = []
     for field in form:
-        errors += list(field.errors)
+        for error in field.errors:
+            errors.append(f"{field.label}: {error}")
     return errors
 
 def checkKeys(dic, keys):
@@ -160,7 +161,7 @@ def signup(request):
     user.set_password(userForm.cleaned_data["password"])
     user.save()
     auth.login(request, user)
-    return JsonResponse({"success": "User authenticated successfully"}, status=200)
+    return JsonResponse({"success": "User authenticated successfully."}, status=200)
 
 @csrf_exempt
 def login(request):
@@ -177,7 +178,7 @@ def login(request):
     if user is None:
         return JsonResponse({"error": "Invalid username and/or password."}, status=401)
     auth.login(request, user)
-    return JsonResponse({"success": "User authenticated successfully"}, status=200)
+    return JsonResponse({"success": "User authenticated successfully."}, status=200)
 
 @csrf_exempt
 def send_email_token(request):
@@ -238,48 +239,84 @@ def new_request(request):
     missingKey = checkKeys(data["request"], NewRequestForm.Meta.fields)
     if missingKey is not None:
         return JsonResponse({"error": f"Missing {missingKey}."}, status=400)
-    requestForm = NewRequestForm(data)
-    
+    requestForm = NewRequestForm(data["request"])
+    if Category.objects.filter(name=data["request"]["category"]) is None:
+        return JsonResponse({"error": f"Category doesn't exist."}, status=400)
+    data["request"]["category"] = Category.objects.get(name=data["request"]["category"])
     if not requestForm.is_valid():
         errors = checkFormErrors(requestForm)
+        print(errors)
         return JsonResponse({"error": errors[0]}, status=400)
-    request = requestForm.save(commit=False)
-    request.owner = request.user
-    request.save()
-    return JsonResponse({"success": request.id}, status=200)
+    requestInstance = requestForm.save(commit=False)
+    requestInstance.owner = request.user
+    requestInstance.requestType = requestInstance.category.requestType
+    requestInstance.save()
+    return JsonResponse({"request_id": requestInstance.id}, status=200)
 
 @csrf_exempt
 def requests(request):
     data = json.loads(request.body)
-    requests = []
-    for req in Request.objects.all():
-        if req.state() == models.OPEN:
-            requests.append(req)
+    requests = Request.objects.all()
+    if data.get("type"):
+        if not Type.objects.filter(name=data["type"]).exists():
+            return JsonResponse({"error": "Specified type doesn't exist"}, status=400)
+        requests = requests.filter(requestType=Type.objects.get(name=data["type"]))
+
     if data.get("category"):
-        if Category.objects.filter(name=data["category"]) is None:
+        if not Category.objects.filter(name=data["category"]).exists():
             return JsonResponse({"error": "Specified category doesn't exist"}, status=400)
-        requests.filter(category=data["category"])
-    return JsonResponse({"requests": requests}, status=200)
+        requests = requests.filter(category=Category.objects.get(name=data["category"]))
+    requestList = []
+    for req in requests:
+        requestList.append({
+            "owner": req.owner.username,
+            "title": req.title,
+            "description": req.description,
+            "requestCategory": req.category.name,
+            "requestType": req.requestType.name,
+            "budget": req.budget,
+            "datetime": req.datetime
+        })
+    return JsonResponse({"requests": requestList}, status=200)
 
 @csrf_exempt
 def categories(request):
-    return JsonResponse({"categories": Category.objects.all()}, status=200)
+    categories = []
+    for cat in Category.objects.all():
+            categories.append(cat.name)
+    return JsonResponse({"categories": categories}, status=200)
+
+@csrf_exempt
+def types(request):
+    types = []
+    for type_ in Type.objects.all():
+            types.append(type_.name)
+    return JsonResponse({"types": types}, status=200)
 
 @csrf_exempt
 def request(request, id):
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
     requestInstance.requestCategory = requestInstance.category.name
     requestInstance.currentState = requestInstance.state()
-    return JsonResponse({"request": requestInstance}, status=200) 
+    req = {
+        "owner": req.owner.username,
+        "title": req.title,
+        "description": req.description,
+        "requestCategory": req.category.name,
+        "requestType": req.requestType.name,
+        "budget": req.budget,
+        "datetime": req.datetime
+    }
+    return JsonResponse({"request": req}, status=200) 
 
 @csrf_exempt
 def cancel_request(request, id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
     if requestInstance.owner != request.user:
@@ -291,7 +328,7 @@ def cancel_request(request, id):
 
 @csrf_exempt
 def offers(request, id):
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400) 
     requestInstance = Request.objects.get(id=id)
     return JsonResponse({"offers": requestInstance.offers.all()})
@@ -301,7 +338,7 @@ def add_offer(request, id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400) 
     requestInstance = Request.objects.get(id=id)
     data = json.loads(request.body)
@@ -330,7 +367,7 @@ def offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
     if requestInstance.offers.filter(id=offer_id) is None:
@@ -342,7 +379,7 @@ def accept_offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
     if requestInstance.owner != request.user:
@@ -362,7 +399,7 @@ def cancel_offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
 
@@ -381,7 +418,7 @@ def complete_request(request, id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
     if requestInstance.owner != request.user:
@@ -396,10 +433,10 @@ def chat_messages(request, id):
     response = checkRequest(request)
     if response is not None:
         return response
-    if Request.objects.filter(id=id) is None:
+    if not Request.objects.filter(id=id).exists():
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
     requestInstance = Request.objects.get(id=id)
-    if Connection.objects.filter(request=requestInstance) is None:
+    if not Connection.objects.filter(request=requestInstance).exists():
         return JsonResponse({"error": "Authorization error"}, status=403)
     chatRoom = Connection.objects.get(request=requestInstance).chatRoom
     if request.user not in [chatRoom.mentor, chatRoom.student]:
@@ -415,7 +452,7 @@ def send_message(request, id):
     if Request.objects.filter(id=id) is None:
         return JsonResponse({"error": "Request doesn't exist"}, status=400) 
     requestInstance = Request.objects.get(id=id)
-    if Connection.objects.filter(request=requestInstance) is None:
+    if not Connection.objects.filter(request=requestInstance).exists():
         return JsonResponse({"error": "Authorization error"}, status=403) 
     chatRoom = Connection.objects.get(request=requestInstance).chatRoom
     if request.user not in [chatRoom.mentor, chatRoom.student]:
@@ -429,7 +466,7 @@ def send_message(request, id):
 
 @csrf_exempt
 def profile(request, username):
-    if User.objects.filter(username=username) is None:
+    if not User.objects.filter(username=username).exists():
         return JsonResponse({"error": "Profile doesn't exist."}, status=400) 
     user = User.objects.get(username=username)
     profile = {
@@ -530,7 +567,9 @@ def notifications(request):
     # if not inBounds(fromIndex, 0, size - 1) or not inBounds(toIndex, fromIndex, size - 1):
     #     return JsonResponse({"error": "Invalid range"}, status=400)
     # notifications = notifications[fromIndex: toIndex]
-    return JsonResponse({"notifications": notifications}, status=200)
+    for notification in notifications:
+        notifications = notification.__dict__
+    return JsonResponse({"notifications": notification}, status=200)
 
 @csrf_exempt 
 def messages(request):
@@ -538,7 +577,7 @@ def messages(request):
     if response is not None:
         return response
     messages = []
-    for room in request.user.student_chatrooms + request.user.mentor_chatrooms:
+    for room in list(request.user.student_chatrooms.all()) + list(request.user.mentor_chatrooms.all()):
         if room.messages.exclude(sender=request.user).exists():
             message = room.messages.exclude(sender=request.user).order_by("-timestamp")[0]
             message.request_id = message.connections.all()[0].request.id
@@ -552,5 +591,6 @@ def messages(request):
     # if not inBounds(fromIndex, 0, size - 1) or not inBounds(toIndex, fromIndex, size - 1):
     #     return JsonResponse({"error": "Invalid range"}, status=400)
     # messages = messages[fromIndex: toIndex]
+    for message in messages:
+        message = message.__dict__
     return JsonResponse({"messages": messages}, status=200)
-

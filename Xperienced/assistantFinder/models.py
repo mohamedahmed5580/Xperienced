@@ -68,18 +68,19 @@ class Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="skills")
     skill = models.CharField(max_length=50)
 
+class Type(models.Model):
+    name = models.CharField(max_length=100)
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    requestType = models.CharField(max_length=25, choices=[
-        ("Academic Support", "Academic Support"), 
-        ("Mentorship", "Mentorship")
-        ])
+    requestType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="categories")
 
 class Request(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests")
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="requests")
+    requestType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="requests")
     budget = models.IntegerField()
     cancelled = models.BooleanField(default=False)
     datetime = models.DateTimeField(auto_now_add=True)
@@ -87,7 +88,7 @@ class Request(models.Model):
     def state(self):
         if self.cancelled:
             return "Cancelled"
-        for offer in self.offers:
+        for offer in self.offers.all():
             if offer.state in [PROGRESS, COMPLETED]:
                 return offer.state
         return OPEN
