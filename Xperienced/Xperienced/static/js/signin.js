@@ -3,7 +3,7 @@ const form = document.getElementById('form');
 document.getElementById('form').addEventListener('submit', function(event) {
   event.preventDefault();
 
-  fetch('/api/login/', {
+  fetch('/api/signup/', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
