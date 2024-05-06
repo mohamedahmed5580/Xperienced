@@ -461,7 +461,7 @@ def edit_profile(request):
         data["phone"] = request.user.phone
     if data.get("email") is None:
         data["email"] = request.user.email
-    else
+    else:
         request.user.changeEmail(data["email"])
 
     userForm = EditUserForm(data)
