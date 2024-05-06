@@ -551,7 +551,7 @@ fetch('api/requests/<int:id>/chat/send', {
 
 **Response:** (JSON)
 * "error": "profile doesn't exist"
-* "profile" : profile {"username", "first_name", "last_name", "about", "skills" : []} _(if all goes well)_
+* "profile" : profile {"username", "first_name", "last_name", "about", "skills" : [], "pictureURL"} _(if all goes well)_
 
 **Status Codes:** 400, 200
 <br>
@@ -573,7 +573,7 @@ fetch('api/profile/<str:username>')
 
 **Response:** (JSON)
 * "error": _user isn't loged in_
-* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance"} _(if all goes well)_
+* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance", "pictureURL"} _(if all goes well)_
 
 **Status Codes:** 401, 200
 <br>
@@ -598,6 +598,7 @@ fetch('api/profile')
 ["phone": string] (optional)
 ["email": string] (optional)
 ["skills": []] (optional)
+["picture" imageFile] (optional)
 
 **Response:** (JSON)
 * "error": _user isn't logged in or some data is invalid __see valodation details bellow___

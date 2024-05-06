@@ -406,6 +406,7 @@ def profile(request, username):
         "last_name": user.last_name,
         "about": user.about,
         "skills": [],
+        "pictureURL": user.picture.url()
     }
     for skill in user.skills:
         profile["skills"].append(skill.skill)
@@ -427,21 +428,11 @@ def personal_profile(request):
         "availableBalance": user.availableBalance(),
         "onHoldBalance": user.onHoldBalance(),
         "totalBalance": user.totalBalance(),
+        "pictureURL": user.picture.url()
     }
     for skill in user.skills:
         profile["skills"].append(skill.skill)
     return JsonResponse({"profile": profile}, status=200)
-
-class EditUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "about",
-            "phone",
-            "email",
-        )
 
 def edit_profile(request):
     response = checkRequest(request)
@@ -458,7 +449,7 @@ def edit_profile(request):
         data["phone"] = request.user.phone
     if data.get("email") is None:
         data["email"] = request.user.email
-    
+
     userForm = EditUserForm(data)
     if not userForm.is_valid():
         return JsonResponse({"error": checkFormErrors(userForm)[0]})
@@ -467,6 +458,7 @@ def edit_profile(request):
     request.user.about = data["about"]
     request.user.phone = data["phone"]
     request.user.email = data["email"]
+    request.user.save()
     if data.get("skills"):
         skills = request.user.skills
         for skill in skills:
@@ -477,6 +469,13 @@ def edit_profile(request):
                 skill.save()
             except Exception:
                 continue
+    if request.FILES.get("picture"):
+        try:
+            request.user.picture = request.FILES["picture"]
+            request.user.save()
+        except Exception:
+            return JsonResponse({"error": "Picture is invalid"})
+        request.user.save()
     return JsonResponse({"success": "Profile edited successfully"}, status=200)
 
 def notifications(request):

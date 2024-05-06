@@ -15,7 +15,7 @@ CANCELLED = "Cancelled"
 class User(AbstractUser):
     phone = PhoneNumberField()
     about = models.TextField(max_length=5000)
-    picture = models.ImageField(null=True, upload_to="images/")
+    picture = models.ImageField(null=True, upload_to="images/", max_upload_size=5242880)
     verifiedEmail = models.BooleanField(default=False)
     balance = models.IntegerField(default=0)
     
