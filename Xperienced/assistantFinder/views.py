@@ -63,30 +63,8 @@ def logout_view(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-class NewUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = (
-            "first_name",
-            "last_name",
-            "username",
-            "email",
-            "phone",
-            "password"
-        )
-
 def new_request_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
-
-class NewRequestForm(forms.ModelForm):
-    class Meta:
-        model = Request
-        fields = (
-            "title",
-            "description",
-            "category",
-            "budget",
-        )
 
 def requests_view(request):
     return render(request, 'assistantFinder/offer_help.html', {
@@ -98,14 +76,6 @@ def request_view(request, id):
     return render(request, 'assistantFinder/add_offer.html', {
         "request": Request.objects.get(id=id)
     })
-
-class NewOfferForm(forms.ModelForm):
-    class Meta:
-        model = Offer
-        fields = (
-            "bid",
-            "notes"
-        )
 
 def profile_view(request, username):
     return render(request, 'assistantFinder/profile.html', {
@@ -120,6 +90,48 @@ def notifications_view(request):
 
 def messages_view(request):
     return render(request, "assistantFinder/Messages.html")
+
+class NewOfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = (
+            "bid",
+            "notes"
+        )
+
+class NewRequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = (
+            "title",
+            "description",
+            "category",
+            "budget",
+        )
+
+class NewUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "phone",
+            "password"
+        )
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            "first_name",
+            "last_name",
+            "about",
+            "phone",
+            "email",
+        )
+
 
 # API
 
