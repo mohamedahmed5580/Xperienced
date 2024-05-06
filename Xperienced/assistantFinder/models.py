@@ -31,8 +31,9 @@ class User(AbstractUser):
     def createToken(self):
         if Token.objects.filter(user=self).exists():
             Token.objects.get(user=self).delete()
-        token = Token(self)
+        token = Token(user=self)
         token.generateTokenKey()
+        token.save()
         return token.key
     
     def getToken(self):
@@ -182,16 +183,15 @@ class Token(models.Model):
     TOKEN_VALIDITY_LIMIT = 5
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tokens")
     key = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def generateTokenKey(self):
         self.key = 0
         for i in range(6):
             self.key += 10**i * randint(0, 9)
-        self.save()
 
     def isExpired(self):
-        minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
+        minitesDiff = (datetime.now() - self.timestamp).total_seconds() / 60.0
         return minitesDiff > self.TOKEN_VALIDITY_LIMIT
 
 def URLValidator(url):

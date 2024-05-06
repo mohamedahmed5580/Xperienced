@@ -24,7 +24,7 @@ def inBounds(index, minIndex, maxIndex):
 def checkRequest(request, auth=True, post=True):
     if post and request.method != "POST":
         return JsonResponse({"error": "Only post method is allowed."}, status=400)
-    if auth and not request.user.is_authenticated():
+    if auth and not request.user.is_authenticated:
         return JsonResponse({"error": "Authentication error."}, status=401)
     return None
 
@@ -186,11 +186,11 @@ def send_email_token(request):
         return response
     if request.user.verifiedEmail:
         return JsonResponse({"error": "Your email is already verified"}, status=403) 
-    try:
-        key = request.user.createToken()
-        emailSender.sendPlain(request.user.email, "Xperienced: Email Verification", f"Your email verification token: {key}")
-    except Exception:
-        return JsonResponse({"error": "Something went wrong"}, status=500)
+    # try:
+    key = request.user.createToken()
+    emailSender.sendPlain(request.user.email, "Xperienced: Email Verification", f"Your email verification token: {key}")
+    # except Exception:
+        # return JsonResponse({"error": "Something went wrong"}, status=500)
     return JsonResponse({"success": "Token sent successfully"}, status=200) 
 
 @csrf_exempt
