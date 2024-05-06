@@ -160,7 +160,7 @@ class Message(models.Model):
 class Connection(models.Model):
     request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name="connections")
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, related_name="connections")
-    chatRoom = models.ForeignKey(ChatRoom, on_delete=models.RESTRICT)
+    chatRoom = models.ForeignKey(ChatRoom, on_delete=models.RESTRICT, related_name="connections")
     datetime = models.DateTimeField(auto_now_add=True)
 
     def mentor(self):
