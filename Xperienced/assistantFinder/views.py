@@ -440,7 +440,8 @@ def personal_profile(request):
         "availableBalance": user.availableBalance(),
         "onHoldBalance": user.onHoldBalance(),
         "totalBalance": user.totalBalance(),
-        "pictureURL": user.picture.url()
+        "pictureURL": user.picture.url(),
+        "verifiedEmail": user.verifiedEmail,
     }
     for skill in user.skills:
         profile["skills"].append(skill.skill)

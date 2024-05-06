@@ -70,7 +70,7 @@ fetch('api/signup', {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-        // data speficified before
+        // data specified before
     }),
 }).then(response => response.json()).then((response) => {
     if ("error" in response) {
@@ -573,7 +573,7 @@ fetch('api/profile/<str:username>')
 
 **Response:** (JSON)
 * "error": _user isn't loged in_
-* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance", "pictureURL"} _(if all goes well)_
+* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance", "pictureURL", "verifiedEmail": boolean} _(if all goes well)_
 
 **Status Codes:** 401, 200
 <br>
