@@ -51,7 +51,7 @@ class User(AbstractUser):
     
     def onHoldBalance(self):
         total = 0
-        for tran in self.to_transations:
+        for tran in self.to_transations.all():
             total += tran.amount
         return total
     

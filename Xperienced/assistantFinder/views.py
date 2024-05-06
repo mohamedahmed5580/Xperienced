@@ -438,9 +438,9 @@ def profile(request, username):
         "last_name": user.last_name,
         "about": user.about,
         "skills": [],
-        "pictureURL": user.picture.url()
+        "pictureURL": user.picture.url() if user.picture else None,
     }
-    for skill in user.skills:
+    for skill in user.skills.all():
         profile["skills"].append(skill.skill)
     return JsonResponse({"profile": profile}, status=200)
 
@@ -455,16 +455,17 @@ def personal_profile(request):
         "first_name": user.first_name,
         "last_name": user.last_name,
         "email": user.email,
-        "phone": user.phone,
+        "phone": str(user.phone),
         "about": user.about,
         "skills": [],
         "availableBalance": user.availableBalance(),
         "onHoldBalance": user.onHoldBalance(),
         "totalBalance": user.totalBalance(),
-        "pictureURL": user.picture.url(),
+        "pictureURL": user.picture.url() if user.picture else None,
         "verifiedEmail": user.verifiedEmail,
     }
-    for skill in user.skills:
+
+    for skill in user.skills.all():
         profile["skills"].append(skill.skill)
     return JsonResponse({"profile": profile}, status=200)
 
