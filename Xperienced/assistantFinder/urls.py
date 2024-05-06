@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/requests/<int:id>/offers', views.offers),
     path('api/requests/<int:id>/offers/add', views.add_offer),
     path('api/requests/<int:id>/offers/<int:offer_id>', views.offer),
+    # check balance before accepting
     path('api/requests/<int:id>/offers/<int:offer_id>/accept', views.accept_offer),
     path('api/requests/<int:id>/offers/<int:offer_id>/cancel', views.cancel_offer),
     path('api/requests/<int:id>/chat', views.chat_messages),

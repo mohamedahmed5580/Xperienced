@@ -1,6 +1,7 @@
 import json
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
@@ -134,7 +135,7 @@ class EditUserForm(forms.ModelForm):
 
 
 # API
-
+@csrf_exempt
 def signup(request):
     response = checkRequest(request, auth=False)
     if response is not None:
@@ -160,6 +161,7 @@ def signup(request):
     auth.login(request, user)
     return JsonResponse({"success": "User authenticated successfully"}, status=200)
 
+@csrf_exempt
 def login(request):
     response = checkRequest(request, auth=False)
     if response is not None:
@@ -176,6 +178,7 @@ def login(request):
     auth.login(request, user)
     return JsonResponse({"success": "User authenticated successfully"}, status=200)
 
+@csrf_exempt
 def send_email_token(request):
     response = checkRequest(request)
     if response is not None:
@@ -189,6 +192,7 @@ def send_email_token(request):
         return JsonResponse({"error": "Something went wrong"}, status=500)
     return JsonResponse({"success": "Token sent successfully"}, status=200) 
 
+@csrf_exempt
 def verify_email(request):
     response = checkRequest(request)
     if response is not None:
@@ -208,6 +212,7 @@ def verify_email(request):
     request.user.verifyEmail()
     return JsonResponse({"success": "Email verified Successfully."}, status=200) 
 
+@csrf_exempt
 def new_request_view(request):
     return render(request, 'assistantFinder/find_assistant.html')
 
@@ -221,6 +226,7 @@ class NewRequestForm(forms.ModelForm):
             "budget",
         )
 
+@csrf_exempt
 def new_request(request):
     response = checkRequest(request)
     if response is not None:
@@ -241,6 +247,7 @@ def new_request(request):
     request.save()
     return JsonResponse({"success": request.id}, status=200)
 
+@csrf_exempt
 def requests(request):
     data = json.loads(request.body)
     requests = []
@@ -253,9 +260,11 @@ def requests(request):
         requests.filter(category=data["category"])
     return JsonResponse({"requests": requests}, status=200)
 
+@csrf_exempt
 def categories(request):
     return JsonResponse({"categories": Category.objects.all()}, status=200)
 
+@csrf_exempt
 def request(request, id):
     if Request.objects.filter(id=id) is None:
         return JsonResponse({"error": "Request doesn't exist"}, status=400)
@@ -264,6 +273,7 @@ def request(request, id):
     requestInstance.currentState = requestInstance.state()
     return JsonResponse({"request": requestInstance}, status=200) 
 
+@csrf_exempt
 def cancel_request(request, id):
     response = checkRequest(request)
     if response is not None:
@@ -278,12 +288,14 @@ def cancel_request(request, id):
     requestInstance.cancelRequest()
     return JsonResponse({"success": "Request cancelled successfully"}, status=200)
 
+@csrf_exempt
 def offers(request, id):
     if Request.objects.filter(id=id) is None:
         return JsonResponse({"error": "Request doesn't exist"}, status=400) 
     requestInstance = Request.objects.get(id=id)
     return JsonResponse({"offers": requestInstance.offers.all()})
 
+@csrf_exempt
 def add_offer(request, id):
     response = checkRequest(request)
     if response is not None:
@@ -312,6 +324,7 @@ def add_offer(request, id):
     offer.save()
     return JsonResponse({"success": "Offer added successfully."}, status=200)
 
+@csrf_exempt
 def offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
@@ -323,6 +336,7 @@ def offer(request, id, offer_id):
         return JsonResponse({"error": "Offer doesn't exist"}, status=400)
     return JsonResponse({"offer": requestInstance.offers.get(id=offer_id)}, status=200)
 
+@csrf_exempt
 def accept_offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
@@ -342,6 +356,7 @@ def accept_offer(request, id, offer_id):
     requestInstance.acceptOffer(offer)
     return JsonResponse({"success": "Offer accepted successfully"}, status=200)
 
+@csrf_exempt
 def cancel_offer(request, id, offer_id):
     response = checkRequest(request)
     if response is not None:
@@ -360,6 +375,7 @@ def cancel_offer(request, id, offer_id):
     offer.state = models.CANCELLED
     return JsonResponse({"success": "Offer cancelled successfully"}, status=200)
 
+@csrf_exempt
 def complete_request(request, id):
     response = checkRequest(request)
     if response is not None:
@@ -374,6 +390,7 @@ def complete_request(request, id):
     requestInstance.completeRequest()
     return JsonResponse({"success": "Request completed successfully"}, status=200)
 
+@csrf_exempt
 def chat_messages(request, id):
     response = checkRequest(request)
     if response is not None:
@@ -389,6 +406,7 @@ def chat_messages(request, id):
     messages = chatRoom.messages.all()
     return JsonResponse({"messages": messages}, status=200)
 
+@csrf_exempt
 def send_message(request, id):
     response = checkRequest(request)
     if response is not None:
@@ -408,6 +426,7 @@ def send_message(request, id):
     Message.objects.create(chatRoom, request.user, data["content"])
     return JsonResponse({"success": "Message sent successfully."}, status=200)
 
+@csrf_exempt
 def profile(request, username):
     if User.objects.filter(username=username) is None:
         return JsonResponse({"error": "Profile doesn't exist."}, status=400) 
@@ -424,6 +443,7 @@ def profile(request, username):
         profile["skills"].append(skill.skill)
     return JsonResponse({"profile": profile}, status=200)
 
+@csrf_exempt
 def personal_profile(request):
     response = checkRequest(request, post=False)
     if response is not None:
@@ -447,6 +467,7 @@ def personal_profile(request):
         profile["skills"].append(skill.skill)
     return JsonResponse({"profile": profile}, status=200)
 
+@csrf_exempt
 def edit_profile(request):
     response = checkRequest(request)
     if response is not None:
@@ -492,6 +513,7 @@ def edit_profile(request):
     request.user.save()
     return JsonResponse({"success": "Profile edited successfully"}, status=200)
 
+@csrf_exempt
 def notifications(request):
     response = checkRequest(request, post=False)
     if response is not None:
@@ -508,6 +530,7 @@ def notifications(request):
     # notifications = notifications[fromIndex: toIndex]
     return JsonResponse({"notifications": notifications}, status=200)
 
+@csrf_exempt 
 def messages(request):
     response = checkRequest(request, post=False)
     if response is not None:
