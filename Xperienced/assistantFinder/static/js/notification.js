@@ -64,12 +64,11 @@ function displayPagination() {
         button.type = 'radio';
         button.id = 'btnradio' + i;
         button.name = 'btnradio';
-        button.value = i; // Set the value of the button to the page number
+        button.value = i; 
         button.addEventListener('click', function() {
             currentPage = parseInt(this.value);
             displayNotifications(currentPage);
         });
-
         var label = document.createElement('label');
         label.setAttribute('for', 'btnradio' + i);
         label.textContent = i;
@@ -77,6 +76,7 @@ function displayPagination() {
         paginationContainer.appendChild(button);
         paginationContainer.appendChild(label);
     }
+
 }
 
 displayNotifications(currentPage);
