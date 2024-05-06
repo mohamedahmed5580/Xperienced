@@ -244,6 +244,7 @@ fetch('api/requests/categories').then(response => response.json()).then(response
 **Response:** (JSON)
 * "error": "Request doesn't exist."
 * "offers" : request {"owner", "title", "description", "requestCategory", "budget", "currentState", "datetime"}
+
 **Status Codes:** 400, 200
 <br>
 **Example:**
@@ -395,7 +396,6 @@ fetch('api/requests/<int:id>/offers/add', {
 **Method:** GET
 <br>
 **Request Parameters:** 
-* CSRF Token : string (header)
 
 **Response:** (JSON)
 * "error": _(request or offer doesn't exist)_
@@ -406,7 +406,7 @@ fetch('api/requests/<int:id>/offers/add', {
 **Example:**
 
 ```
-fetch('api/login')
+fetch('api/requests/<int:id>/offers/<int:offer_id>')
 .then(response => response.json()).then((response) => {
     // do stuff
 });
@@ -458,7 +458,7 @@ fetch('api/requests/<int:id>/offers/<int:offer_id>/accept', {
 <br>
 **Example:**
 ```
-fetch('api/login', {
+fetch('api/requests/<int:id>/offers/<int:offer_id>/cancel', {
     method: 'POST',
     headers: {
         'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
@@ -484,7 +484,6 @@ fetch('api/login', {
 **Method:** GET
 <br>
 **Request Parameters:** 
-* CSRF Token : string (header)
 
 **Response:** (JSON)
 * "error": _user isn't authorized..._
