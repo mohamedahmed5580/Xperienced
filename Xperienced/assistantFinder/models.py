@@ -19,11 +19,21 @@ class User(AbstractUser):
     verifiedEmail = models.BooleanField(default=False)
     balance = models.IntegerField(default=0)
     
+    def changeEmail(self, email):
+        if email == self.email:
+            return False
+        self.email = email
+        self.verifiedEmail = False
+        if Token.objects.filter(user=self).exists():
+            Token.objects.get(user=self).delete()
+        return True
+
     def createToken(self):
         if Token.objects.filter(user=self).exists():
             Token.objects.get(user=self).delete()
-        token = Token(self)
+        token = Token(user=self)
         token.generateTokenKey()
+        token.save()
         return token.key
     
     def getToken(self):
@@ -41,7 +51,7 @@ class User(AbstractUser):
     
     def onHoldBalance(self):
         total = 0
-        for tran in self.to_transations:
+        for tran in self.to_transations.all():
             total += tran.amount
         return total
     
@@ -58,18 +68,19 @@ class Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="skills")
     skill = models.CharField(max_length=50)
 
+class Type(models.Model):
+    name = models.CharField(max_length=100)
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    requestType = models.CharField(max_length=25, choices=[
-        ("Academic Support", "Academic Support"), 
-        ("Mentorship", "Mentorship")
-        ])
+    requestType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="categories")
 
 class Request(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requests")
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=1000)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="requests")
+    requestType = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="requests")
     budget = models.IntegerField()
     cancelled = models.BooleanField(default=False)
     datetime = models.DateTimeField(auto_now_add=True)
@@ -77,7 +88,7 @@ class Request(models.Model):
     def state(self):
         if self.cancelled:
             return "Cancelled"
-        for offer in self.offers:
+        for offer in self.offers.all():
             if offer.state in [PROGRESS, COMPLETED]:
                 return offer.state
         return OPEN
@@ -115,7 +126,6 @@ class Request(models.Model):
         self.save()
         return True
         
-
 class Offer(models.Model):
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="offers")
     request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name="offers")
@@ -174,16 +184,15 @@ class Token(models.Model):
     TOKEN_VALIDITY_LIMIT = 5
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tokens")
     key = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def generateTokenKey(self):
         self.key = 0
         for i in range(6):
             self.key += 10**i * randint(0, 9)
-        self.save()
 
     def isExpired(self):
-        minitesDiff = (datetime.now() - self.date).total_seconds() / 60.0
+        minitesDiff = (datetime.now() - self.timestamp).total_seconds() / 60.0
         return minitesDiff > self.TOKEN_VALIDITY_LIMIT
 
 def URLValidator(url):

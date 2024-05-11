@@ -70,7 +70,7 @@ fetch('api/signup', {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-        // data speficified before
+        // data specified before
     }),
 }).then(response => response.json()).then((response) => {
     if ("error" in response) {
@@ -156,7 +156,7 @@ fetch('api/verify_email/verify', {
 <br>
 **Request Parameters:** 
 * CSRF Token : string (header)
-* request: {"title", "description", "category", "budget",}
+* request: {"title", "description", "category", "budget": integer}
 
 **Response:** (JSON)
 * "error": error_message _(some data is missing or invalid __see valodation bellow__)_
@@ -196,7 +196,7 @@ fetch('api/new_request', {
 
 **Response:** (JSON)
 * "error": _if the specified category does not exist_
-* "requests" : a list of request request {"owner", "title", "description", "requestCategory", "budget", "datetime"}
+* "requests" : a list of request request {"owner", "title", "description", "requestCategory", "requestType", "budget", "datetime"}
 
 
 **Status Codes:** 400, 200
@@ -214,14 +214,14 @@ fetch('api/requests', {
 ```
 
 ## api/requests/categories
-**Use:** fetches all request categories along side their type
+**Use:** fetches all request categories
 <br>
 **Method:** GET
 <br>
 **Request Parameters:** 
 
 **Response:** (JSON)
-* "categories" : a list of category {"name", "requestType"}
+* "categories" : a list of category names
 
 
 **Status Codes:** 200
@@ -230,6 +230,26 @@ fetch('api/requests', {
 
 ```
 fetch('api/requests/categories').then(response => response.json()).then(response => {
+    // do stuff
+});
+```
+
+## api/requests/types
+**Use:** fetches all request types
+<br>
+**Method:** GET
+<br>
+**Request Parameters:** 
+
+**Response:** (JSON)
+* "categories" : a list of type names
+
+**Status Codes:** 200
+<br>
+**Example:**
+
+```
+fetch('api/requests/types').then(response => response.json()).then(response => {
     // do stuff
 });
 ```
@@ -551,7 +571,7 @@ fetch('api/requests/<int:id>/chat/send', {
 
 **Response:** (JSON)
 * "error": "profile doesn't exist"
-* "profile" : profile {"username", "first_name", "last_name", "about", "skills" : []} _(if all goes well)_
+* "profile" : profile {"username", "first_name", "last_name", "about", "skills" : [], "pictureURL"} _(if all goes well)_
 
 **Status Codes:** 400, 200
 <br>
@@ -573,7 +593,7 @@ fetch('api/profile/<str:username>')
 
 **Response:** (JSON)
 * "error": _user isn't loged in_
-* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance"} _(if all goes well)_
+* "profile" : profile {"username", "first_name", "last_name", "email", "phone", "about", skills": [], "availableBalance", "onHoldBalance", "totalBalance", "pictureURL", "verifiedEmail": boolean} _(if all goes well)_
 
 **Status Codes:** 401, 200
 <br>
@@ -598,6 +618,7 @@ fetch('api/profile')
 ["phone": string] (optional)
 ["email": string] (optional)
 ["skills": []] (optional)
+["picture" imageFile] (optional)
 
 **Response:** (JSON)
 * "error": _user isn't logged in or some data is invalid __see valodation details bellow___
