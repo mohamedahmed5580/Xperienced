@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+<div class="container Offer_Help mt " id="offer-list">
+  <div class="Required">
+    <div class="Requir">
+        <span >
+          Required aid
+        </span>
+    </div>
+    <div class="search">
+      <h5>Search</h5>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <div class="category">
+      <h5>Category</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Mathematics
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Computer Science
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Others
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <h5>Type</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Career Guidance
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Academic Support
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Mentorship
+          </label>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="Categorys " id="offer-list-items">
+    <div class="box">
+      <p>
+        OOP
+      </p>
+      <div class="text">
+        محتاج حد يشرحلي  يعني ايه  copy constructor<br />
+        و ايه الفرق بينه و بين الـ deep copy and shallow copy
+      </div>
+      <div class="Add">
+        <div class="price">
+          25-50 EGP
+        </div>
+
+        <a href="" class="btn_add">  Add an offer</a>
+        <a href="" class="btn_add">  Remove offer</a>
+
+      </div>
+
+      
+  </div>
+</div>
+</div>
+
+<script src="{% static 'js/Addoffer.js' %} "></script>
+<script src="{% static '/js/show_offer.js' %} "></script>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+      
