@@ -33,7 +33,6 @@ function dspliayoffers() {
 }
 function removeoffer(index) {
   offerDataArray.splice(index, 1);
-  
   window.localStorage.setItem('offerDataArray', JSON.stringify(offerDataArray));
   window.location.reload();
 }

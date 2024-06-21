@@ -13,215 +13,227 @@
     <link rel="stylesheet" href="{% static 'css/all.min.css' %} ">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %} ">
+    
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap" rel="stylesheet">
-      <script88 src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script8>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+    <script88 src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script8>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>   
   </head>
   <body>
-  <header class="header">
-    <nav class="navbar navbar-expand-lg navbar-light nav fixed-top fixed-bottom-nav">
-      <div class="container-fluid">
-        <div class="btnbox">
-          <button type="button" class="toggle" id="toggle">
-            <span></span>
-          </button>
-        </div>
-        <div class="box-nav">
-          <a class="nav-link mobile-text" href="{% url 'notifications' %}"><i class="fa-solid fa-bell " ></i> </a>
-          <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'image/image.png' %} " alt=""></a>
-          <a class="nav-link mobile-text" href="{% url 'messages' %}"><i class="fa-solid fa-envelope "></i> </a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-          <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-            <li class="nav-item">
-              <a class="nav-link nav-l active " aria-current="page" href="{% url 'new_request' %}">
-                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 8.75H17M8 11.75H12.5M2.75 13.26C2.75 14.86 3.873 16.254 5.457 16.487C6.586 16.653 7.727 16.78 8.88 16.866C9.23 16.892 9.55 17.076 9.745 17.367L12.5 21.5L15.255 17.367C15.3516 17.2233 15.4798 17.1034 15.6297 17.0166C15.7795 16.9298 15.9472 16.8783 16.12 16.866C17.2652 16.7805 18.4069 16.6541 19.543 16.487C21.127 16.254 22.25 14.861 22.25 13.259V7.241C22.25 5.639 21.127 4.246 19.543 4.013C17.211 3.67072 14.857 3.49926 12.5 3.5C10.108 3.5 7.756 3.675 5.457 4.013C3.873 4.246 2.75 5.64 2.75 7.241V13.259V13.26Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Find Assistant</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-l" href="{% url 'requests' %}">
-                <i class="fa-solid fa-plus"></i>                  
-                Offer Help </a>
-            </li>
-          </ul>
-          <form class="btns">
-            {% if user.is_authenticated %}
-              <div class="sidepar  d-flex">
-                <div class="chat dropdown">
-                  <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                    <i class="fa-solid fa-envelope fa-xl"></i>
+    <!-- <div id="main-content" style="display: none;"> -->
+      <header class="header">
+      <nav class="navbar navbar-expand-lg navbar-light nav fixed-top fixed-bottom-nav"  data-aos="fade-down">
+        <div class="container-fluid">
+          <div class="btnbox">
+            <button type="button" class="toggle" id="toggle">
+              <span></span>
+            </button>
+          </div>
+          <div class="box-nav">
+            <a class="nav-link mobile-text" href="{% url 'notifications' %}"><i class="fa-solid fa-bell " ></i> </a>
+            <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'image/image.png' %} " alt=""></a>
+            <a class="nav-link mobile-text" href="{% url 'messages' %}"><i class="fa-solid fa-envelope "></i> </a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link nav-l active " aria-current="page" href="{% url 'new_offer' %}">
+                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 8.75H17M8 11.75H12.5M2.75 13.26C2.75 14.86 3.873 16.254 5.457 16.487C6.586 16.653 7.727 16.78 8.88 16.866C9.23 16.892 9.55 17.076 9.745 17.367L12.5 21.5L15.255 17.367C15.3516 17.2233 15.4798 17.1034 15.6297 17.0166C15.7795 16.9298 15.9472 16.8783 16.12 16.866C17.2652 16.7805 18.4069 16.6541 19.543 16.487C21.127 16.254 22.25 14.861 22.25 13.259V7.241C22.25 5.639 21.127 4.246 19.543 4.013C17.211 3.67072 14.857 3.49926 12.5 3.5C10.108 3.5 7.756 3.675 5.457 4.013C3.873 4.246 2.75 5.64 2.75 7.241V13.259V13.26Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Find Assistant</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-l" href="{% url 'offers' %}">
+                  <i class="fa-solid fa-plus"></i>                  
+                  Offer Help </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-l" href="{% url 'myoffer' user.id %}">
+                  <i class="fa-solid fa-plus"></i>                  
+                  My Offer 
                   </a>
-                  <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
-    
-                    <ul class="notification-list" >
-                      <li class="notification-list-item ">
-                        <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
-                        <div class="notification-item-content">
-                          User Name :
-                          <a class="notification-link" href="#" >
-                            A guide for entrepreneurs to get started with the Independent platform
-                          </a>
-                          <div class="notification-item-date">
-                            <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+              </li>
+              
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link nav-l active " aria-current="page" href="{% url 'new_offer' %}">
+                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 8.75H17M8 11.75H12.5M2.75 13.26C2.75 14.86 3.873 16.254 5.457 16.487C6.586 16.653 7.727 16.78 8.88 16.866C9.23 16.892 9.55 17.076 9.745 17.367L12.5 21.5L15.255 17.367C15.3516 17.2233 15.4798 17.1034 15.6297 17.0166C15.7795 16.9298 15.9472 16.8783 16.12 16.866C17.2652 16.7805 18.4069 16.6541 19.543 16.487C21.127 16.254 22.25 14.861 22.25 13.259V7.241C22.25 5.639 21.127 4.246 19.543 4.013C17.211 3.67072 14.857 3.49926 12.5 3.5C10.108 3.5 7.756 3.675 5.457 4.013C3.873 4.246 2.75 5.64 2.75 7.241V13.259V13.26Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Find Assistant</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-l" href="{% url 'offers' %}">
+                  <i class="fa-solid fa-plus"></i>                  
+                  Offer Help </a>
+              </li>
+              {% endif %}
+            </ul>
+            <form class="btns">
+              {% if user.is_authenticated %}
+                <div class="sidepar  d-flex">
+                  <div class="chat dropdown">
+                    <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                      <i class="fa-solid fa-envelope fa-xl"></i>
+                    </a>
+                    <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
+      
+                      <ul class="notification-list" >
+                        <li class="notification-list-item ">
+                          <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                          <div class="notification-item-content">
+                            User Name :
+                            <a class="notification-link" href="#" >
+                              A guide for entrepreneurs to get started with the Independent platform
+                            </a>
+                            <div class="notification-item-date">
+                              <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                      <li class="notification-list-item ">
-                        <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
-                        <div class="notification-item-content">
-                          User Name :
-                          <a class="notification-link" href="#" >
-                            A guide for entrepreneurs to get started with the Independent platform
-                          </a>
-                          <div class="notification-item-date">
-                            <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                        </li>
+                        <li class="notification-list-item ">
+                          <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                          <div class="notification-item-content">
+                            User Name :
+                            <a class="notification-link" href="#" >
+                              A guide for entrepreneurs to get started with the Independent platform
+                            </a>
+                            <div class="notification-item-date">
+                              <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-    
-                    </ul>
-                    <hr>
-                    <div class="notification-link">
-                      <a href="{% url 'messages' %}"><i class="fa-regular fa-bell"></i> All Massages </a>
+                        </li>
+      
+                      </ul>
+                      <hr>
+                      <div class="notification-link">
+                        <a href="{% url 'messages' %}"><i class="fa-regular fa-bell"></i> All Massages </a>
+                      </div>
                     </div>
+      
                   </div>
-    
+                  <div class="chat dropdown ">
+                    <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa-solid fa-bell fa-xl" ></i>
+                    </a>
+                    <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
+                      <ul class="notification-list" data-empty="لا جديد حتى اللحظة!">
+                        <li class="notification-list-item ">
+                          <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                          <div class="notification-item-content">
+                            Message:
+                            <a class="notification-link" href="#" >
+                              A guide for entrepreneurs to get started with the Independent platform
+                            </a>
+                            <div class="notification-item-date">
+                              <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="notification-list-item ">
+                          <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
+                          <div class="notification-item-content">
+                            Message:
+                            <a class="notification-link" href="#" >
+                              A guide for entrepreneurs to get started with the Independent platform
+                            </a>
+                            <div class="notification-item-date">
+                              <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
+                            </div>
+                          </div>
+                        </li>
+      
+                      </ul>
+                      <hr>
+                      <div class="notification-link">
+                        <a href="{% url 'notifications' %}"><i class="fa-regular fa-bell"></i> All Notifications </a>
+                      </div>
+                    </div>
+      
                 </div>
-                <div class="chat dropdown ">
-                  <a class="vector" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid fa-bell fa-xl" ></i>
+                <div class="chat dropdown accunt-content">
+                  <a class=" dropdown-toggle bg-img" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if user.image %}
+                      <img src="{{  user.image.url }}" alt=" {{ user.first_name }} {{ user.last_name }}" class="img-navb">
+                    {% else %}
+                      <img src="{% static 'image/user.png' %}" alt="Default Image" class="img-navb">
+                    {% endif %}
+                    <!-- <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128"> -->
                   </a>
-                  <div class="dropdown-menu notification" aria-labelledby="dropdownMenuLink">
-                    <ul class="notification-list" data-empty="لا جديد حتى اللحظة!">
-                      <li class="notification-list-item ">
-                        <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
-                        <div class="notification-item-content">
-                          Message:
-                          <a class="notification-link" href="#" >
-                            A guide for entrepreneurs to get started with the Independent platform
-                          </a>
-                          <div class="notification-item-date">
-                            <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="notification-list-item ">
-                        <img class="notification-item-img" alt="" src="{% static 'image/image.png' %}">
-                        <div class="notification-item-content">
-                          Message:
-                          <a class="notification-link" href="#" >
-                            A guide for entrepreneurs to get started with the Independent platform
-                          </a>
-                          <div class="notification-item-date">
-                            <time datetime="2024-04-25 05:12:01" title="2024-04-25 05:12:01"> <i class="fa fa-clock-o"></i> 4 أيام و 8 ساعات </time>
-                          </div>
-                        </div>
-                      </li>
-    
-                    </ul>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'profile' request.user.id %}">
+                      
+                      <i class="fa fa-fw fa-user"></i>
+                      {{ user.first_name }} {{ user.last_name }}
+                    </a>
+                    <a class="dropdown-item" href="{% url 'balance'%}">
+                      <i class="fa fa-fw fa-usd"></i>
+                      Balance
+                    </a>
                     <hr>
-                    <div class="notification-link">
-                      <a href="{% url 'notifications' %}"><i class="fa-regular fa-bell"></i> All Notifications </a>
-                    </div>
-                  </div>
-    
-              </div>
-              <div class="chat dropdown accunt-content">
-                <a class=" dropdown-toggle bg-img" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {% if user.image %}
-                    <img src="{{  user.image.url }}" alt=" {{ user.first_name }} {{ user.last_name }}" class="img-navb">
-                  {% else %}
-                    <img src="{% static 'image/user.png' %}" alt="Default Image" class="img-navb">
-                  {% endif %}
-                  <!-- <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128"> -->
+                    <a class="dropdown-item" href="#">
+                      <i class="fa fa-fw fa-edit"></i>
+                      Edit Profile 
+                    </a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">
+                      <i class="fa fa-fw fa-sign-out"></i>
+                      Logout
+                    </a>
+      
+      
+                </div>
+                </div>
+                </div>
+              {% else %}
+                <a href="{% url 'login_view'  %}" class="btn btn-outline-light right"> 
+                  <i class="fa-solid fa-right-to-bracket"></i>               
+                  Login 
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="{% url 'profile'%}">
-                    
-                    <i class="fa fa-fw fa-user"></i>
-                    {{ user.first_name }} {{ user.last_name }}
-                  </a>
-                  <a class="dropdown-item" href="{% url 'balance'%}">
-                    <i class="fa fa-fw fa-usd"></i>
-                    Balance
-                  </a>
-                  <hr>
-                  <a class="dropdown-item" href="#">
-                    <i class="fa fa-fw fa-edit"></i>
-                    Edit Profile 
-                  </a>
-                  <a class="dropdown-item" href="{% url 'logout' %}">
-                    <i class="fa fa-fw fa-sign-out"></i>
-                    Logout
-                  </a>
-    
-    
-              </div>
-              </div>
-              </div>
-            {% else %}
-              <a href="{% url 'login_view'  %}" class="btn btn-outline-light right"> 
-                <i class="fa-solid fa-right-to-bracket"></i>               
-                Login 
-              </a>
-              <a href="{% url 'register'  %}" class="btn btn-outline-light left">
-                  <i class="fa-solid fa-user-plus"></i> 
-                    Sign Up
-              </a>
-            {% endif %}
-        </form>
-        
+                <a href="{% url 'register'  %}" class="btn btn-outline-light left">
+                    <i class="fa-solid fa-user-plus"></i> 
+                      Sign Up
+                </a>
+              {% endif %}
+          </form>
+          
+          </div>
         </div>
-      </div>
-    </nav>
-    {% csrf_token %}
-  </header>
-  <div class="sidebar" id='sidebar'>  
-    <ul class="navbar-nav ms-auto nav-section items">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="{% url 'new_request' %}">Find Assistant</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'requests' %}">Offer Help</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'balance' %}">Balance</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="{% url 'requests' %}">Log Out</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link img-link" href="{% url 'profile' %}"> 
-            <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128">
-            {% if user.image %}
-              {{ user.first_name }} {{ user.last_name }}
-            {% else %}
-            User
-            {% endif %}
-            
-          </a>
-      </li>
-    </ul>
-    </div>
-<!-- start landing -->
+      </nav>
+      </header>
+      <div class="sidebar" id='sidebar'>  
+        <ul class="navbar-nav ms-auto nav-section items">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'new_offer' %}">Find Assistant</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'offers' %}">Offer Help</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'balance' %}">Balance</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link img-link" href="{% url 'profile' %}"> 
+                <img class="img-navb" src="https://avatars.hsoubcdn.com/ec365cbde984baac6669282ae0242d02?s=128">
+                {% if user.image %}
+                  {{ user.first_name }} {{ user.last_name }}
+                {% else %}
+                User
+                {% endif %}
+                
+              </a>
+          </li>
+        </ul>
+        </div>
+  <!-- start landing -->
 

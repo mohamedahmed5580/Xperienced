@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    $('#signup-form').on('submit', function(event) {
-        event.preventDefault(); // Prevent the form from submitting the default way
-        
+$('#signup-form').on('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
+    
+    if (validateForm()) {
+    
+            // Collect form data
         var formData = {
             'first_name': $('#firstname').val(),
             'last_name': $('#lastname').val(),
@@ -12,26 +14,48 @@ $(document).ready(function() {
             'confirm_password': $('#confirm-password').val(),
             'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val() // Get CSRF token
         };
-        if (validateForm()) {
-            $.ajax({
-                type: 'POST',
-                url: 'signup/', // Add the trailing slash here
-                data: formData,
-                success: function(response) {
-                    console.log('Data sent successfully.');
-                },
-                error: function(error) {
-                    console.log('An error occurred.');
-                    console.log(error);
-                }
-            });
-        }
-     
-    });
+        
+        
+        $.ajax({
+            type: 'POST',
+            url: 'signup', // Change this to your actual signup URL
+            data: formData,
+            success: function(response) {
+                console.log('Data sent successfully.');
+                window.location.href = "/";
 
+            },
+            error: function(error) {
+                console.log('An error occurred.');
+                console.log(error);
+            }
+        });
+    }
+  
 });
 
+// Function to get CSRF cookie value
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
+// Function to check if HTTP method is safe for CSRF
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+// Function to validate form fields
 function validateForm() {
     const firstName = $('#firstname').val();
     const lastName = $('#lastname').val();
@@ -43,16 +67,17 @@ function validateForm() {
 
     let isValid = true;
 
-    // Clear existing error messages
+    // Clear previous error messages
     $('.error-message').text('').removeClass('error-message');
 
+    // Validation checks
     if (firstName === "" || /\d/.test(firstName)) {
-        $('#firstname-error').text("Please enter your first name properly.").addClass('error-message');
+        $('#name-error').text("Please enter your first name properly.").addClass('error-message');
         isValid = false;
     }
 
     if (lastName === "" || /\d/.test(lastName)) {
-        $('#lastname-error').text("Please enter your last name properly.").addClass('error-message');
+        $('#name-error').text("Please enter your last name properly.").addClass('error-message');
         isValid = false;
     }
 

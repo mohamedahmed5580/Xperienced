@@ -1,26 +1,16 @@
-from django.shortcuts import render
-
-# Create your views here.
 import json
 from django.contrib import auth
+from django.db import transaction
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from django import forms
-from . import models
-from django.core.paginator import Paginator
 from django.contrib.auth import  logout as auth_logout
-from django.contrib.auth import authenticate, login
+from .forms import OfferForm
+from .models import Offer,Type, Category
 from account.models import User
-
-from .models import Request, Offer, User, Category, Type
-from .forms import RequestForm, OfferForm  # Assuming you have forms for these models
-
-# from .models import Skill
-# Create your views here.
-
 def new_request_view(request):
     return render(request, 'pages/find_assistant.html')
 def index(request):
@@ -38,122 +28,125 @@ def logout_view(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-def new_request_view(request):
+def add_offer(request):
     return render(request, 'pages/find_assistant.html')
-
-def requests_view(request):
-    return render(request, 'pages/offer_help.html')
 
 
 def request_view(request, id):
     return render(request, 'pages/add_offer.html')
 
-def profile_view(request):
-    return render(request, 'pages/profile.html', {
-        "profile": request.user
-    })
+# def profile_view(request):
+#     return render(request, 'pages/profile.html', {
+#         "profile": request.user
+#     })
 
 def balance_view(request):
     return render(request, 'pages/account_balance.html')
-    
+
 def notifications_view(request):
     return render(request, "pages/Notifications.html")
 
-# def skills(request):
-#     if request.method == 'POST':
-#         skill_name = request.POST.get('skill-input')
-#         user_id = request.user.id
+def offer_view(request):
+    details = Offer.objects.all()
+    print(details)
+    print('All Offer')
+    
+    return render(request, 'pages/offer_help.html',{'offers': details})
 
-#         if skill_name and user_id:
-#             user = User.objects.get(id=user_id)
-#             skill = Skill(user=user, skill=skill_name)
-#             skill.save()
-#             return JsonResponse({'status': 'success'}, status=200)
-#         else:
-#             return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
-#     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+def myoffer_view(request, id):
+    user = get_object_or_404(User, id=id)
+    offers = Offer.objects.filter(user=user)
+
+    profile = {
+        "id": user.id,
+        "username": user.username,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "phone": user.phone,
+        "password": user.password,
+        "description": user.description,
+        "image": user.image,
+    }
+    return render(request, 'pages/My_offer_help.html', {'offers': offers, 'profile': profile})
+
+
+
+@login_required
+@transaction.atomic
+def offers(request):
+    print("in offer")
+    if request.method == 'POST':
+        print(request.POST)
+        try:
+            # Get or create Type instance
+            type_instance, created = Type.objects.get_or_create(user=request.user, name=request.POST['type'])
+            if created:
+                print(f"Created new Type: {type_instance.name}")
+            else:
+                print(f"Type already exists: {type_instance.name}")
+
+            # Ensure the type_instance is saved
+            if not type_instance.pk:
+                type_instance.save()
+
+            # Get or create Category instance
+            category_instance, created = Category.objects.get_or_create(user=request.user, name=request.POST['category'])
+            if created:
+                print(f"Created new Category: {category_instance.name}")
+            else:
+                print(f"Category already exists: {category_instance.name}")
+
+            # Ensure the category_instance is saved
+            if not category_instance.pk:
+                category_instance.save()
+
+            # Initialize the form with POST data and files
+            form = OfferForm(request.POST, request.FILES)
+            
+            if form.is_valid():
+                offer = form.save(commit=False)
+                offer.user = request.user
+                offer.type = type_instance
+                offer.category = category_instance
+                offer.save()  # Save the offer again to update the type and category
+                print("Offer created successfully.")
+                return redirect('myoffer', id=request.user.id)
+            else:
+                print("Form is not valid.")
+                print(form.errors)
+                messages.error(request, "There was an error with your form.")
+        except Exception as e:
+            print(f"Exception occurred: {e}")
+            messages.error(request, "An unexpected error occurred.")
+    else:
+        form = OfferForm()
+    
+    return render(request, 'pages/offer_help.html', {'form': form})
+
+
+@login_required
+@transaction.atomic
+def delete_offer(request, id):
+    print('in delete Offer')
+    if request.method == 'POST':
+        try:
+            offer = Offer.objects.get(id=id, user=request.user)  # Ensure the offer belongs to the user
+
+            types = Type.objects.filter(offer=offer)
+            categories = Category.objects.filter(offer=offer)
+
+            types.delete()
+            categories.delete()
+            offer.delete()
+
+            messages.success(request, "Offer and related objects successfully deleted.")
+        except Offer.DoesNotExist:
+            messages.error(request, "Offer not found.")
+        return redirect('myoffer', id=request.user.id)
+    return redirect('myoffer', id=request.user.id)
 
 
 def messages_view(request):
     return render(request, "pages/Messages.html")
 
-@login_required
-def create_request(request):
-    if request.method == 'POST':
-        form = RequestForm(request.POST)
-        if form.is_valid():
-            new_request = form.save(commit=False)
-            new_request.owner = request.user
-            new_request.save()
-            return redirect('request_detail', request_id=new_request.id)
-    else:
-        form = RequestForm()
-    return render(request, 'create_request.html', {'form': form})
-
-@login_required
-def request_detail(request, request_id):
-    req = get_object_or_404(Request, id=request_id)
-    return render(request, 'request_detail.html', {'request': req})
-
-@login_required
-def make_offer(request, request_id):
-    req = get_object_or_404(Request, id=request_id)
-    if request.method == 'POST':
-        form = OfferForm(request.POST)
-        if form.is_valid():
-            new_offer = form.save(commit=False)
-            new_offer.bidder = request.user
-            new_offer.request = req
-            new_offer.save()
-            return redirect('request_detail', request_id=request_id)
-    else:
-        form = OfferForm()
-    return render(request, 'make_offer.html', {'form': form, 'request': req})
-
-@login_required
-def accept_offer(request, offer_id):
-    offer = get_object_or_404(Offer, id=offer_id)
-    if offer.request.owner == request.user and offer.request.state() == 'Open':
-        offer.request.acceptOffer(offer)
-        return redirect('request_detail', request_id=offer.request.id)
-    return JsonResponse({'status': 'error', 'message': 'Cannot accept offer'}, status=400)
-
-@login_required
-def cancel_offer(request, offer_id):
-    offer = get_object_or_404(Offer, id=offer_id)
-    if offer.bidder == request.user and offer.state == 'Pending':
-        offer.request.cancelOffer(offer)
-        return redirect('request_detail', request_id=offer.request.id)
-    return JsonResponse({'status': 'error', 'message': 'Cannot cancel offer'}, status=400)
-
-@login_required
-def complete_request(request, request_id):
-    req = get_object_or_404(Request, id=request_id)
-    if req.owner == request.user and req.state() == 'Pending':
-        req.completeRequest()
-        return redirect('request_detail', request_id=request_id)
-    return JsonResponse({'status': 'error', 'message': 'Cannot complete request'}, status=400)
-
-@login_required
-def cancel_request(request, request_id):
-    req = get_object_or_404(Request, id=request_id)
-    if req.owner == request.user and req.state() == 'Open':
-        req.cancelRequest()
-        return redirect('request_detail', request_id=request_id)
-    return JsonResponse({'status': 'error', 'message': 'Cannot cancel request'}, status=400)
-@login_required
-def make_offer(request, request_id):
-    req = get_object_or_404(Request, id=request_id)
-    if request.method == 'POST':
-        form = OfferForm(request.POST)
-        if form.is_valid():
-            new_offer = form.save(commit=False)
-            new_offer.bidder = request.user
-            new_offer.request = req
-            new_offer.save()
-            return JsonResponse({'status': 'success', 'message': 'Offer submitted successfully!'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'Invalid form data'}, status=400)
-    else:
-        form = OfferForm()
-    return render(request, 'make_offer.html', {'form': form, 'request': req})

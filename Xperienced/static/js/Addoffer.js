@@ -1,116 +1,102 @@
+$(document).ready(function() {
+    $('#offer-form').submit(function() {
+        event.preventDefault(); 
+        if (validateForm()) {
+            // Form is valid, proceed with AJAX request
+            var formData = {
+                'title': $('#title').val(),
+                'description': $('#description').val(),
+                'type': $('#type').val(),
+                'category': $('#category').val(),
+                'salary': $('#salary').val(),
+                'status': $('#status').val(),
+                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val() // If using Django, get CSRF token
+            };
 
-var offerDataArray = JSON.parse(localStorage.getItem('offerDataArray')) || [];
-var btn=document.getElementById("btnAdd");
-var alart_error= document.getElementById('alart');
-
-function addoffer() {
-    event.preventDefault();
-
-    var title = document.getElementById("title").value;
-    var salary = document.getElementById("salary").value;
-    // var skills = document.getElementById("skills").value;
-    var type = document.getElementById("type").value;
-    var description = document.getElementById("description").value;
-    var category = document.getElementById("category").value;
-    if (title == '' || salary =='' || description ==''  || type ==''  || category=='') {
-        alart_error.classList.remove('d-n');
-        alart_error.classList.add('d-b');
-        alart_error.textContent="you have empty field";
-        return false;
-      }else{
-          var offerData = {
-              title: title,
-              salary: salary,
-              // skills: skills,
-              type: type,
-              description: description,
-              category: category,
-          };
-          offerDataArray.push(offerData);
-          window.localStorage.setItem('offerDataArray', JSON.stringify(offerDataArray));
-          alart_error.classList.remove('d-b');
-         
-          alart_error.classList.add('d-n');
-      }
-      
- document.getElementById('offer-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    
-    fetch("{% url 'make_offer' request.id %}", {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
-      },
-      body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-      const messageDiv = document.getElementById('message');
-      if (data.status === 'success') {
-        messageDiv.innerHTML = '<p>Offer submitted successfully!</p>';
-      } else {
-        messageDiv.innerHTML = `<p>Error: ${data.message}</p>`;
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
+            $.ajax({
+                type: 'POST',
+                url: 'sendoffers',  // Replace with your URL
+                data: formData,
+                success: function(response) {
+                    console.log('Data sent successfully.');
+                    location.href = "/myoffer/" + response.id;
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        } else {
+            // Form is invalid, prevent form submission
+            $('#alart').text('Please correct the errors in the form.').removeClass('d-n');
+        }
     });
-  });
-}
+    
+    function validateForm() {
+        // Get form values
+        const title = $('#title').val();
+        const salary = $('#salary').val();
+        const description = $('#description').val();
+        const status = $('#status').val();
+        
+        // Get error message elements
+        const titleError = $('#title-error');
+        const salaryError = $('#salary-error');
+        const descriptionError = $('#description-error');
+        const statusError = $('#status-error');
 
-// document.addEventListener("DOMContentLoaded", () => {
-//     let requestForm = document.getElementById("new-request-form");
-//     requestForm.onsubmit = addRequest;
-// })
+        // Initialize validity flag
+        let isValid = true;
 
-  
-// function updateJSONFile() {
-//     var jsonData = JSON.stringify(offerDataArray);
-//     var blob = new Blob([jsonData], { type: 'application/json' });
-//     var url = URL.createObjectURL(blob);
+        // Validate title
+        if (title === '') {
+            titleError.text('Title is required.').addClass('error-message');
+            isValid = false;
+        } else {
+            titleError.text('').removeClass('error-message');
+        }
 
-//     var a = document.createElement('a');
-//     a.href = url;
-//     a.download = 'offer_data.json';
-//     document.body.appendChild(a);
-//     a.click();
-//     document.body.removeChild(a);
-// }
+        // Validate salary (must be a number and greater than 0)
+        if (isNaN(salary) || salary <= 0) {
+            salaryError.text('Please enter a valid salary.').addClass('error-message');
+            isValid = false;
+        } else {
+            salaryError.text('').removeClass('error-message');
+        }
 
+        // Validate description length (must be at least 100 characters)
+        if (description.length < 10 ||description.length > 100 || description === '') {
+            descriptionError.text('Description is required, and must be at least 50 characters long.').addClass('error-message');
+            isValid = false;
+        } else {
+            descriptionError.text('').removeClass('error-message');
+        }
 
+        // Validate status
+        if (status === '') {
+            statusError.text('Status is required.').addClass('error-message');
+            isValid = false;
+        } else {
+            statusError.text('').removeClass('error-message');
+        }
 
-// function HelpRequest(title, description, skills, category, budget) {
-//     this.title = title;
-//     this.description = description;
-//     this.skills = skills;
-//     this.category = category;
-//     this.budget = budget;
-// }
+        return isValid;
+    }
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
 
-// function addRequest() {
-//     let title = document.getElementById("title").value;
-//     let description = document.getElementById("description").value;
-//     let skills = document.getElementById("skills").value;
-//     let category = document.getElementById("category").value;
-//     let budget = document.getElementById("salary").value;
-
-//     let request = new HelpRequest(title, description, skills, category, budget);
-//     fetch('find/submit', {
-//         method: 'POST',
-//         headers: {
-//             'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             request: request
-//         }),
-//     }).then(response => response.json()).then(console.log(response));
-//     let requests = JSON.parse(localStorage.getItem('offerDataArray')) || [];
-//     requests.push(request);
-//     window.localStorage.setItem('offerDataArray', JSON.stringify(requests));
-//     return false;
-// }
-console.log(offerDataArray);
+});

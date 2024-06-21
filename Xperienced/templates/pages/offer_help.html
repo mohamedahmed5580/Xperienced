@@ -63,32 +63,42 @@
       </div>
     </div>
   </div>
-  <div class="Categorys " id="offer-list-items">
-    <div class="box">
-      <p>
-        OOP
-      </p>
-      <div class="text">
-        محتاج حد يشرحلي  يعني ايه  copy constructor<br />
-        و ايه الفرق بينه و بين الـ deep copy and shallow copy
-      </div>
-      <div class="Add">
-        <div class="price">
-          25-50 EGP
-        </div>
-
-        <a href="" class="btn_add">  Add an offer</a>
-        <a href="" class="btn_add">  Remove offer</a>
-
-      </div>
-
-      
+  <div class="Categorys" id="offer-list-items"data-aos="fade-up">
+    <div class="offer-cards" data-aos="fade-right">
+    
+      {% for offer in offers %}
+              <div class="offer-card"data-aos="fade-up">
+                  <div class="offer-card-header">
+                      <img class="logo" src="{% static 'image/image.png' %}" alt=""> 
+                  <div class="offer-card-head">{{offer.user}}</div>               
+                  </div>
+                  <div class="offer-card-title">{{ offer.title }}</div>
+                  <div class="offer-card-subtitle">
+                    {{ offer.description }}
+                  </div>
+                  <div class="price">
+                      {{ offer.salary }} EGP
+                  </div>
+                  <div class="offer-detail-buttons">
+                      <button class="search-buttons detail-button">{{ offer.type.name }}</button>
+                      <button class="search-buttons detail-button">{{ offer.category.name }}</button>
+                      <button class="search-buttons detail-button">{{ offer.status }}</button>
+                  </div>
+                  <div class="offer-card-buttons">
+                    <button class="search-buttons card-buttons">Apply Now</button>
+                    <button class="search-buttons card-buttons-msg">Messages</button>
+                  </div>
+              </div>
+        {% endfor %}
+     </div>
   </div>
+
 </div>
-</div>
+
 
 <script src="{% static 'js/Addoffer.js' %} "></script>
 <script src="{% static '/js/show_offer.js' %} "></script>
+<script src="{% static 'js/aos.js' %} "></script>
 
 {% endblock content %}
 

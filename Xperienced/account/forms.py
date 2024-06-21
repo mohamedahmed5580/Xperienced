@@ -29,6 +29,23 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username','phone']
+
+    def clean_password(self):
+        # This method ensures that the password is cleaned properly
+        return self.cleaned_data['password']
+class EditAboutForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['description']
+class EditImageProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['image']
+
 # class ApplicationForm(forms.ModelForm):
 #     class Meta:
 #         model = Application

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+<div class="container Offer_Help mt " id="offer-list" >
+  <div class="Required">
+    <div class="Requir">
+        <span >
+          Required aid
+        </span>
+    </div>
+    <div class="search">
+      <h5>Search</h5>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <div class="category">
+      <h5>Category</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Mathematics
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Computer Science
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Others
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <h5>Type</h5>
+      <div class="Check_boxs">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Career Guidance
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Academic Support
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Mentorship
+          </label>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="Categorys" id="offer-list-items" data-aos="fade-up">
+    <div class="offer-cards"data-aos="fade-right">
+    
+      {% if user.is_authenticated and user.id == profile.id %}
+        {% for offer in offers %}
+              <div class="offer-card" data-aos="fade-up">
+                  <div class="offer-card-header">
+                      <img class="logo" src="{% static 'image/image.png' %}" alt=""> 
+                  <div class="offer-card-head">{{profile.username}}</div>
+                      
+                  </div>
+                  <div class="offer-card-title">{{ offer.title }}</div>
+                  <div class="offer-card-subtitle">
+                    {{ offer.description }}
+                  </div>
+                  <div class="price">
+                      {{ offer.salary }} EGP
+                  </div>
+                  <div class="offer-detail-buttons">
+                      <button class="search-buttons detail-button">{{ offer.type.name }}</button>
+                      <button class="search-buttons detail-button">{{ offer.category.name }}</button>
+                      <button class="search-buttons detail-button">{{ offer.status }}</button>
+                  </div>
+                  <div class="offer-card-buttons">
+                    <button class="btn-primary search-buttons card-buttons">Edit Offer</button>
+                    <form action="{% url 'delete_offer' offer.id %}" class="form-deloffer" id="" method="POST" role="form" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <button class="btn btn-danger delete_btn" type="submit">Delete</button>
+                    </form>
+                  </div>
+              </div>
+        {% endfor %}
+      {% else %}
+      <div class="offer-card">
+        <div class="offer-card-header">
+          <img class="logo" src="{% static 'image/image.png' %} " alt >
+          <!-- <div class="menu-dot"></div> -->
+        </div>
+        <div class="offer-card-title">OOP  </div>
+        <div class="offer-card-subtitle"> Offer Not Found </div>
+      </div>
+      {% endif %}
+     </div>
+  </div>
+</div>
+
+<script src="{% static 'js/Addoffer.js' %} "></script>
+<script src="{% static '/js/show_offer.js' %} "></script>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+      

@@ -1,36 +1,40 @@
-$(document).ready(function() {
-    $('#signup-form').on('submit', function(event) {
-        event.preventDefault(); // Prevent the form from submitting the default way
+$('#signup-form').on('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the default way
+    
+    if (validateForm()) {
+    
+            // Collect form data
+        var formData = {
+            'first_name': $('#firstname').val(),
+            'last_name': $('#lastname').val(),
+            'username': $('#username').val(),
+            'email': $('#email').val(),
+            'phone': $('#phone').val(),
+            'password': $('#password').val(),
+            'confirm_password': $('#confirm-password').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val() // Get CSRF token
+        };
         
-        if (validateForm()) {
-             // Collect form data
-             var formData = {
-                'first_name': $('#firstname').val(),
-                'last_name': $('#lastname').val(),
-                'username': $('#username').val(),
-                'email': $('#email').val(),
-                'phone': $('#phone').val(),
-                'password': $('#password').val(),
-                'confirm_password': $('#confirm-password').val(),
-                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val() // Get CSRF token
-            };
-            $.ajax({
-                type: 'POST',
-                url: 'signup', // Change this to your actual signup URL
-                data: formData,
-                success: function(response) {
-                    console.log('Data sent successfully.');
-                },
-                error: function(error) {
-                    console.log('An error occurred.');
-                    console.log(error);
-                }
-            });   
-        }
-      
-    });
+        
+        $.ajax({
+            type: 'POST',
+            url: 'signup', // Change this to your actual signup URL
+            data: formData,
+            success: function(response) {
+                console.log('Data sent successfully.');
+                window.location.href = "/";
+
+            },
+            error: function(error) {
+                console.log('An error occurred.');
+                console.log(error);
+            }
+        });
+    }
+  
 });
 
+// Function to get CSRF cookie value
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -46,69 +50,61 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Function to check if HTTP method is safe for CSRF
 function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+// Function to validate form fields
 function validateForm() {
-    const firstName = document.getElementById('firstname').value.trim();
-    const lastName = document.getElementById('lastname').value.trim();
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirm-password').value.trim();
-
-    const nameError = document.getElementById('name-error');
-    const usernameError = document.getElementById('username-error');
-    const emailError = document.getElementById('email-error');
-    const phoneError = document.getElementById('phone-error');
-    const passwordError = document.getElementById('password-error');
-    const confirmPasswordError = document.getElementById('confirm-password-error');
-
-    nameError.textContent = '';
-    usernameError.textContent = '';
-    emailError.textContent = '';
-    phoneError.textContent = '';
-    passwordError.textContent = '';
-    confirmPasswordError.textContent = '';
+    const firstName = $('#firstname').val();
+    const lastName = $('#lastname').val();
+    const email = $('#email').val(); 
+    const password = $('#password').val();
+    const confirmPassword = $('#confirm-password').val();
+    const username = $('#username').val();
+    const phone = $('#phone').val();
 
     let isValid = true;
 
+    // Clear previous error messages
+    $('.error-message').text('').removeClass('error-message');
+
+    // Validation checks
     if (firstName === "" || /\d/.test(firstName)) {
-        nameError.textContent = "Please enter your first name properly.";
+        $('#name-error').text("Please enter your first name properly.").addClass('error-message');
         isValid = false;
     }
 
     if (lastName === "" || /\d/.test(lastName)) {
-        nameError.textContent = "Please enter your last name properly.";
+        $('#name-error').text("Please enter your last name properly.").addClass('error-message');
         isValid = false;
     }
 
     if (username === "") {
-        usernameError.textContent = "Username is required.";
+        $('#user-error').text("Username is required.").addClass('error-message');
         isValid = false;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        emailError.textContent = "Please enter a valid email address.";
+        $('#email-error').text("Please enter a valid email address.").addClass('error-message');
         isValid = false;
     }
 
     const phonePattern = /^[0-9]{10,15}$/;
     if (!phonePattern.test(phone)) {
-        phoneError.textContent = "Invalid phone number.";
+        $('#phone-error').text("Invalid phone number.").addClass('error-message');
         isValid = false;
     }
 
     if (password === "" || password.length < 8) {
-        passwordError.textContent = "Please enter a password with at least 8 characters.";
+        $('#password-error').text("Please enter a password with at least 8 characters.").addClass('error-message');
         isValid = false;
     }
 
     if (confirmPassword === "" || confirmPassword.length < 8 || password !== confirmPassword) {
-        confirmPasswordError.textContent = "The passwords do not match.";
+        $('#confirm-password-error').text("The passwords do not match.").addClass('error-message');
         isValid = false;
     }
 

@@ -3,71 +3,68 @@
 {% load static %}
 {% block content %}
 
-<div class="container emp-profile mt">
+<div class="container emp-profile mt" data-aos="zoom-in-up">
   <div class="find-assistant">
     
       <span class="find-assistant-15">
           Find Assistant
       </span>
   </div>
-  <form method="post" id="offer-form">
-      <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Title<span class="heading-17-sub-0">*</span></label>
-          <input type="text" class="form-control" id="title" placeholder="Write Titlem"  >
-      </div>
-      <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Description<span class="heading-17-sub-0">*</span></label>
-          <textarea class="form-control" id="description" placeholder="Enter a detailed description of your project and attach examples of what you want if possible." rows="3" ></textarea>
-      </div>
-      <!-- <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label"> Skills<span class="heading-17-sub-0">*</span></label>
-          <input type="text" class="form-control" id="skills" placeholder="Identify the most important skills " >
-      </div> -->
-
-      <div class="mb-3 Type_Category">
-          <div class="col-md-3">
-              <label for="validationCustom04" class="form-label">Type</label>
-              <input type="text" class="form-control" id="type" >
-
-          </div>
-          <div class="col-md-3">
-              <label for="validationCustom05" class="form-label">Category</label>
-              <input type="text" class="form-control" id="category" >
-          </div>
-          <div class="col-md-3">
-              <label for="validationCustom05" class="form-label">Expected budget</label>
-              <input type="text" class="form-control" id="salary" placeholder="25$" >
-          </div>
-      </div>
-
-
-      <div class="mb-3 form-check">
-          <label class="form-check-label" for="exampleCheck1">Explanatory files</label>
-          <div class="frame-10">
-              <div class="frame-12">
-                <input type="file" name="" id="" >
-                  <svg width="35" height="29" viewBox="0 0 35 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0041 0.75C13.6211 0.749876 12.2532 1.03661 10.9867 1.59209C9.72015 2.14756 8.58262 2.9597 7.64597 3.97718C6.70931 4.99466 5.99388 6.19536 5.54489 7.50342C5.09589 8.81147 4.9231 10.1984 5.03743 11.5767C3.23493 12.4213 1.77427 13.8552 0.896558 15.6418C0.0188426 17.4284 -0.223468 19.4609 0.20962 21.4037C0.642708 23.3466 1.72531 25.0838 3.27873 26.3284C4.83215 27.5731 6.76353 28.2509 8.75409 28.25H27.5041C29.1628 28.2505 30.7748 27.7012 32.0881 26.688C33.4013 25.6747 34.3416 24.2547 34.7618 22.6502C35.182 21.0456 35.0585 19.347 34.4105 17.8201C33.7626 16.2933 32.6268 15.0243 31.1808 14.2117C31.329 13.2607 31.2556 12.2884 30.9663 11.3705C30.6769 10.4525 30.1796 9.61384 29.5129 8.91973C28.8462 8.22562 28.0282 7.69485 27.1227 7.3688C26.2172 7.04275 25.2486 6.93022 24.2924 7.04C23.5504 5.1832 22.2688 3.59144 20.6131 2.47023C18.9574 1.34902 17.0037 0.749825 15.0041 0.75ZM18.7541 10.75C18.7541 10.4185 18.6224 10.1005 18.388 9.86612C18.1536 9.6317 17.8356 9.5 17.5041 9.5C17.1726 9.5 16.8546 9.6317 16.6202 9.86612C16.3858 10.1005 16.2541 10.4185 16.2541 10.75V18.9833L13.3874 16.1167C13.1505 15.8959 12.8371 15.7757 12.5132 15.7814C12.1894 15.7871 11.8804 15.9183 11.6514 16.1473C11.4224 16.3763 11.2912 16.6853 11.2855 17.0091C11.2798 17.333 11.4 17.6464 11.6208 17.8833L16.6208 22.8833C16.8551 23.1174 17.1728 23.2489 17.5041 23.2489C17.8353 23.2489 18.153 23.1174 18.3874 22.8833L23.3874 17.8833C23.5102 17.7689 23.6087 17.6309 23.6771 17.4776C23.7454 17.3242 23.7821 17.1587 23.7851 16.9909C23.788 16.823 23.7572 16.6563 23.6943 16.5007C23.6314 16.345 23.5379 16.2036 23.4192 16.0849C23.3005 15.9662 23.1591 15.8727 23.0034 15.8098C22.8478 15.7469 22.6811 15.7161 22.5132 15.719C22.3454 15.722 22.1799 15.7587 22.0265 15.827C21.8732 15.8954 21.7352 15.9939 21.6208 16.1167L18.7541 18.9833V10.75Z" fill="#FCFCFD"/>
-                  </svg>
-              </div>
-
-              <div class="frame-11">
-                <div class="drag-files-here">
-                  Drag files here
-                </div>
-                <span class="or-click-to-select-manually">
-                  Or click to select manually
-                </span>
-              </div>
+<form method="post" id="offer-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Title<span class="heading-17-sub-0">*</span></label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Write Title">
+        <span id="title-error" ></span>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description<span class="heading-17-sub-0">*</span></label>
+        <textarea class="form-control" id="description" name="description" placeholder="Enter a detailed description of your project and attach examples of what you want if possible." rows="3"></textarea>
+        <span id="description-error" ></span>
+    </div>
+    <div class="mb-3 Type_Category">
+        <div class="col-md-3">
+            <label for="type" class="form-label">Type</label>
+            <input type="text" class="form-control" id="type" name="type">
+        </div>
+        <div class="col-md-3">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" class="form-control" id="category" name="category">
+        </div>
+        <div class="col-md-3">
+            <label for="salary" class="form-label">Expected budget</label>
+            <input type="number" class="form-control" id="salary" name="salary" placeholder="25$">
+            <span id="salary-error" ></span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label>Status: </label><br>
+        <select class="inpp" id="status" name="status">
+            <option class="inp" value="">Choose</option>
+            <option class="inp" value="Full Time">Full Time</option>
+            <option class="inp" value="Part Time">Part Time</option>
+        </select><br>
+        <span id="status-error" ></span>
+    </div>
+    <div class="mb-3 form-check">
+        <label class="form-check-label" for="exampleCheck1">Explanatory files</label>
+        <div class="frame-10">
+            <div class="frame-12">
+                <input type="file" name="file" id="file">
+                <!-- SVG Icon -->
             </div>
-      </div>
-      <div class="alert alert-danger d-n" role="alert" id="alart">
-      </div>
-      <button  class="btn btn-primary" id="btnAdd" onclick="addoffer()" >Submit</button>
-  </form>
+            <div class="frame-11">
+                <div class="drag-files-here">Drag files here</div>
+                <span class="or-click-to-select-manually">Or click to select manually</span>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger d-n" role="alert" id="alart"></div>
+    <button class="btn btn-primary" id="btnAdd" type="submit">Submit</button>
+</form>
+
 </div>
 <script></script>
 <script src="{% static 'js/Addoffer.js' %} "></script>
-<script src="{% static 'js/show_offer.js' %} "></script>
 
 {% endblock content %}

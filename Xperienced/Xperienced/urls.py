@@ -8,5 +8,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('account.urls')),
     path('', include("assistants.urls")),
-    # path("", include("assistantFinder.urls")),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
